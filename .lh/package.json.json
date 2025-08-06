@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 4,
+            "activePatchIndex": 5,
             "patches": [
                 {
                     "date": 1752336547628,
@@ -24,6 +24,10 @@
                 {
                     "date": 1754518667799,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,16 +2,18 @@\n   \"name\": \"sitelobos\",\n   \"version\": \"1.0.0\",\n   \"main\": \"Script.js\",\n   \"scripts\": {\n-    \"test\": \"echo \\\"Error: no test specified\\\" && exit 1\",\n-    \"build:css\": \"chmod +x ./node_modules/.bin/tailwindcss && tailwindcss -i ./src/input.css -o ./style.css\"\n+    \"build:css\": \"tailwindcss -i ./src/input.css -o ./dist/style.css\",\n+    \"build:copy\": \"cpy \\\"**/*.html\\\" \\\"Scripts\\\" \\\"public\\\" \\\"pages\\\" \\\"src\\\" dist --parents\",\n+    \"build\": \"npm run build:copy && npm run build:css\"\n   },\n   \"keywords\": [],\n   \"author\": \"\",\n   \"license\": \"ISC\",\n   \"description\": \"\",\n   \"devDependencies\": {\n     \"@tailwindcss/cli\": \"^4.1.11\",\n+    \"cpy-cli\": \"^5.0.0\",\n     \"tailwindcss\": \"^4.1.11\"\n   }\n }\n"
+                },
+                {
+                    "date": 1754518946012,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,13 +1,13 @@\n {\n   \"name\": \"sitelobos\",\n   \"version\": \"1.0.0\",\n   \"main\": \"Script.js\",\n-  \"scripts\": {\n-    \"build:css\": \"tailwindcss -i ./src/input.css -o ./dist/style.css\",\n-    \"build:copy\": \"cpy \\\"**/*.html\\\" \\\"Scripts\\\" \\\"public\\\" \\\"pages\\\" \\\"src\\\" dist --parents\",\n-    \"build\": \"npm run build:copy && npm run build:css\"\n-  },\n+\"scripts\": {\n+  \"build:css\": \"chmod +x ./node_modules/.bin/tailwindcss && tailwindcss -i ./src/input.css -o ./dist/style.css\",\n+  \"build:copy\": \"chmod +x ./node_modules/.bin/cpy && cpy \\\"**/*.html\\\" \\\"Scripts\\\" \\\"public\\\" \\\"pages\\\" \\\"src\\\" dist --parents\",\n+  \"build\": \"npm run build:copy && npm run build:css\"\n+},\n   \"keywords\": [],\n   \"author\": \"\",\n   \"license\": \"ISC\",\n   \"description\": \"\",\n"
                 }
             ],
             "date": 1752336547628,

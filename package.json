@@ -2,11 +2,11 @@
   "name": "sitelobos",
   "version": "1.0.0",
   "main": "Script.js",
-  "scripts": {
-    "build:css": "tailwindcss -i ./src/input.css -o ./dist/style.css",
-    "build:copy": "cpy \"**/*.html\" \"Scripts\" \"public\" \"pages\" \"src\" dist --parents",
-    "build": "npm run build:copy && npm run build:css"
-  },
+"scripts": {
+  "build:css": "chmod +x ./node_modules/.bin/tailwindcss && tailwindcss -i ./src/input.css -o ./dist/style.css",
+  "build:copy": "chmod +x ./node_modules/.bin/cpy && cpy \"**/*.html\" \"Scripts\" \"public\" \"pages\" \"src\" dist --parents",
+  "build": "npm run build:copy && npm run build:css"
+},
   "keywords": [],
   "author": "",
   "license": "ISC",
