@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 190,
+            "activePatchIndex": 191,
             "patches": [
                 {
                     "date": 1752239206847,
@@ -768,6 +768,10 @@
                 {
                     "date": 1754501069696,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -471,8 +471,13 @@\n             mobileMenuButton.addEventListener('click', () => {\r\n                 mobileMenu.classList.toggle('hidden');\r\n             });\r\n         }\r\n+        const copyrightTextElement = document.getElementById('copyright-text');\r\n+        if (copyrightTextElement) {\r\n+            const currentYear = new Date().getFullYear();\r\n+            copyrightTextElement.innerHTML = `&copy; ${currentYear} LobosTI. Todos os direitos reservados.`;\r\n+        }\r\n         \r\n         // Carrega o script que controla os modais (Termos de Uso, Privacidade)\r\n         const modalScript = document.createElement('script');\r\n         const basePath = window.location.pathname.includes('/pages/') ? '../' : '';\r\n"
+                },
+                {
+                    "date": 1754520097656,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,67 +3,10 @@\n <head>\r\n     <meta charset=\"UTF-8\">\r\n     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n     <title>LobosTI - Soluções em Tecnologia</title>\r\n-    <script src=\"https://cdn.tailwindcss.com\"></script>\r\n     <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css\">\r\n-    <style>\r\n-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');\r\n-        \r\n-        body {\r\n-            font-family: 'Poppins', sans-serif;\r\n-            background-color: #0f172a;\r\n-            color: #e2e8f0;\r\n-        }\r\n-        \r\n-        .hero-gradient {\r\n-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);\r\n-        }\r\n-        \r\n-        .service-card:hover {\r\n-            transform: translateY(-5px);\r\n-            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);\r\n-        }\r\n-        \r\n-        .wolf-logo {\r\n-            filter: drop-shadow(0 0 5px rgba(99, 102, 241, 0.7));\r\n-        }\r\n-        \r\n-        .login-form {\r\n-            backdrop-filter: blur(10px);\r\n-            background: rgba(15, 23, 42, 0.8);\r\n-            border: 1px solid rgba(99, 102, 241, 0.3);\r\n-        }\r\n-        \r\n-        .nav-link {\r\n-            position: relative;\r\n-        }\r\n-        \r\n-        .nav-link::after {\r\n-            content: '';\r\n-            position: absolute;\r\n-            width: 0;\r\n-            height: 2px;\r\n-            bottom: -2px;\r\n-            left: 0;\r\n-            background-color: #6366f1;\r\n-            transition: width 0.3s ease;\r\n-        }\r\n-        \r\n-        .nav-link:hover::after {\r\n-            width: 100%;\r\n-        }\r\n-        \r\n-        .animated-wolf {\r\n-            animation: float 6s ease-in-out infinite;\r\n-        }\r\n-        \r\n-        @keyframes float {\r\n-            0% { transform: translateY(0px); }\r\n-            50% { transform: translateY(-15px); }\r\n-            100% { transform: translateY(0px); }\r\n-        }\r\n-    </style>\r\n+    <link rel=\"stylesheet\" href=\"style.css\">\r\n </head>\r\n <body>\r\n     <header id=\"header-placeholder\"></header>\r\n \r\n"
                 }
             ],
             "date": 1752239206846,

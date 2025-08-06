@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 8,
+            "activePatchIndex": 9,
             "patches": [
                 {
                     "date": 1754346228934,
@@ -40,6 +40,10 @@
                 {
                     "date": 1754500572781,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -133,49 +133,8 @@\n \r\n     <div id=\"modals-placeholder\"></div>\r\n     <footer id=\"footer-placeholder\"></footer>\r\n \r\n-<script>\r\n-document.addEventListener(\"DOMContentLoaded\", function() {\r\n-    const headerPlaceholder = document.getElementById(\"header-placeholder\");\r\n-    const footerPlaceholder = document.getElementById(\"footer-placeholder\");\r\n-    const modalsPlaceholder = document.getElementById(\"modals-placeholder\");\r\n+<script type=\"module\" src=\"../scripts/page-loader.js\"></script>\r\n \r\n-    const basePath = window.location.pathname.includes('/pages/') ? '../' : '';\r\n-\r\n-    const loadComponent = (url, placeholder) => {\r\n-        return fetch(url)\r\n-            .then(res => res.ok ? res.text() : Promise.reject(`Erro ao carregar ${url}`))\r\n-            .then(data => {\r\n-                if (placeholder) placeholder.innerHTML = data;\r\n-            });\r\n-    };\r\n-\r\n-    Promise.all([\r\n-        loadComponent(`${basePath}components/header.html`, headerPlaceholder),\r\n-        loadComponent(`${basePath}components/footer.html`, footerPlaceholder),\r\n-        loadComponent(`${basePath}components/modals.html`, modalsPlaceholder)\r\n-    ]).then(() => {\r\n-        // --- A CORREÇÃO ESTÁ AQUI ---\r\n-\r\n-        // 1. Carregamos o script dos modais (como antes)\r\n-        const modalScript = document.createElement('script');\r\n-        modalScript.src = `${basePath}scripts/modals.js`;\r\n-        document.body.appendChild(modalScript);\r\n-\r\n-        // 2. Em vez de carregar um 'header.js' externo,\r\n-        //    colocamos a lógica do menu mobile DIRETAMENTE aqui.\r\n-        //    Isto garante que ela só é executada depois do header.html ser carregado.\r\n-        const mobileMenuButton = document.getElementById('mobile-menu-button');\r\n-        const mobileMenu = document.getElementById('mobile-menu');\r\n-\r\n-        if (mobileMenuButton && mobileMenu) {\r\n-            mobileMenuButton.addEventListener('click', () => {\r\n-                mobileMenu.classList.toggle('hidden');\r\n-            });\r\n-        }\r\n-\r\n-    }).catch(error => console.error(\"Erro crítico ao carregar componentes:\", error));\r\n-});\r\n-</script>\r\n </body>\r\n </html>\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1754520293117,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,21 +3,10 @@\n <head>\r\n     <meta charset=\"UTF-8\">\r\n     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n     <title>Infraestrutura de TI - LobosTI</title>\r\n-    <script src=\"https://cdn.tailwindcss.com\"></script>\r\n     <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css\">\r\n-    \r\n-    <link rel=\"stylesheet\" href=\"../style.css\"> \r\n-    \r\n-    <style>\r\n-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');\r\n-        body {\r\n-            font-family: 'Poppins', sans-serif;\r\n-            background-color: #0f172a;\r\n-            color: #e2e8f0;\r\n-        }\r\n-    </style>\r\n+    <link rel=\"stylesheet\" href=\"../style.css\">\r\n </head>\r\n <body>\r\n \r\n     <header id=\"header-placeholder\"></header>\r\n"
                 }
             ],
             "date": 1754346228934,

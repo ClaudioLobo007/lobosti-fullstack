@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 16,
+            "activePatchIndex": 17,
             "patches": [
                 {
                     "date": 1754337126151,
@@ -72,6 +72,10 @@
                 {
                     "date": 1754500574134,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -127,6 +127,7 @@\n     <div id=\"modals-placeholder\"></div>\r\n     <footer id=\"footer-placeholder\"></footer>\r\n \r\n <script type=\"module\" src=\"../scripts/page-loader.js\"></script>\r\n+\r\n </body>\r\n </html>\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1754520294693,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,14 +3,10 @@\n <head>\r\n     <meta charset=\"UTF-8\">\r\n     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n     <title>Desenvolvimento de Software - LobosTI</title> <link rel=\"stylesheet\" href=\"../style.css\">\r\n-    <script src=\"https://cdn.tailwindcss.com\"></script>\r\n     <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css\">\r\n-    <style>\r\n-        /* Adicionado para garantir a consistência de fontes com as outras páginas */\r\n-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');\r\n-    </style>\r\n+    <link rel=\"stylesheet\" href=\"../style.css\">\r\n </head>\r\n <body style=\"font-family: 'Poppins', sans-serif; background-color: #0f172a; color: #e2e8f0;\">\r\n \r\n     <header id=\"header-placeholder\"></header>\r\n"
                 }
             ],
             "date": 1754337126151,
