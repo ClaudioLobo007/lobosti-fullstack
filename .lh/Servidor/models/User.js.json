@@ -1,0 +1,42 @@
+{
+    "sourceFile": "Servidor/models/User.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 6,
+            "patches": [
+                {
+                    "date": 1752269307164,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1752931500509,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,11 @@\n     company: { \r\n         type: Schema.Types.ObjectId, \r\n         ref: 'Company', // <-- A \"nota\" que diz a qual empresa este usuário pertence\r\n         required: true \r\n-    }\r\n+    },\r\n+    resetPasswordToken: { type: String },\r\n+    resetPasswordExpires: { type: Date }\r\n });\r\n \r\n // Garante que não haja usuários com o mesmo nome na mesma empresa\r\n UserSchema.index({ username: 1, company: 1 }, { unique: true });\r\n"
+                },
+                {
+                    "date": 1753144631305,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,13 +4,19 @@\n const Schema = mongoose.Schema;\r\n \r\n const UserSchema = new Schema({\r\n     username: { type: String, required: true },\r\n+    email: { \r\n+        type: String, \r\n+        required: true, \r\n+        unique: true,\r\n+        lowercase: true\r\n+    },\r\n     password: { type: String, required: true },\r\n     role: { type: String, enum: ['Proprietário', 'Gerente', 'Funcionário'], default: 'Funcionário' },\r\n     company: { \r\n         type: Schema.Types.ObjectId, \r\n-        ref: 'Company', // <-- A \"nota\" que diz a qual empresa este usuário pertence\r\n+        ref: 'Company',\r\n         required: true \r\n     },\r\n     resetPasswordToken: { type: String },\r\n     resetPasswordExpires: { type: Date }\r\n"
+                },
+                {
+                    "date": 1753533029894,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,28 +1,20 @@\n-// models/User.js\r\n+// D:\\SCripts\\SiteLobos\\Servidor\\models\\User.js\r\n \r\n const mongoose = require('mongoose');\r\n const Schema = mongoose.Schema;\r\n \r\n const UserSchema = new Schema({\r\n-    username: { type: String, required: true },\r\n+    username: { type: String, required: true, unique: true }, // Agora o username é único dentro da empresa\r\n     email: { \r\n         type: String, \r\n         required: true, \r\n         unique: true,\r\n         lowercase: true\r\n     },\r\n     password: { type: String, required: true },\r\n     role: { type: String, enum: ['Proprietário', 'Gerente', 'Funcionário'], default: 'Funcionário' },\r\n-    company: { \r\n-        type: Schema.Types.ObjectId, \r\n-        ref: 'Company',\r\n-        required: true \r\n-    },\r\n     resetPasswordToken: { type: String },\r\n     resetPasswordExpires: { type: Date }\r\n });\r\n \r\n-// Garante que não haja usuários com o mesmo nome na mesma empresa\r\n-UserSchema.index({ username: 1, company: 1 }, { unique: true });\r\n-\r\n module.exports = mongoose.model('User', UserSchema);\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1753533083700,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,4 @@\n-// D:\\SCripts\\SiteLobos\\Servidor\\models\\User.js\r\n-\r\n const mongoose = require('mongoose');\r\n const Schema = mongoose.Schema;\r\n \r\n const UserSchema = new Schema({\r\n"
+                },
+                {
+                    "date": 1753534851587,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,5 +14,5 @@\n     resetPasswordToken: { type: String },\r\n     resetPasswordExpires: { type: Date }\r\n });\r\n \r\n-module.exports = mongoose.model('User', UserSchema);\n\\ No newline at end of file\n+module.exports = mongoose.models.User || mongoose.model('User', UserSchema);\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1754505303981,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,5 +14,7 @@\n     resetPasswordToken: { type: String },\r\n     resetPasswordExpires: { type: Date }\r\n });\r\n \r\n-module.exports = mongoose.models.User || mongoose.model('User', UserSchema);\n\\ No newline at end of file\n+module.exports = {\r\n+    schema: UserSchema\r\n+};\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1752269307164,
+            "name": "Commit-0",
+            "content": "// models/User.js\r\n\r\nconst mongoose = require('mongoose');\r\nconst Schema = mongoose.Schema;\r\n\r\nconst UserSchema = new Schema({\r\n    username: { type: String, required: true },\r\n    password: { type: String, required: true },\r\n    role: { type: String, enum: ['Proprietário', 'Gerente', 'Funcionário'], default: 'Funcionário' },\r\n    company: { \r\n        type: Schema.Types.ObjectId, \r\n        ref: 'Company', // <-- A \"nota\" que diz a qual empresa este usuário pertence\r\n        required: true \r\n    }\r\n});\r\n\r\n// Garante que não haja usuários com o mesmo nome na mesma empresa\r\nUserSchema.index({ username: 1, company: 1 }, { unique: true });\r\n\r\nmodule.exports = mongoose.model('User', UserSchema);"
+        }
+    ]
+}

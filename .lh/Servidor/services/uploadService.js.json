@@ -1,0 +1,46 @@
+{
+    "sourceFile": "Servidor/services/uploadService.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 7,
+            "patches": [
+                {
+                    "date": 1752792758819,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1752792775292,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,4 @@\n-// Em Servidor/services/uploadService.js\r\n const aws = require('aws-sdk');\r\n const multer = require('multer');\r\n const multerS3 = require('multer-s3');\r\n \r\n"
+                },
+                {
+                    "date": 1752797845846,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,15 @@\n const aws = require('aws-sdk');\r\n const multer = require('multer');\r\n const multerS3 = require('multer-s3');\r\n \r\n+console.log(\"--- Verificando Variáveis de Ambiente da AWS ---\");\r\n+console.log(\"AWS Access Key ID:\", process.env.AWS_ACCESS_KEY_ID ? \"Carregada\" : \"!!! NÃO ENCONTRADA !!!\");\r\n+console.log(\"AWS Secret Access Key:\", process.env.AWS_SECRET_ACCESS_KEY ? \"Carregada\" : \"!!! NÃO ENCONTRADA !!!\");\r\n+console.log(\"AWS Region:\", process.env.AWS_REGION);\r\n+console.log(\"S3 Bucket Name:\", process.env.S3_BUCKET_NAME);\r\n+console.log(\"---------------------------------------------\");\r\n+\r\n // Configura a AWS com as credenciais do seu ficheiro .env\r\n aws.config.update({\r\n     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,\r\n     accessKeyId: process.env.AWS_ACCESS_KEY_ID,\r\n"
+                },
+                {
+                    "date": 1752799472982,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,30 +1,26 @@\n-const aws = require('aws-sdk');\r\n+const { S3Client } = require('@aws-sdk/client-s3');\r\n const multer = require('multer');\r\n const multerS3 = require('multer-s3');\r\n \r\n-console.log(\"--- Verificando Variáveis de Ambiente da AWS ---\");\r\n-console.log(\"AWS Access Key ID:\", process.env.AWS_ACCESS_KEY_ID ? \"Carregada\" : \"!!! NÃO ENCONTRADA !!!\");\r\n-console.log(\"AWS Secret Access Key:\", process.env.AWS_SECRET_ACCESS_KEY ? \"Carregada\" : \"!!! NÃO ENCONTRADA !!!\");\r\n-console.log(\"AWS Region:\", process.env.AWS_REGION);\r\n-console.log(\"S3 Bucket Name:\", process.env.S3_BUCKET_NAME);\r\n-console.log(\"---------------------------------------------\");\r\n-\r\n-// Configura a AWS com as credenciais do seu ficheiro .env\r\n-aws.config.update({\r\n-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,\r\n-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,\r\n-    region: process.env.AWS_REGION\r\n+// Configura o cliente S3 v3 com as credenciais do seu ficheiro .env\r\n+const s3 = new S3Client({\r\n+    region: process.env.AWS_REGION,\r\n+    credentials: {\r\n+        accessKeyId: process.env.AWS_ACCESS_KEY_ID,\r\n+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,\r\n+    }\r\n });\r\n \r\n-const s3 = new aws.S3();\r\n-\r\n // Configura o multer para fazer o upload para o S3\r\n const upload = multer({\r\n     storage: multerS3({\r\n-        s3: s3,\r\n+        s3: s3, // Passa o novo cliente S3 v3\r\n         bucket: process.env.S3_BUCKET_NAME,\r\n         acl: 'public-read', // Permite que o ficheiro seja visualizado publicamente pelo link\r\n+        metadata: function (req, file, cb) {\r\n+            cb(null, { fieldName: file.fieldname });\r\n+        },\r\n         key: function (req, file, cb) {\r\n             // Cria um nome de ficheiro único para evitar sobreposições\r\n             cb(null, Date.now().toString() + '-' + file.originalname);\r\n         }\r\n"
+                },
+                {
+                    "date": 1752799673075,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,8 @@\n const upload = multer({\r\n     storage: multerS3({\r\n         s3: s3, // Passa o novo cliente S3 v3\r\n         bucket: process.env.S3_BUCKET_NAME,\r\n-        acl: 'public-read', // Permite que o ficheiro seja visualizado publicamente pelo link\r\n         metadata: function (req, file, cb) {\r\n             cb(null, { fieldName: file.fieldname });\r\n         },\r\n         key: function (req, file, cb) {\r\n"
+                },
+                {
+                    "date": 1752799961528,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,5 +25,21 @@\n         }\r\n     })\r\n });\r\n \r\n+// Configura a exclusão do anexo\r\n+const deleteFile = async (fileKey) => {\r\n+    const command = new DeleteObjectCommand({\r\n+        Bucket: process.env.S3_BUCKET_NAME,\r\n+        Key: fileKey,\r\n+    });\r\n+\r\n+    try {\r\n+        await s3.send(command);\r\n+        console.log(`Ficheiro ${fileKey} apagado do S3 com sucesso.`);\r\n+    } catch (error) {\r\n+        console.error(`Erro ao apagar o ficheiro ${fileKey} do S3:`, error);\r\n+        throw error; // Propaga o erro para a rota\r\n+    }\r\n+};\r\n+\r\n module.exports = upload;\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1752800308213,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,8 @@\n const { S3Client } = require('@aws-sdk/client-s3');\r\n const multer = require('multer');\r\n const multerS3 = require('multer-s3');\r\n+const { DeleteObjectCommand } = require(\"@aws-sdk/client-s3\");\r\n \r\n // Configura o cliente S3 v3 com as credenciais do seu ficheiro .env\r\n const s3 = new S3Client({\r\n     region: process.env.AWS_REGION,\r\n"
+                },
+                {
+                    "date": 1752800360680,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,5 +42,5 @@\n         throw error; // Propaga o erro para a rota\r\n     }\r\n };\r\n \r\n-module.exports = upload;\n\\ No newline at end of file\n+module.exports = { upload, deleteFile };\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1752792758818,
+            "name": "Commit-0",
+            "content": "// Em Servidor/services/uploadService.js\r\nconst aws = require('aws-sdk');\r\nconst multer = require('multer');\r\nconst multerS3 = require('multer-s3');\r\n\r\n// Configura a AWS com as credenciais do seu ficheiro .env\r\naws.config.update({\r\n    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,\r\n    accessKeyId: process.env.AWS_ACCESS_KEY_ID,\r\n    region: process.env.AWS_REGION\r\n});\r\n\r\nconst s3 = new aws.S3();\r\n\r\n// Configura o multer para fazer o upload para o S3\r\nconst upload = multer({\r\n    storage: multerS3({\r\n        s3: s3,\r\n        bucket: process.env.S3_BUCKET_NAME,\r\n        acl: 'public-read', // Permite que o ficheiro seja visualizado publicamente pelo link\r\n        key: function (req, file, cb) {\r\n            // Cria um nome de ficheiro único para evitar sobreposições\r\n            cb(null, Date.now().toString() + '-' + file.originalname);\r\n        }\r\n    })\r\n});\r\n\r\nmodule.exports = upload;"
+        }
+    ]
+}

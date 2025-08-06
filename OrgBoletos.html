@@ -1,0 +1,1467 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organizador de Boletos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+</head>
+
+<body class="bg-gray-900 text-gray-100 min-h-screen flex items-center justify-center">
+
+    <div id="globalAnnouncementBanner"
+        class="hidden bg-indigo-600 text-white text-center p-3 absolute top-0 w-full z-40">
+        <div id="announcementMessage" class="font-semibold"></div>
+        <button id="closeAnnouncementBtn"
+            class="absolute top-1/2 right-4 -translate-y-1/2 text-white hover:bg-indigo-700 p-2 rounded-full">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+    <div id="generalLoader" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 hidden">
+        <i class="fas fa-spinner fa-spin text-white text-4xl"></i>
+    </div>
+
+    <!-- NOVO MODAL DE ASSINATURA -->
+    <div id="subscriptionModal" class="fixed inset-0 bg-gray-900 flex justify-center items-center z-50 hidden">
+        <div class="bg-gray-800 rounded-lg shadow-xl p-8 w-full max-w-md text-center">
+            <div class="w-16 h-16 mx-auto bg-red-500/20 rounded-full flex items-center justify-center mb-4">
+                <i id="subscriptionIcon" class="fas fa-exclamation-triangle text-red-400 text-3xl"></i>
+            </div>
+            <h3 id="subscriptionTitle" class="text-2xl font-bold text-white mb-2">Assinatura Expirada</h3>
+            <p id="subscriptionMessage" class="text-gray-400 mb-6">
+                Sua assinatura do Organizador de Boletos expirou. Por favor, renove para continuar usando todas as
+                funcionalidades.
+            </p>
+            <button id="subscriptionActionBtn"
+                class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-4 rounded-lg transition duration-300 flex items-center justify-center">
+                Renovar Assinatura
+            </button>
+            <button id="subscriptionLogoutBtn" class="mt-4 text-sm text-gray-500 hover:text-gray-300">
+                Sair
+            </button>
+        </div>
+    </div>
+
+    <!-- ACESSO BLOQUEADO PARA FUNCIONÁRIOS -->
+    <div id="accessBlockedModal" class="fixed inset-0 bg-gray-900 flex justify-center items-center z-50 hidden">
+        <div class="bg-gray-800 rounded-lg shadow-xl p-8 w-full max-w-md text-center">
+            <div class="w-16 h-16 mx-auto bg-yellow-500/20 rounded-full flex items-center justify-center mb-4">
+                <i class="fas fa-lock text-yellow-400 text-3xl"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-white mb-2">Acesso Temporariamente Indisponível</h3>
+            <p class="text-gray-400 mb-6">
+                O acesso ao sistema está indisponível no momento. Por favor, entre em contato com o proprietário da sua
+                empresa para mais informações sobre a assinatura.
+            </p>
+            <button id="blockedAccessLogoutBtn"
+                class="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-3 px-4 rounded-lg transition duration-300">
+                Sair
+            </button>
+        </div>
+    </div>
+
+    <div id="loadingScreen" class="fixed inset-0 bg-gray-900 flex flex-col justify-center items-center z-50">
+        <i class="fas fa-spinner fa-spin text-indigo-400 text-5xl"></i>
+        <p class="mt-4 text-gray-300">Carregando sua sessão...</p>
+    </div>
+
+    <div id="toastMessage"
+        class="fixed top-4 right-4 text-white px-4 py-2 rounded-md shadow-lg flex items-center fade-in hidden z-50">
+    </div>
+
+    <div id="adminDashboardScreen" class="container mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 hidden">
+
+        <div id="adminHeader">
+            <div class="relative">
+                <h1 class="text-3xl font-bold text-red-400 mb-6 text-center">Painel de Administrador</h1>
+                <button id="adminLogoutBtn"
+                    class="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 absolute top-0 right-0">Sair</button>
+            </div>
+
+            <div class="border-b border-gray-700">
+                <div class="hidden md:flex space-x-2">
+                    <button id="viewDashboardTab" class="admin-tab-btn px-4 py-2 text-sm font-medium rounded-t-lg">
+                        <i class="fas fa-chart-pie mr-2"></i>Dashboard
+                    </button>
+                    <button id="viewCompaniesTab" class="admin-tab-btn px-4 py-2 text-sm font-medium rounded-t-lg">
+                        <i class="fas fa-building mr-2"></i>Empresas
+                    </button>
+                    <button id="viewSubscriptionsTab" class="admin-tab-btn px-4 py-2 text-sm font-medium rounded-t-lg">
+                        <i class="fas fa-credit-card mr-2"></i>Assinaturas
+                    </button>
+                    <button id="viewAnnouncementsTab" class="admin-tab-btn px-4 py-2 text-sm font-medium rounded-t-lg">
+                        <i class="fas fa-bullhorn mr-2"></i>Anúncios
+                    </button>
+                    <button id="viewSettingsTab" class="admin-tab-btn px-4 py-2 text-sm font-medium rounded-t-lg">
+                        <i class="fas fa-envelope mr-2"></i>Emails
+                    </button>
+                </div>
+                <div class="md:hidden mb-2">
+                    <label for="admin-nav-select" class="sr-only">Selecionar Aba</label>
+                    <select id="admin-nav-select"
+                        class="w-full bg-gray-700 border border-gray-600 rounded-md py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        <option value="dashboard">Dashboard</option>
+                        <option value="companies">Empresas</option>
+                        <option value="subscriptions">Assinaturas</option>
+                        <option value="announcements">Anúncios</option>
+                        <option value="settings">Emails</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div id="adminContentWrapper">
+
+            <div id="adminDashboardView" class="hidden">
+                <div class="grid grid-cols-3 gap-6 mb-8">
+                    <div class="bg-gray-800 p-6 rounded-lg shadow-lg text-center">
+                        <h3 class="text-xs sm:text-sm font-medium text-gray-400 uppercase tracking-wider">Empresas</h3>
+                        <p id="kpiTotalCompanies" class="mt-2 text-3xl font-bold text-indigo-400">0</p>
+                    </div>
+                    <div class="bg-gray-800 p-6 rounded-lg shadow-lg text-center">
+                        <h3 class="text-xs sm:text-sm font-medium text-gray-400 uppercase tracking-wider">Usuários</h3>
+                        <p id="kpiTotalUsers" class="mt-2 text-3xl font-bold text-blue-400">0</p>
+                    </div>
+                    <div class="bg-gray-800 p-6 rounded-lg shadow-lg text-center">
+                        <h3 class="text-xs sm:text-sm font-medium text-gray-400 uppercase tracking-wider">Ativas</h3>
+                        <p id="kpiActiveSubscriptions" class="mt-2 text-3xl font-bold text-green-400">0</p>
+                    </div>
+                </div>
+                
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+                    <div class="bg-gray-800 rounded-lg p-6">
+                        <h2 class="text-xl font-semibold text-white mb-4">Novas Empresas (Últimos 30 dias)</h2>
+                        <div style="position: relative; height: 300px; margin: auto;">
+                            <canvas id="newCompaniesChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-800 rounded-lg p-6">
+                        <h2 class="text-xl font-semibold text-white mb-4">Empresas Adicionadas Recentemente</h2>
+                        <div id="recentCompaniesList" class="space-y-3">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="companiesView" class="hidden">
+                <div class="mb-6 flex justify-center space-x-4">
+                    <button id="createCompanyBtn"
+                        class="bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition duration-200 flex items-center">
+                        <i class="fas fa-plus-circle mr-2"></i> Criar Nova Empresa
+                    </button>
+                </div>
+                <div id="companyList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+                <div id="noCompaniesMessage" class="col-span-full text-center text-gray-400 py-8 hidden">
+                    Nenhuma empresa cadastrada ainda.
+                </div>
+            </div>
+            <div id="settingsView" class="hidden">
+            </div>
+
+            <div id="subscriptionsView" class="hidden">
+            </div>
+
+            <div id="announcementsView" class="hidden">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-semibold text-white">Gestão de Anúncios</h2>
+                    <button id="openAnnouncementModalBtn"
+                        class="bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700">
+                        <i class="fas fa-plus-circle mr-2"></i>Novo Anúncio
+                    </button>
+                </div>
+                <div id="announcementsList" class="space-y-4"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="mainAppContent" class="container mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 hidden">
+        <header class="mb-8">
+            <div class="flex flex-wrap items-center justify-between gap-y-4">
+
+                <div class="hidden md:block">
+                    <h1 class="text-3xl font-bold text-indigo-400 flex items-center">
+                        <i class="fas fa-file-invoice-dollar mr-3"></i>Organizador de Boletos
+                    </h1>
+                    <p class="text-gray-400 mt-1">Gerencie e organize seus boletos de forma simples e eficiente.</p>
+                </div>
+
+                <div class="flex items-center space-x-2 sm:space-x-4 ml-auto">
+
+                    <span id="loggedInUserDisplay" class="text-sm text-gray-400 font-medium hidden sm:block"></span>
+
+                    <button id="backToAdminBtn"
+                        class="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600 hidden">Voltar ao
+                        Admin</button>
+
+                    <div id="settingsMenuContainer" class="relative hidden">
+                        <button id="openProfileModalBtn" class="text-white px-2 py-1 rounded-md hover:bg-gray-700"
+                            title="Meu Perfil">
+                            <i class="fas fa-user text-lg"></i>
+                        </button>
+                        <button id="settingsBtn" class="text-white px-2 py-1 rounded-md hover:bg-gray-700"
+                            title="Configurações">
+                            <i class="fas fa-cog text-lg"></i>
+                        </button>
+
+                        <div id="settingsDropdown"
+                            class="absolute right-0 mt-2 w-56 origin-top-right rounded-md bg-gray-800 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none hidden z-20"
+                            role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                            <div class="py-1" role="none">
+                                <a href="#" id="menuEmpresa"
+                                    class="block px-4 py-2 text-sm text-gray-200 hover:bg-indigo-600" role="menuitem"
+                                    tabindex="-1">Detalhes da Empresa</a>
+                                <a href="#" id="menuUsuarios"
+                                    class="block px-4 py-2 text-sm text-gray-200 hover:bg-indigo-600" role="menuitem"
+                                    tabindex="-1">Gerenciar Usuários</a>
+                                <a href="#" id="menuPermissoes"
+                                    class="block px-4 py-2 text-sm text-gray-200 hover:bg-indigo-600" role="menuitem"
+                                    tabindex="-1">Gerenciar Permissões</a>
+
+                                <a href="#" id="menuNotificacoes"
+                                    class="block px-4 py-2 text-sm text-gray-200 hover:bg-indigo-600" role="menuitem"
+                                    tabindex="-1">Gerenciar Notificações</a>
+                                <a href="#" id="menuCategorias"
+                                    class="block px-4 py-2 text-sm text-gray-200 hover:bg-indigo-600" role="menuitem"
+                                    tabindex="-1">Gerenciar Categorias</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button id="logoutBtn"
+                        class="bg-red-500 text-white px-3 py-2 rounded-md hover:bg-red-600">Sair</button>
+                </div>
+            </div>
+        </header>
+
+        <div>
+            <div id="billsOrganizer" class="w-full mb-8">
+
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-4 border-b border-gray-700 pb-4">
+                    <div class="flex space-x-2">
+                        <button id="viewCalendarBtn"
+                            class="px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-lg">
+                            <i class="fas fa-calendar-alt mr-2"></i>Calendário
+                        </button>
+                        <button id="viewDashboardBtn"
+                            class="px-4 py-2 text-sm font-medium text-gray-400 hover:bg-gray-800 rounded-lg">
+                            <i class="fas fa-chart-line mr-2"></i>Dashboard
+                        </button>
+                    </div>
+                    <div class="text-sm text-gray-400 hidden sm:block">
+                        <span id="totalBills">0</span> parcelas registradas
+                    </div>
+                </div>
+
+                <div id="calendarView">
+
+                    <div id="filter-wrapper" class="bg-gray-800/50 rounded-lg mb-6 border border-gray-700">
+                        <button id="toggleFiltersBtn" class="w-full flex justify-between items-center p-4 text-left">
+                            <span class="font-medium text-white"><i class="fas fa-filter mr-2"></i>Filtros de
+                                Pesquisa</span>
+                            <i id="filter-chevron" class="fas fa-chevron-down transition-transform"></i>
+                        </button>
+                        <div id="filter-container" class="p-4 border-t border-gray-700 hidden">
+                            <div class="flex flex-col gap-4">
+                                <div>
+                                    <label for="searchInput"
+                                        class="block text-sm font-medium text-gray-400 mb-1">Pesquisar por nome ou Cód.
+                                        NF</label>
+                                    <div class="relative">
+                                        <div
+                                            class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            <i class="fas fa-search text-gray-500"></i>
+                                        </div>
+                                        <input type="text" id="searchInput" placeholder="Digite para pesquisar..."
+                                            class="w-full pl-10 pr-4 py-2 border border-gray-600 rounded-md bg-gray-700 text-white focus:ring-2 focus:ring-indigo-300">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label for="categoryFilterSelect"
+                                        class="block text-sm font-medium text-gray-400 mb-1">Filtrar por
+                                        categoria</label>
+                                    <select id="categoryFilterSelect"
+                                        class="w-full px-3 py-2 border border-gray-600 rounded-md bg-gray-700 text-white focus:ring-2 focus:ring-indigo-300"></select>
+                                </div>
+                                <div>
+                                    <label for="statusFilterSelect"
+                                        class="block text-sm font-medium text-gray-400 mb-1">Filtrar por status</label>
+                                    <select id="statusFilterSelect"
+                                        class="w-full px-3 py-2 border border-gray-600 rounded-md bg-gray-700 text-white focus:ring-2 focus:ring-indigo-300">
+                                        <option value="all">Todos</option>
+                                        <option value="paid">Pagos</option>
+                                        <option value="unpaid">Não Pagos</option>
+                                        <option value="overdue">Vencidos</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="monthlySummary"
+                        class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6 bg-gray-800 p-4 rounded-lg shadow-md">
+
+                        <div class="bg-gray-700 p-4 rounded-lg flex flex-col items-center justify-center">
+                            <h4 id="summaryOverdueLabel" class="text-xs sm:text-sm font-medium text-gray-400 uppercase">
+                                Vencidas</h4>
+                            <p id="summaryOverdue" class="text-xl md:text-2xl font-bold text-orange-400">R$ 0,00</p>
+                        </div>
+
+                        <div class="bg-gray-700 p-4 rounded-lg flex flex-col items-center justify-center">
+                            <h4 id="summaryTotalLabel" class="text-xs sm:text-sm font-medium text-gray-400 uppercase">
+                                Total no Mês</h4>
+                            <p id="summaryTotal" class="text-xl md:text-2xl font-bold text-blue-400">R$ 0,00</p>
+                        </div>
+
+                        <div class="bg-gray-700 p-4 rounded-lg flex flex-col items-center justify-center">
+                            <h4 id="summaryPaidLabel" class="text-xs sm:text-sm font-medium text-gray-400 uppercase">
+                                Total Pago</h4>
+                            <p id="summaryPaid" class="text-xl md:text-2xl font-bold text-green-400">R$ 0,00</p>
+                        </div>
+
+                        <div class="bg-gray-700 p-4 rounded-lg flex flex-col items-center justify-center">
+                            <h4 id="summaryUnpaidLabel" class="text-xs sm:text-sm font-medium text-gray-400 uppercase">
+                                Não Pago</h4>
+                            <p id="summaryUnpaid" class="text-xl md:text-2xl font-bold text-red-400">R$ 0,00</p>
+                        </div>
+
+                    </div>
+
+                    <div class="bg-gray-800 rounded-lg shadow-md p-4 hidden lg:block">
+                        <div class="flex justify-between items-center mb-4">
+                            <button id="prevMonth" class="p-2 rounded-full hover:bg-gray-700 text-gray-300"><i
+                                    class="fas fa-chevron-left"></i></button>
+                            <h3 id="currentMonthYear" class="font-semibold text-lg text-gray-100"></h3>
+                            <button id="nextMonth" class="p-2 rounded-full hover:bg-gray-700 text-gray-300"><i
+                                    class="fas fa-chevron-right"></i></button>
+                        </div>
+                        <div class="grid grid-cols-7 gap-1 mb-2">
+                            <div class="text-center font-medium text-sm text-gray-400">Dom</div>
+                            <div class="text-center font-medium text-sm text-gray-400">Seg</div>
+                            <div class="text-center font-medium text-sm text-gray-400">Ter</div>
+                            <div class="text-center font-medium text-sm text-gray-400">Qua</div>
+                            <div class="text-center font-medium text-sm text-gray-400">Qui</div>
+                            <div class="text-center font-medium text-sm text-gray-400">Sex</div>
+                            <div class="text-center font-medium text-sm text-gray-400">Sáb</div>
+                        </div>
+                        <div id="calendarDays" class="grid grid-cols-7 gap-1"></div>
+                    </div>
+
+                    <div id="dailyBillsViewer" class="w-full bg-gray-800 rounded-lg shadow-md p-4 block lg:hidden">
+                        <div class="flex justify-between items-center mb-4">
+                            <button id="prevDay" class="p-2 rounded-full hover:bg-gray-700 text-gray-300">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <h3 id="currentDailyDate" class="font-semibold text-lg text-gray-100"></h3>
+                            <button id="nextDay" class="p-2 rounded-full hover:bg-gray-700 text-gray-300">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                        <div id="dailyBillsList" class="space-y-3">
+                            <div id="noDailyBills" class="text-center text-gray-400 py-4 hidden">Nenhum boleto para este
+                                dia.</div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div id="dashboardView" class="hidden">
+
+                    <div id="dashboard-date-filter-container"
+                        class="bg-gray-800/50 p-4 rounded-lg mb-6 border border-gray-700">
+                        <div class="flex flex-col md:flex-row md:items-end gap-6">
+
+                            <div class="flex-shrink-0">
+                                <label class="block text-sm font-medium text-gray-400 mb-1">Filtrar Gráficos por
+                                    Status</label>
+                                <div
+                                    class="flex items-center space-x-1 bg-gray-900/50 p-1 rounded-md border border-gray-700">
+                                    <button
+                                        class="dashboard-filter-btn active flex-1 py-1 px-3 text-sm rounded-md transition-colors"
+                                        data-filter="all">Todos</button>
+                                    <button
+                                        class="dashboard-filter-btn flex-1 py-1 px-3 text-sm rounded-md transition-colors"
+                                        data-filter="paid">Pagos</button>
+                                    <button
+                                        class="dashboard-filter-btn flex-1 py-1 px-3 text-sm rounded-md transition-colors"
+                                        data-filter="unpaid">Não Pagos</button>
+                                </div>
+                            </div>
+
+                            <div class="flex-grow">
+                                <label for="date-range-preset-select"
+                                    class="block text-sm font-medium text-gray-400 mb-1">Ver Período</label>
+                                <select id="date-range-preset-select"
+                                    class="w-full md:w-64 px-3 py-2 border border-gray-600 rounded-md bg-gray-700 text-white focus:ring-2 focus:ring-indigo-300">
+                                    <option value="thisMonth" selected>Este Mês</option>
+                                    <option value="lastMonth">Mês Anterior</option>
+                                    <option value="thisQuarter">Este Trimestre</option>
+                                    <option value="thisYear">Este Ano</option>
+                                    <option value="custom">Personalizado...</option>
+                                </select>
+                            </div>
+                            <div id="custom-date-range-inputs" class="hidden flex-grow md:flex md:items-end md:gap-4">
+                                <div>
+                                    <label for="start-date-input"
+                                        class="block text-sm font-medium text-gray-400 mb-1">De</label>
+                                    <input type="date" id="start-date-input"
+                                        class="w-full px-3 py-2 border border-gray-600 rounded-md bg-gray-700 text-white">
+                                </div>
+                                <div>
+                                    <label for="end-date-input"
+                                        class="block text-sm font-medium text-gray-400 mb-1">Até</label>
+                                    <input type="date" id="end-date-input"
+                                        class="w-full px-3 py-2 border border-gray-600 rounded-md bg-gray-700 text-white">
+                                </div>
+                            </div>
+
+                            <div class="flex-shrink-0 flex items-end space-x-2">
+                                <button id="export-csv-btn"
+                                    class="px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-md hover:bg-green-700 flex items-center">
+                                    <i class="fas fa-file-csv mr-2"></i>Exportar CSV
+                                </button>
+                                <button id="export-pdf-btn"
+                                    class="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700 flex items-center">
+                                    <i class="fas fa-file-pdf mr-2"></i>Exportar PDF
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div id="dashboard-kpi-grid" class="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+
+                        <div data-id="kpi-overdue" class="bg-gray-800 p-6 rounded-lg shadow-lg">
+                            <h3 class="text-sm font-medium text-gray-400 uppercase tracking-wider">Contas Vencidas</h3>
+                            <p id="kpiContasVencidas" class="mt-2 text-xl md:text-3xl font-bold text-orange-400">R$ 0,00
+                            </p>
+                        </div>
+
+                        <div data-id="kpi-total" class="bg-gray-800 p-6 rounded-lg shadow-lg">
+                            <h3 class="text-sm font-medium text-gray-400 uppercase tracking-wider">Total a Pagar
+                                (Período)</h3>
+                            <p id="kpiTotalMes" class="mt-2 text-xl md:text-3xl font-bold text-blue-400">R$ 0,00</p>
+                        </div>
+
+                        <div data-id="kpi-paid" class="bg-gray-800 p-6 rounded-lg shadow-lg">
+                            <h3 class="text-sm font-medium text-gray-400 uppercase tracking-wider">Total Pago (Período)
+                            </h3>
+                            <p id="kpiPagoMes" class="mt-2 text-xl md:text-3xl font-bold text-green-400">R$ 0,00</p>
+                        </div>
+
+                        <div data-id="kpi-pending" class="bg-gray-800 p-6 rounded-lg shadow-lg">
+                            <h3 class="text-sm font-medium text-gray-400 uppercase tracking-wider">Pendente (Período)
+                            </h3>
+                            <p id="kpiPendenteMes" class="mt-2 text-xl md:text-3xl font-bold text-yellow-400">R$ 0,00
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <div id="dashboard-main-grid" class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+                        <div data-id="main-upcoming" class="bg-gray-800 rounded-lg p-6">
+                            <h2 class="text-xl font-semibold text-white mb-4">Próximos Vencimentos</h2>
+                            <div id="upcoming-payments-list" class="space-y-3">
+                                <p id="no-upcoming-payments-message" class="text-gray-400">Nenhuma conta a vencer nos
+                                    próximos dias.</p>
+                            </div>
+                        </div>
+
+                        <div data-id="main-pie-chart" class="bg-gray-800 rounded-lg p-6">
+                            <h2 class="text-xl font-semibold text-white mb-4">Despesas por Categoria</h2>
+
+                            <div id="chartContainerPie" style="position: relative; height: 300px; margin: auto;">
+                                <canvas id="expensesByCategoryChart"></canvas>
+                            </div>
+                        </div>
+
+                        <div data-id="main-top-expenses" class="bg-gray-800 rounded-lg p-6">
+                            <h2 class="text-xl font-semibold text-white mb-4">Maiores Despesas por Categoria</h2>
+                            <div style="position: relative; height: 300px; margin: auto;">
+                                <canvas id="topExpensesChart"></canvas>
+                            </div>
+                        </div>
+
+                        <div data-id="main-bar-chart" class="bg-gray-800 rounded-lg p-6">
+                            <h2 class="text-xl font-semibold text-white mb-4">Resumo dos Últimos 6 Meses</h2>
+
+                            <div id="chartContainerBar" style="position: relative; height: 300px; margin: auto;">
+                                <canvas id="monthlyExpensesChart"></canvas>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div id="emptyState" class="bg-gray-800 rounded-lg shadow-md p-8 text-center hidden mx-auto max-w-xl">
+                    <i class="fas fa-file-invoice text-4xl text-gray-600 mb-4"></i>
+                    <h3 class="text-lg font-medium text-gray-300 mb-2">Nenhuma parcela adicionada</h3>
+                    <p class="text-gray-400">Adicione seu primeiro boleto usando o formulário abaixo</p>
+                </div>
+
+                <div id="categoriesModal"
+                    class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+                    <div class="bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-lg">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-xl font-semibold text-gray-100 flex items-center">
+                                <i class="fas fa-tags mr-3 text-indigo-400"></i>
+                                Gerenciar Categorias
+                            </h3>
+                            <button id="closeCategoriesModal" class="text-gray-400 hover:text-white">
+                                <i class="fas fa-times text-xl"></i>
+                            </button>
+                        </div>
+
+                        <form id="addCategoryForm" class="flex items-center space-x-2 mb-4">
+                            <input type="text" id="newCategoryName" placeholder="Nome da nova categoria" required
+                                class="flex-grow px-3 py-2 border rounded-md border-gray-600 bg-gray-700 text-white">
+                            <button type="submit"
+                                class="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700">Adicionar</button>
+                        </form>
+
+                        <div id="categoryList"
+                            class="space-y-2 max-h-60 overflow-y-auto pr-2 border-t border-gray-700 pt-4">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="addBillModal"
+                    class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-40 hidden">
+                    <div class="max-w-xl mx-auto w-full p-4">
+                        <div class="bg-gray-800 rounded-lg shadow-md p-6 relative">
+
+                            <button id="closeAddBillModalBtn"
+                                class="absolute top-4 right-4 text-gray-400 hover:text-white">
+                                <i class="fas fa-times text-xl"></i>
+                            </button>
+
+                            <h2 class="text-xl font-semibold text-gray-200 mb-4">
+                                <i class="fas fa-plus-circle mr-2 text-indigo-400"></i> Adicionar Novo Boleto
+                            </h2>
+
+                            <form id="billForm">
+                                <div class="flex border-b border-gray-700 mb-6">
+                                    <button type="button" id="manual-add-btn"
+                                        class="px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-t-lg -mb-px border border-gray-700 border-b-0">
+                                        <i class="fas fa-pencil-alt sm:mr-2"></i>
+                                        <span class="hidden sm:inline">Manual</span><span
+                                            class="sm:hidden">Manual</span>
+                                    </button>
+                                    <button type="button" id="xml-add-btn"
+                                        class="px-4 py-2 text-sm font-medium text-gray-400 hover:bg-gray-800 rounded-t-lg">
+                                        <i class="fas fa-file-invoice sm:mr-2"></i>
+                                        <span class="hidden sm:inline">XML</span><span class="sm:hidden">XML</span>
+                                    </button>
+                                    <button type="button" id="recurrent-add-btn"
+                                        class="px-4 py-2 text-sm font-medium text-gray-400 hover:bg-gray-800 rounded-t-lg">
+                                        <i class="fas fa-sync-alt sm:mr-2"></i>
+                                        <span class="hidden sm:inline">Recorrente</span><span
+                                            class="sm:hidden">Recorrente</span>
+                                    </button>
+                                    <button type="button" id="csv-import-btn"
+                                        class="px-4 py-2 text-sm font-medium text-gray-400 hover:bg-gray-800 rounded-t-lg">
+                                        <i class="fas fa-file-csv sm:mr-2"></i>
+                                        <span class="hidden sm:inline">Excel</span><span class="sm:hidden">Excel</span>
+                                    </button>
+                                </div>
+
+                                <div id="manual-add-form" class="space-y-4">
+                                    <div>
+                                        <label for="billName" class="block text-sm font-medium text-gray-300 mb-1">
+                                            <i class="fas fa-signature mr-1 text-gray-400"></i> Nome
+                                        </label>
+                                        <input type="text" id="billName"
+                                            class="w-full px-4 py-2 border border-gray-600 rounded-md bg-gray-700 text-white focus:ring-2 focus:ring-indigo-300 focus:border-indigo-400">
+                                    </div>
+                                    <div>
+                                        <label for="dueDate" class="block text-sm font-medium text-gray-300 mb-1">
+                                            <i class="far fa-calendar-alt mr-1 text-gray-400"></i> Data de Vencimento
+                                        </label>
+                                        <input type="date" id="dueDate"
+                                            class="w-full px-4 py-2 border border-gray-600 rounded-md bg-gray-700 text-white focus:ring-2 focus:ring-indigo-300 focus:border-indigo-400">
+                                    </div>
+                                    <div>
+                                        <label for="totalAmount" class="block text-sm font-medium text-gray-300 mb-1">
+                                            <i class="fas fa-money-bill-wave mr-1 text-gray-400"></i> Valor Total (R$)
+                                        </label>
+                                        <input type="number" id="totalAmount" step="0.01" min="0"
+                                            class="w-full px-4 py-2 border border-gray-600 rounded-md bg-gray-700 text-white focus:ring-2 focus:ring-indigo-300 focus:border-indigo-400">
+                                    </div>
+                                    <div>
+                                        <label for="installments"
+                                            class="block text-gray-300 text-sm font-medium mb-1"><i
+                                                class="fas fa-stream mr-2"></i>Parcelas</label>
+                                        <input type="number" id="installments"
+                                            placeholder="Digite a quantidade de parcelas" min="1"
+                                            class="w-full bg-gray-700 border border-gray-600 rounded-md py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                    </div>
+                                    <div>
+                                        <label for="spacingDays" class="block text-sm font-medium text-gray-300 mb-1">
+                                            <i class="fas fa-calendar-day mr-1 text-gray-400"></i> Espaçamento entre
+                                            boletos (dias)
+                                        </label>
+                                        <input type="number" id="spacingDays" placeholder="Ex: 30"
+                                            class="w-full bg-gray-700 border border-gray-600 rounded-md py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                    </div>
+                                    <div>
+                                        <label for="description" class="block text-sm font-medium text-gray-300 mb-1">
+                                            <i class="fas fa-align-left mr-1 text-gray-400"></i> Descrição
+                                        </label>
+                                        <textarea id="description" rows="3"
+                                            class="w-full px-4 py-2 border border-gray-600 rounded-md bg-gray-700 text-white focus:ring-2 focus:ring-indigo-300 focus:border-indigo-400"></textarea>
+                                    </div>
+                                </div>
+
+                                <div id="xml-add-form" class="hidden space-y-4">
+                                    <div>
+                                        <label for="nfeXmlInput"
+                                            class="block text-sm font-medium text-gray-300 mb-1">Selecione o ficheiro
+                                            XML da NFe</label>
+                                        <input type="file" id="nfeXmlInput" accept=".xml, text/xml"
+                                            class="block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-500 file:text-white hover:file:bg-indigo-600 cursor-pointer" />
+                                        <p class="text-xs text-gray-400 mt-2">O sistema irá ler o XML e preencherá a
+                                            pré-visualização das parcelas automaticamente.</p>
+                                    </div>
+                                </div>
+
+                                <div id="csv-import-form" class="hidden space-y-4">
+                                    <div>
+                                        <label for="csv-file-input"
+                                            class="block text-sm font-medium text-gray-300 mb-1">Selecione o ficheiro
+                                            CSV</label>
+                                        <input type="file" id="csv-file-input" accept=".csv"
+                                            class="block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-500 file:text-white hover:file:bg-indigo-600 cursor-pointer" />
+                                        <p class="text-xs text-gray-400 mt-2">Colunas obrigatórias: Data, Nome, Parcela,
+                                            Valor. Opcionais: Categoria, Pago (use "sim"), CodNFE, Tipo.</p>
+                                    </div>
+
+                                    <div id="csv-preview-area" class="hidden mt-4">
+                                        <h3 class="text-md font-semibold text-gray-200 mb-2">Pré-visualização dos
+                                            Boletos a Importar:</h3>
+                                        <div class="max-h-60 overflow-y-auto border border-gray-700 rounded-lg p-2">
+                                            <table class="w-full text-sm text-left">
+                                                <thead class="text-xs text-gray-400 uppercase bg-gray-700">
+                                                    <tr>
+                                                        <th class="px-4 py-2">Data</th>
+                                                        <th class="px-4 py-2">Nome</th>
+                                                        <th class="px-4 py-2">Parcela</th>
+                                                        <th class="px-4 py-2 text-right">Valor</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="csv-preview-table-body">
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div id="csv-import-summary" class="text-sm text-gray-300 mt-2"></div>
+                                        <div class="mt-4 flex justify-end">
+                                            <button id="import-csv-btn"
+                                                class="bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition">
+                                                <i class="fas fa-check mr-2"></i>Confirmar e Importar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="recurrent-add-form" class="hidden space-y-4">
+                                    <div>
+                                        <label for="recurrentBillName"
+                                            class="block text-sm font-medium text-gray-300 mb-1">Nome da Despesa</label>
+                                        <input type="text" id="recurrentBillName"
+                                            class="w-full px-4 py-2 border border-gray-600 rounded-md bg-gray-700 text-white"
+                                            placeholder="Ex: Aluguer do Escritório">
+                                    </div>
+                                    <div>
+                                        <label for="recurrentAmount"
+                                            class="block text-sm font-medium text-gray-300 mb-1">Valor Mensal
+                                            (R$)</label>
+                                        <input type="number" id="recurrentAmount" step="0.01" min="0"
+                                            class="w-full px-4 py-2 border border-gray-600 rounded-md bg-gray-700 text-white">
+                                    </div>
+                                    <div>
+                                        <label for="recurrentStartDate"
+                                            class="block text-sm font-medium text-gray-300 mb-1">Data do Primeiro
+                                            Vencimento</label>
+                                        <input type="date" id="recurrentStartDate"
+                                            class="w-full px-4 py-2 border border-gray-600 rounded-md bg-gray-700 text-white">
+                                    </div>
+                                    <div>
+                                        <label for="recurrentInstallments"
+                                            class="block text-sm font-medium text-gray-300 mb-1">Quantidade de
+                                            Meses</label>
+                                        <input type="number" id="recurrentInstallments" min="1"
+                                            class="w-full px-4 py-2 border border-gray-600 rounded-md bg-gray-700 text-white"
+                                            placeholder="Ex: 12 (para um ano)">
+                                    </div>
+                                    <div>
+                                        <label for="recurrentDescription"
+                                            class="block text-sm font-medium text-gray-300 mb-1">Descrição</label>
+                                        <textarea id="recurrentDescription" rows="3"
+                                            class="w-full px-4 py-2 border border-gray-600 rounded-md bg-gray-700 text-white"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="mt-6 pt-6 border-t border-gray-700 flex justify-end space-x-3">
+                                    <button type="button" id="clearFormBtn"
+                                        class="bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-500 transition">Limpar
+                                        Formulário</button>
+                                    <button type="submit"
+                                        class="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition">Calcular
+                                        Parcelas</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="installmentsPreviewModal"
+                    class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-40 hidden">
+                    <div class="max-w-6xl mx-auto w-full p-4">
+                        <div class="bg-gray-800 rounded-lg shadow-xl p-6 relative">
+                            <button id="closePreviewModalBtn"
+                                class="absolute top-4 right-4 text-gray-400 hover:text-white z-10">
+                                <i class="fas fa-times text-xl"></i>
+                            </button>
+
+                            <div class="flex justify-between items-start mb-6 pr-10">
+                                <div class="flex-grow mr-6 space-y-2">
+                                    <div>
+                                        <label for="previewBillNameInput"
+                                            class="block text-xs font-medium text-gray-400 mb-1">Nome do Boleto (para o
+                                            calendário)</label>
+                                        <input type="text" id="previewBillNameInput"
+                                            class="w-full bg-gray-700 border border-gray-600 rounded-md py-2 px-3 text-white text-lg font-semibold focus:ring-2 focus:ring-indigo-500">
+                                    </div>
+                                    <div>
+                                        <label for="previewBillCategorySelect"
+                                            class="block text-xs font-medium text-gray-400 mb-1">Categoria</label>
+                                        <select id="previewBillCategorySelect"
+                                            class="w-full bg-gray-700 border border-gray-600 rounded-md py-2 px-3 text-white focus:ring-2 focus:ring-indigo-500"></select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-medium text-gray-400 mb-1">Número da
+                                            NFe</label>
+                                        <p id="previewNfeNumber" class="text-white font-semibold text-lg"></p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-4 flex-shrink-0 mt-6">
+                                    <span id="parcelPreviewTotal" class="text-lg font-bold text-green-400"></span>
+                                    <button id="addToOrganizer"
+                                        class="bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition duration-200 text-sm flex items-center">
+                                        <i class="fas fa-save mr-2"></i> Adicionar ao Organizador
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-12 gap-4 px-3 pb-2 border-b border-gray-700">
+                            </div>
+                            <div id="installmentsList" class="space-y-2 mt-2 max-h-[60vh] overflow-y-auto pr-2">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    </div>
+
+    <div id="billModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+        <div class="bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-xl">
+
+            <div class="flex justify-between items-center mb-4 pr-8 relative">
+
+                <h3 class="text-xl font-semibold text-gray-100 truncate" id="modalBillName" title=""></h3>
+
+                <button id="closeModal" class="text-gray-400 hover:text-gray-200 absolute top-0 right-0">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <div id="modalNfeNumberContainer" class="mb-4 hidden">
+                <label class="block text-sm font-medium text-gray-400">Número da NFe</label>
+                <p id="modalNfeNumber" class="mt-1 text-gray-200 font-mono"></p>
+            </div>
+            <div class="mb-4">
+                <label for="modalBillCategorySelect"
+                    class="block text-sm font-medium text-gray-300 mb-1">Categoria</label>
+                <select id="modalBillCategorySelect"
+                    class="w-full px-3 py-2 border rounded-md border-gray-600 bg-gray-700 text-white focus:ring-2 focus:ring-indigo-300"></select>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-1">Valor</label>
+                    <input type="number" id="modalBillAmount" step="0.01"
+                        class="w-full px-3 py-2 border rounded-md border-gray-600 bg-gray-700 text-white">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-1">Data de Vencimento</label>
+                    <input type="date" id="modalBillDate"
+                        class="w-full px-3 py-2 border rounded-md border-gray-600 bg-gray-700 text-white">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-1">Descrição</label>
+                    <textarea id="modalBillDescription" rows="3"
+                        class="w-full px-3 py-2 border rounded-md border-gray-600 bg-gray-700 text-white"></textarea>
+                </div>
+                <div>
+                    <label for="modalBillBarcode" class="block text-sm font-medium text-gray-300 mb-1">Código de
+                        Barras</label>
+                    <input type="text" id="modalBillBarcode"
+                        class="w-full px-3 py-2 border rounded-md border-gray-600 bg-gray-700 text-white"
+                        placeholder="Código de Barras">
+                </div>
+                <div class="mt-2">
+                    <button id="showFullScreenBarcodeBtn"
+                        class="w-full bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700 transition duration-200 hidden">
+                        <i class="fas fa-barcode mr-2"></i> Mostrar Código de Barras
+                    </button>
+                </div>
+                <div class="flex items-center mt-4">
+                    <input type="checkbox" id="modalBillPaid"
+                        class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-600 rounded">
+                    <label for="modalBillPaid" class="ml-2 block text-sm text-gray-300">Marcar como pago</label>
+                </div>
+
+                <div class="border-t border-gray-700 pt-4 mt-2">
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Comprovativo de Pagamento</label>
+                    <div id="attachment-container" class="space-y-2">
+                    </div>
+                </div>
+
+                <div class="flex justify-between pt-4">
+                    <button id="saveBill" class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700">
+                        Salvar
+                    </button>
+                    <button id="deleteBill" class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700">
+                        Excluir Parcela
+                    </button>
+                </div>
+                <div class="border-t border-gray-700 pt-4 mt-4">
+                    <button id="deleteEntireBillBtn"
+                        class="w-full bg-red-800 text-white px-4 py-2 rounded-md hover:bg-red-900 transition-colors duration-200">
+                        Excluir Boleto Completo
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="companyDetailsModal"
+        class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+        <div class="bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-lg">
+            <div class="flex justify-between items-center mb-4">
+                <div>
+                    <label for="modalCompanyNameInput" class="block text-sm font-medium text-gray-300 mb-1">Nome da
+                        Empresa</label>
+                    <input type="text" id="modalCompanyNameInput"
+                        class="w-full px-3 py-2 border rounded-md border-gray-600 bg-gray-700 text-white focus:ring-2 focus:ring-indigo-300">
+                </div>
+                <button id="closeCompanyModal" class="text-gray-400 hover:text-gray-200">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <div class="space-y-4">
+                <p class="text-gray-300">
+                    <span class="font-medium">CNPJ:</span> <span id="modalCompanyCnpj"></span>
+                </p>
+                <div>
+                    <label for="modalCompanyPasswordInput" class="block text-sm font-medium text-gray-300 mb-1">Senha da
+                        Empresa</label>
+                    <input type="text" id="modalCompanyPasswordInput"
+                        class="w-full px-3 py-2 border rounded-md border-gray-600 bg-gray-700 text-white">
+                </div>
+                <h4 class="text-lg font-semibold text-gray-200 mt-4 mb-2">Usuários:</h4>
+                <div id="modalCompanyUsers" class="space-y-2">
+                </div>
+                <div class="mt-4 flex justify-end space-x-2">
+                    <button id="saveCompanyDetailsBtn"
+                        class="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition duration-200 flex items-center">
+                        <i class="fas fa-save mr-2"></i> Salvar Alterações
+                    </button>
+                    <button id="addUserBtn"
+                        class="bg-blue-600 text-white py-1 px-3 rounded-md hover:bg-blue-700 flex items-center">
+                        <i class="fas fa-user-plus mr-2"></i> Adicionar Usuário
+                    </button>
+                </div>
+                <div class="pt-4 border-t border-gray-700 mt-4">
+                    <button id="deleteCompanyBtn"
+                        class="w-full bg-red-600 text-white py-2 px-4 rounded-md hover:bg-red-700 transition duration-200 flex items-center justify-center">
+                        <i class="fas fa-trash-alt mr-2"></i> Excluir Esta Empresa
+                    </button>
+                </div>
+
+                <fieldset id="adminSubscriptionManagement" class="mt-4 pt-4 border-t border-gray-700">
+                    <legend class="px-2 text-lg font-semibold text-gray-200">Gerenciar Assinatura</legend>
+                    <div class="p-2 space-y-3">
+                        <div>
+                            <span class="text-sm font-medium text-gray-400">Status Atual:</span>
+                            <span id="subscriptionStatus" class="ml-2 font-bold text-white"></span>
+                        </div>
+                        <div>
+                            <span class="text-sm font-medium text-gray-400">Expira em:</span>
+                            <span id="subscriptionEndDate" class="ml-2 font-bold text-white"></span>
+                        </div>
+                        <div class="flex items-center space-x-3 mt-2">
+                            <input type="number" id="daysToAddInput"
+                                class="w-24 px-3 py-2 border rounded-md border-gray-600 bg-gray-700 text-white"
+                                placeholder="Dias" min="1">
+                            <button id="addSubscriptionBtn"
+                                class="bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition duration-200 flex items-center">
+                                <i class="fas fa-plus mr-2"></i> Adicionar Tempo
+                            </button>
+                            <button id="removeSubscriptionBtn"
+                                class="bg-red-600 text-white py-2 px-4 rounded-md hover:bg-red-700 transition duration-200 flex items-center">
+                                <i class="fas fa-ban mr-2"></i> Remover Assinatura
+                            </button>
+                        </div>
+                    </div>
+                </fieldset>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="barcodeFullScreenModal"
+        class="fixed inset-0 bg-black bg-opacity-80 flex flex-col items-center justify-center z-50 hidden">
+
+        <div class="bg-white p-6 rounded-lg shadow-xl inline-block">
+            <svg id="fullScreenBarcodeImage"></svg>
+        </div>
+
+        <button id="closeFullScreenBarcodeBtn"
+            class="mt-6 bg-red-600 text-white py-2 px-6 rounded-lg hover:bg-red-700 text-lg">
+            Fechar
+        </button>
+    </div>
+
+    <div id="quickUserAddModal"
+        class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+        <div class="bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-md">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-semibold text-gray-100">Cadastrar Novo Usuário</h3>
+                <button id="closeQuickUserAddModal" class="text-gray-400 hover:text-gray-200">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="quickUserAddForm" class="space-y-4">
+                <div>
+                    <label for="quickAddUsername" class="block text-sm font-medium text-gray-300 mb-1">Nome de
+                        Usuário</label>
+                    <input type="text" id="quickAddUsername" required
+                        class="w-full px-4 py-2 border border-gray-600 rounded-md bg-gray-700 text-white focus:ring-2 focus:ring-indigo-300">
+                </div>
+                <div>
+                    <label for="quickAddPassword" class="block text-sm font-medium text-gray-300 mb-1">Senha</label>
+                    <input type="password" id="quickAddPassword" required
+                        class="w-full px-4 py-2 border border-gray-600 rounded-md bg-gray-700 text-white focus:ring-2 focus:ring-indigo-300">
+                </div>
+                <div class="pt-4 flex justify-end space-x-3">
+                    <button type="button" id="cancelQuickUserAdd"
+                        class="bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700">Cancelar</button>
+                    <button type="submit"
+                        class="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700">Salvar
+                        Usuário</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="companyInfoModal"
+        class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+        <div class="bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-lg">
+            <div class="flex justify-between items-start mb-6">
+                <h3 class="text-xl font-semibold text-gray-100 flex items-center">
+                    <i class="fas fa-building mr-3 text-indigo-400"></i>
+                    Detalhes da Empresa
+                </h3>
+
+                <div class="flex items-start space-x-4">
+                    <div id="headerSubscriptionInfo" class="text-right hidden">
+                        <label class="block text-xs font-medium text-gray-400 tracking-wider">ASSINATURA ATIVA
+                            ATÉ</label>
+                        <p id="headerSubscriptionEndDate" class="text-base font-semibold text-green-400"></p>
+                    </div>
+
+                    <button id="closeCompanyInfoModal" class="text-gray-400 hover:text-white">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+            </div>
+
+            <form id="companyInfoForm" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-400">CNPJ</label>
+                    <p id="companyInfoCnpj" class="mt-1 text-gray-200"></p>
+                </div>
+
+                <div>
+                    <label for="companyInfoName" class="block text-sm font-medium text-gray-300">Nome da Empresa</label>
+                    <input type="text" id="companyInfoName"
+                        class="w-full mt-1 px-3 py-2 border rounded-md border-gray-600 bg-gray-700 text-white focus:ring-2 focus:ring-indigo-300">
+                </div>
+
+                <div>
+                    <label for="companyInfoEmail" class="block text-sm font-medium text-gray-300">E-mail</label>
+                    <input type="email" id="companyInfoEmail"
+                        class="w-full mt-1 px-3 py-2 border rounded-md border-gray-600 bg-gray-700 text-white focus:ring-2 focus:ring-indigo-300">
+                </div>
+
+                <div id="verificationNotice"
+                    class="hidden mt-4 p-4 bg-yellow-900/50 border border-yellow-700 rounded-lg text-center">
+                    <p class="text-yellow-300 text-sm mb-3">
+                        <i class="fas fa-exclamation-triangle mr-2"></i>O e-mail desta empresa ainda não foi verificado.
+                    </p>
+                    <button type="button" id="resendVerificationBtn"
+                        class="bg-yellow-600 hover:bg-yellow-700 text-white text-sm font-medium py-2 px-4 rounded-lg transition duration-300">
+                        Reenviar E-mail de Verificação
+                    </button>
+                </div>
+
+                <div>
+                    <label for="companyInfoTelefone" class="block text-sm font-medium text-gray-300">Telefone
+                        Fixo</label>
+                    <input type="text" id="companyInfoTelefone"
+                        class="w-full mt-1 px-3 py-2 border rounded-md border-gray-600 bg-gray-700 text-white focus:ring-2 focus:ring-indigo-300">
+                </div>
+
+                <div>
+                    <label for="companyInfoWhatsapp" class="block text-sm font-medium text-gray-300">Telefone
+                        WhatsApp</label>
+                    <input type="text" id="companyInfoWhatsapp"
+                        class="w-full mt-1 px-3 py-2 border rounded-md border-gray-600 bg-gray-700 text-white focus:ring-2 focus:ring-indigo-300">
+                </div>
+            </form>
+
+            <div class="mt-8 pt-4 border-t border-gray-700 flex justify-end">
+                <button id="saveCompanyInfoBtn"
+                    class="bg-indigo-600 text-white py-2 px-5 rounded-md hover:bg-indigo-700 transition duration-200 flex items-center">
+                    <i class="fas fa-save mr-2"></i> Salvar Alterações
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="permissionsModal"
+        class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+        <div class="bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-4xl max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-semibold text-gray-100 flex items-center"><i
+                        class="fas fa-shield-alt mr-3 text-indigo-400"></i>Gerenciar Permissões dos Papéis</h3>
+                <button id="closePermissionsModal" class="text-gray-400 hover:text-white"><i
+                        class="fas fa-times text-xl"></i></button>
+            </div>
+
+            <div id="permissionsContainer" class="space-y-6">
+
+                <div class="bg-gray-900/50 rounded-lg p-5 border border-gray-700">
+                    <h4 class="text-lg font-bold text-indigo-400 mb-4">Gerente</h4>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm font-medium text-gray-300">Pode criar boletos</span>
+                            <label class="inline-flex items-center cursor-pointer">
+                                <input type="checkbox" id="gerente-canCreate-boleto" class="sr-only peer">
+                                <div
+                                    class="relative w-11 h-6 bg-gray-600 rounded-full peer peer-checked:after:translate-x-5 peer-checked:bg-indigo-600 after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all">
+                                </div>
+                            </label>
+                        </div>
+                        <fieldset>
+                            <legend class="text-sm font-medium text-gray-300 mb-2">Permissão para Editar Boletos:
+                            </legend>
+                            <div class="flex flex-col items-start space-y-3 sm:flex-row sm:items-center sm:space-y-0 sm:space-x-6">
+                                <label class="flex items-center cursor-pointer"><input type="radio"
+                                        name="gerente-canUpdate" value="none" class="sr-only"><span
+                                        class="radio-custom"></span><span
+                                        class="ms-2 text-sm text-gray-400">Nenhuma</span></label>
+                                <label class="flex items-center cursor-pointer"><input type="radio"
+                                        name="gerente-canUpdate" value="own" class="sr-only"><span
+                                        class="radio-custom"></span><span class="ms-2 text-sm text-gray-400">Apenas
+                                        Próprios</span></label>
+                                <label class="flex items-center cursor-pointer"><input type="radio"
+                                        name="gerente-canUpdate" value="all" class="sr-only"><span
+                                        class="radio-custom"></span><span
+                                        class="ms-2 text-sm text-gray-400">Todos</span></label>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <legend class="text-sm font-medium text-gray-300 mb-2">Permissão para Excluir Boletos:
+                            </legend>
+                            <div class="flex flex-col items-start space-y-3 sm:flex-row sm:items-center sm:space-y-0 sm:space-x-6">
+                                <label class="flex items-center cursor-pointer"><input type="radio"
+                                        name="gerente-canDelete" value="none" class="sr-only"><span
+                                        class="radio-custom"></span><span
+                                        class="ms-2 text-sm text-gray-400">Nenhuma</span></label>
+                                <label class="flex items-center cursor-pointer"><input type="radio"
+                                        name="gerente-canDelete" value="own" class="sr-only"><span
+                                        class="radio-custom"></span><span class="ms-2 text-sm text-gray-400">Apenas
+                                        Próprios</span></label>
+                                <label class="flex items-center cursor-pointer"><input type="radio"
+                                        name="gerente-canDelete" value="all" class="sr-only"><span
+                                        class="radio-custom"></span><span
+                                        class="ms-2 text-sm text-gray-400">Todos</span></label>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+
+                <div class="bg-gray-900/50 rounded-lg p-5 border border-gray-700">
+                    <h4 class="text-lg font-bold text-indigo-400 mb-4">Funcionário</h4>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm font-medium text-gray-300">Pode criar boletos</span>
+                            <label class="inline-flex items-center cursor-pointer">
+                                <input type="checkbox" id="funcionario-canCreate-boleto" class="sr-only peer">
+                                <div
+                                    class="relative w-11 h-6 bg-gray-600 rounded-full peer peer-checked:after:translate-x-5 peer-checked:bg-indigo-600 after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all">
+                                </div>
+                            </label>
+                        </div>
+                        <fieldset>
+                            <legend class="text-sm font-medium text-gray-300 mb-2">Permissão para Editar Boletos:
+                            </legend>
+                            <div class="flex flex-col items-start space-y-3 sm:flex-row sm:items-center sm:space-y-0 sm:space-x-6">
+                                <label class="flex items-center cursor-pointer"><input type="radio"
+                                        name="funcionario-canUpdate" value="none" class="sr-only"><span
+                                        class="radio-custom"></span><span
+                                        class="ms-2 text-sm text-gray-400">Nenhuma</span></label>
+                                <label class="flex items-center cursor-pointer"><input type="radio"
+                                        name="funcionario-canUpdate" value="own" class="sr-only"><span
+                                        class="radio-custom"></span><span class="ms-2 text-sm text-gray-400">Apenas
+                                        Próprios</span></label>
+                                <label class="flex items-center cursor-pointer"><input type="radio"
+                                        name="funcionario-canUpdate" value="all" class="sr-only"><span
+                                        class="radio-custom"></span><span
+                                        class="ms-2 text-sm text-gray-400">Todos</span></label>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <legend class="text-sm font-medium text-gray-300 mb-2">Permissão para Excluir Boletos:
+                            </legend>
+                            <div class="flex flex-col items-start space-y-3 sm:flex-row sm:items-center sm:space-y-0 sm:space-x-6">
+                                <label class="flex items-center cursor-pointer"><input type="radio"
+                                        name="funcionario-canDelete" value="none" class="sr-only"><span
+                                        class="radio-custom"></span><span
+                                        class="ms-2 text-sm text-gray-400">Nenhuma</span></label>
+                                <label class="flex items-center cursor-pointer"><input type="radio"
+                                        name="funcionario-canDelete" value="own" class="sr-only"><span
+                                        class="radio-custom"></span><span class="ms-2 text-sm text-gray-400">Apenas
+                                        Próprios</span></label>
+                                <label class="flex items-center cursor-pointer"><input type="radio"
+                                        name="funcionario-canDelete" value="all" class="sr-only"><span
+                                        class="radio-custom"></span><span
+                                        class="ms-2 text-sm text-gray-400">Todos</span></label>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 pt-4 border-t border-gray-700 flex justify-end">
+                <button id="savePermissionsBtn"
+                    class="bg-indigo-600 text-white py-2 px-5 rounded-md hover:bg-indigo-700 transition duration-200 flex items-center"><i
+                        class="fas fa-save mr-2"></i>Salvar Alterações</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="addUserModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+        <div class="bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-md">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-semibold text-gray-100 flex items-center">
+                    <i class="fas fa-user-plus mr-3 text-indigo-400"></i>
+                    Adicionar Novo Usuário
+                </h3>
+                <button id="closeAddUserModal" class="text-gray-400 hover:text-white">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+
+            <form id="addUserForm" class="space-y-4">
+                <div>
+                    <label for="addUsernameInput" class="block text-sm font-medium text-gray-300">Nome de
+                        Usuário</label>
+                    <input type="text" id="addUsernameInput" required
+                        class="w-full mt-1 px-3 py-2 border rounded-md border-gray-600 bg-gray-700 text-white focus:ring-2 focus:ring-indigo-300">
+                </div>
+                <div>
+                    <label for="addUserEmailInput" class="block text-sm font-medium text-gray-300">E-mail</label>
+                    <input type="email" id="addUserEmailInput" required
+                        class="w-full mt-1 px-3 py-2 border rounded-md border-gray-600 bg-gray-700 text-white focus:ring-2 focus:ring-indigo-300">
+                </div>
+                <div>
+                    <label for="addUserPasswordInput" class="block text-sm font-medium text-gray-300">Senha</label>
+                    <input type="password" id="addUserPasswordInput" required
+                        class="w-full mt-1 px-3 py-2 border rounded-md border-gray-600 bg-gray-700 text-white focus:ring-2 focus:ring-indigo-300">
+                </div>
+                <div>
+                    <label for="addUserRoleSelect" class="block text-sm font-medium text-gray-300">Cargo</label>
+                    <select id="addUserRoleSelect" required
+                        class="w-full mt-1 px-3 py-2 border rounded-md border-gray-600 bg-gray-700 text-white focus:ring-2 focus:ring-indigo-300">
+                    </select>
+                </div>
+
+                <div class="mt-6 pt-4 border-t border-gray-700 flex justify-end space-x-3">
+                    <button type="button" id="cancelAddUserBtn"
+                        class="bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700 transition">Cancelar</button>
+                    <button type="submit"
+                        class="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition">Salvar
+                        Usuário</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="addCompanyModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+        <div class="bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-lg">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-semibold text-gray-100 flex items-center">
+                    <i class="fas fa-building mr-3 text-indigo-400"></i>
+                    Criar Nova Empresa
+                </h3>
+                <button id="closeAddCompanyModal" class="text-gray-400 hover:text-white">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+
+            <form id="addCompanyForm" class="space-y-4">
+                <fieldset class="border border-gray-700 p-4 rounded-md">
+                    <legend class="px-2 text-lg font-semibold text-gray-300">Dados da Empresa</legend>
+                    <div class="space-y-4 pt-2">
+                        <div>
+                            <label for="addCompanyNameInput" class="block text-sm font-medium text-gray-300">Nome da
+                                Empresa</label>
+                            <input type="text" id="addCompanyNameInput" required
+                                class="w-full mt-1 px-3 py-2 border rounded-md border-gray-600 bg-gray-700 text-white focus:ring-2 focus:ring-indigo-300">
+                        </div>
+                        <div>
+                            <label for="addCompanyCnpjInput"
+                                class="block text-sm font-medium text-gray-300">CNPJ</label>
+                            <input type="text" id="addCompanyCnpjInput" required
+                                class="w-full mt-1 px-3 py-2 border rounded-md border-gray-600 bg-gray-700 text-white focus:ring-2 focus:ring-indigo-300">
+                        </div>
+                        <div>
+                            <label for="addCompanyEmailInput" class="block text-sm font-medium text-gray-300">E-mail da
+                                Empresa</label>
+                            <input type="email" id="addCompanyEmailInput" required
+                                class="w-full mt-1 px-3 py-2 border rounded-md border-gray-600 bg-gray-700 text-white focus:ring-2 focus:ring-indigo-300">
+                        </div>
+                        <div>
+                            <label for="addCompanyPasswordInput" class="block text-sm font-medium text-gray-300">Senha
+                                da Empresa</label>
+                            <input type="password" id="addCompanyPasswordInput" required
+                                class="w-full mt-1 px-3 py-2 border rounded-md border-gray-600 bg-gray-700 text-white focus:ring-2 focus:ring-indigo-300">
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset class="border border-gray-700 p-4 rounded-md">
+                    <legend class="px-2 text-lg font-semibold text-gray-300">Usuário Proprietário</legend>
+                    <div class="space-y-4 pt-2">
+                        <div>
+                            <label for="addOwnerUsernameInput" class="block text-sm font-medium text-gray-300">Nome de
+                                Usuário do Proprietário</label>
+                            <input type="text" id="addOwnerUsernameInput" required
+                                class="w-full mt-1 px-3 py-2 border rounded-md border-gray-600 bg-gray-700 text-white focus:ring-2 focus:ring-indigo-300">
+                        </div>
+                        <div>
+                            <label for="addOwnerPasswordInput" class="block text-sm font-medium text-gray-300">Senha do
+                                Proprietário</label>
+                            <input type="password" id="addOwnerPasswordInput" required
+                                class="w-full mt-1 px-3 py-2 border rounded-md border-gray-600 bg-gray-700 text-white focus:ring-2 focus:ring-indigo-300">
+                        </div>
+                    </div>
+                </fieldset>
+
+                <div class="mt-6 pt-4 border-t border-gray-700 flex justify-end space-x-3">
+                    <button type="button" id="cancelAddCompanyBtn"
+                        class="bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700 transition">Cancelar</button>
+                    <button type="submit"
+                        class="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition">Salvar
+                        Empresa</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="manageUsersModal"
+        class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+        <div class="bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-lg">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-semibold text-gray-100">Gerenciar Utilizadores da Empresa</h3>
+                <button id="closeManageUsersModal" class="text-gray-400 hover:text-white">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+
+            <div id="companyUsersList" class="space-y-2 mb-6 max-h-60 overflow-y-auto pr-2">
+            </div>
+
+            <div class="mt-4 flex justify-end">
+                <button id="addCompanyUserBtn"
+                    class="bg-blue-600 text-white py-2 px-5 rounded-md hover:bg-blue-700 transition duration-200 flex items-center">
+                    <i class="fas fa-user-plus mr-2"></i> Adicionar Novo Utilizador
+                </button>
+            </div>
+        </div>
+    </div>
+    <button id="openAddBillModalBtn"
+        class="fixed bottom-8 right-8 bg-indigo-600 text-white w-16 h-16 rounded-full shadow-lg flex items-center justify-center text-3xl hover:bg-indigo-700 transition-transform transform hover:scale-110 z-30 hidden">
+        <i class="fas fa-plus"></i>
+    </button>
+
+    <div id="categoryBatchModal"
+        class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+        <div class="bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-sm">
+            <h3 class="text-xl font-semibold text-gray-100 mb-4">Alterar Categoria dos Itens Selecionados</h3>
+
+            <div class="space-y-4">
+                <div>
+                    <label for="batchCategorySelect" class="block text-sm font-medium text-gray-300 mb-1">Nova
+                        Categoria</label>
+                    <select id="batchCategorySelect"
+                        class="w-full px-3 py-2 border rounded-md border-gray-600 bg-gray-700 text-white focus:ring-2 focus:ring-indigo-300"></select>
+                </div>
+
+                <div class="flex justify-end space-x-3 pt-4">
+                    <button id="cancelCategoryBatchBtn"
+                        class="bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-500 transition">Cancelar</button>
+                    <button id="confirmCategoryBatchBtn"
+                        class="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="profileModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+        <div class="bg-gray-800 rounded-lg shadow-2xl p-8 w-full max-w-md text-white relative transform transition-all">
+
+            <button id="closeProfileModalBtn" class="absolute top-4 right-4 text-gray-400 hover:text-white transition">
+                <i class="fas fa-times fa-lg"></i>
+            </button>
+
+            <h2 class="text-2xl font-bold mb-4 text-center text-indigo-400">Meu Perfil</h2>
+
+            <div class="space-y-2 text-base border-b border-gray-700 pb-4 mb-4">
+                <p><strong class="text-gray-400 w-24 inline-block">Utilizador:</strong> <span
+                        id="profileUsername"></span></p>
+                <p><strong class="text-gray-400 w-24 inline-block">Cargo:</strong> <span id="profileRole"></span></p>
+                <p><strong class="text-gray-400 w-24 inline-block">Empresa:</strong> <span id="profileCompany"></span>
+                </p>
+            </div>
+
+            <h3 class="text-lg font-semibold text-gray-200 mb-3">Alterar Senha</h3>
+            <form id="changePasswordForm" class="space-y-4">
+                <div>
+                    <label for="currentPassword" class="block text-sm font-medium text-gray-300">Senha Atual</label>
+                    <input type="password" id="currentPassword" required
+                        class="mt-1 w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md">
+                </div>
+                <div>
+                    <label for="newPassword" class="block text-sm font-medium text-gray-300">Nova Senha</label>
+                    <input type="password" id="newPassword" required
+                        class="mt-1 w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md">
+                </div>
+                <div>
+                    <label for="confirmPassword" class="block text-sm font-medium text-gray-300">Confirmar Nova
+                        Senha</label>
+                    <input type="password" id="confirmPassword" required
+                        class="mt-1 w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md">
+                </div>
+                <button type="submit"
+                    class="w-full mt-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-lg transition duration-300">
+                    Salvar Nova Senha
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div id="recurrentEditModal"
+        class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+        <div class="bg-gray-800 rounded-lg shadow-2xl p-8 w-full max-w-lg text-white relative">
+
+            <h2 class="text-2xl font-bold mb-4 text-center text-indigo-400">Editar Parcela Recorrente</h2>
+            <p class="text-center text-gray-400 mb-6">
+                Esta parcela faz parte de uma série recorrente. Como deseja aplicar as alterações?
+            </p>
+
+            <div class="space-y-4">
+                <button data-scope="single"
+                    class="recurrent-choice-btn w-full text-left p-4 bg-gray-700 hover:bg-indigo-600 rounded-lg transition">
+                    <strong class="block text-white">Alterar Somente Esta Parcela</strong>
+                    <span class="text-sm text-gray-400">Apenas a parcela de <span class="font-bold"
+                            id="single-parcel-date"></span> será modificada.</span>
+                </button>
+                <button data-scope="future"
+                    class="recurrent-choice-btn w-full text-left p-4 bg-gray-700 hover:bg-indigo-600 rounded-lg transition">
+                    <strong class="block text-white">Alterar Esta e as Próximas</strong>
+                    <span class="text-sm text-gray-400">O dia do vencimento, valor, descrição e cód. de barras serão
+                        aplicados nesta e em todas as parcelas futuras.</span>
+                </button>
+                <button data-scope="all"
+                    class="recurrent-choice-btn w-full text-left p-4 bg-gray-700 hover:bg-indigo-600 rounded-lg transition">
+                    <strong class="block text-white">Alterar Todas as Parcelas</strong>
+                    <span class="text-sm text-gray-400">O dia do vencimento, valor, descrição e cód. de barras serão
+                        aplicados a todas as parcelas desta série.</span>
+                </button>
+            </div>
+
+            <div class="text-center mt-6">
+                <button id="cancelRecurrentEditBtn" class="text-gray-400 hover:text-white">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="announcementModal"
+        class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+        <div class="bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-lg">
+            <h3 id="announcementModalTitle" class="text-xl font-semibold text-gray-100 mb-6">Novo Anúncio</h3>
+            <form id="announcementForm" class="space-y-4">
+                <input type="hidden" id="announcementId">
+                <div>
+                    <label for="announcementMessageInput"
+                        class="block text-sm font-medium text-gray-300">Mensagem</label>
+                    <input type="text" id="announcementMessageInput" required
+                        class="w-full mt-1 px-3 py-2 border rounded-md bg-gray-700 text-white">
+                </div>
+                <div>
+                    <label for="announcementLink" class="block text-sm font-medium text-gray-300">Link
+                        (Opcional)</label>
+                    <input type="url" id="announcementLink"
+                        class="w-full mt-1 px-3 py-2 border rounded-md bg-gray-700 text-white">
+                </div>
+                <div class="flex items-center">
+                    <input type="checkbox" id="announcementIsActive" class="h-4 w-4 text-indigo-600 rounded">
+                    <label for="announcementIsActive" class="ml-2 text-sm text-gray-300">Ativo (visível para todos os
+                        utilizadores)</label>
+                </div>
+                <div class="flex justify-end space-x-3 pt-4">
+                    <button type="button" id="cancelAnnouncementBtn"
+                        class="bg-gray-600 text-white py-2 px-4 rounded-md">Cancelar</button>
+                    <button type="submit" class="bg-indigo-600 text-white py-2 px-4 rounded-md">Salvar Anúncio</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/imask"></script>
+    <script type="module" src="scripts/main.js"></script>
+
+</body>
+
+</html>

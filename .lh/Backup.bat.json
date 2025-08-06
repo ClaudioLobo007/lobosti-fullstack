@@ -1,0 +1,18 @@
+{
+    "sourceFile": "Backup.bat",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1753996639015,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1753996639015,
+            "name": "Commit-0",
+            "content": "@echo off\r\ncls\r\ntitle Script de Backup do Site - Lobos\r\n\r\n:: =================================================================\r\n:: Caminhos configurados para o seu projeto.\r\n:: =================================================================\r\nset \"PASTA_DO_SITE=D:\\SCripts\\SiteLobos\"\r\nset \"PASTA_DE_BACKUP=D:\\SCripts\\BackupSiteLobo\"\r\n:: =================================================================\r\n\r\necho Pasta do Site: \"%PASTA_DO_SITE%\"\r\necho Pasta de Backup: \"%PASTA_DE_BACKUP%\"\r\necho.\r\nif not exist \"%PASTA_DO_SITE%\" (\r\n    echo ERRO: A pasta do site nao foi encontrada! Verifique o caminho.\r\n    pause\r\n    exit\r\n)\r\nif not exist \"%PASTA_DE_BACKUP%\" mkdir \"%PASTA_DE_BACKUP%\"\r\n\r\n:: --- Criando o Backup Inicial Permanente ---\r\nset \"TIMESTAMP=%date:~6,4%-%date:~3,2%-%date:~0,2%_%time:~0,2%h%time:~3,2%m\"\r\nset \"PASTA_BACKUP_INICIAL=%PASTA_DE_BACKUP%\\Backup_Inicial_%TIMESTAMP%\"\r\n\r\necho =================================================================\r\necho  FAZENDO O PRIMEIRO BACKUP (PERMANENTE)...\r\necho =================================================================\r\nrobocopy \"%PASTA_DO_SITE%\" \"%PASTA_BACKUP_INICIAL%\" /MIR /R:2 /W:5\r\necho.\r\necho Backup inicial concluido em: \"%PASTA_BACKUP_INICIAL%\"\r\necho =================================================================\r\necho.\r\n\r\nset \"contador=0\"\r\n\r\n:loop\r\nset /a contador+=1\r\nif %contador% GTR 3 set \"contador=1\"\r\n\r\necho Proximo backup rotativo (slot %contador%) em 30 minutos. Pressione Ctrl+C para cancelar.\r\ntimeout /t 1800 /nobreak > nul\r\n\r\nset \"PASTA_BACKUP_ATUAL=%PASTA_DE_BACKUP%\\Backup_Recente_%contador%\"\r\nset \"TIMESTAMP_ATUAL=%date:~6,4%-%date:~3,2%-%date:~0,2%_%time:~0,2%h%time:~3,2%m\"\r\n\r\necho.\r\necho =================================================================\r\necho  FAZENDO BACKUP ROTATIVO (Slot: %contador%) em %TIMESTAMP_ATUAL%\r\necho =================================================================\r\nrobocopy \"%PASTA_DO_SITE%\" \"%PASTA_BACKUP_ATUAL%\" /MIR /R:2 /W:5\r\necho.\r\necho Backup rotativo concluido em: \"%PASTA_BACKUP_ATUAL%\"\r\necho =================================================================\r\necho.\r\n\r\ngoto :loop"
+        }
+    ]
+}

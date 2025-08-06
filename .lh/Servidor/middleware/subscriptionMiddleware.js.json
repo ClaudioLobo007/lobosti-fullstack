@@ -1,0 +1,22 @@
+{
+    "sourceFile": "Servidor/middleware/subscriptionMiddleware.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1752581685747,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1753548652101,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,26 +1,19 @@\n-// Em middleware/subscriptionMiddleware.js\r\n+// D:\\SCripts\\SiteLobos\\Servidor\\middleware\\subscriptionMiddleware.js\r\n \r\n-const Company = require('../models/Company');\r\n-\r\n const checkSubscription = async (req, res, next) => {\r\n     try {\r\n-        // Se o usuário for SuperAdmin, ele não precisa de assinatura\r\n+        // Se o usuário for SuperAdmin ou estiver sendo representado, ele não precisa de assinatura.\r\n         if (req.user.role === 'SuperAdmin' || req.user.impersonator) {\r\n             return next();\r\n         }\r\n \r\n-        const companyId = req.user.companyId;\r\n-        if (!companyId) {\r\n-            return res.status(401).json({ message: 'ID da empresa não encontrado no token.' });\r\n+        // O 'tenantMiddleware' já nos forneceu os dados da empresa em 'req.company'.\r\n+        if (!req.company || !req.company.subscription) {\r\n+            return res.status(403).json({ message: 'Não foi possível verificar os dados da assinatura.' });\r\n         }\r\n \r\n-        const company = await Company.findById(companyId).select('subscription');\r\n-        if (!company) {\r\n-            return res.status(401).json({ message: 'Empresa associada não encontrada.' });\r\n-        }\r\n-\r\n-        const { status, endDate } = company.subscription;\r\n+        const { status, endDate } = req.company.subscription;\r\n         const today = new Date();\r\n \r\n         // A VERIFICAÇÃO PRINCIPAL:\r\n         // O status deve ser 'active' E a data de expiração deve ser maior que a data de hoje.\r\n"
+                }
+            ],
+            "date": 1752581685747,
+            "name": "Commit-0",
+            "content": "// Em middleware/subscriptionMiddleware.js\r\n\r\nconst Company = require('../models/Company');\r\n\r\nconst checkSubscription = async (req, res, next) => {\r\n    try {\r\n        // Se o usuário for SuperAdmin, ele não precisa de assinatura\r\n        if (req.user.role === 'SuperAdmin' || req.user.impersonator) {\r\n            return next();\r\n        }\r\n\r\n        const companyId = req.user.companyId;\r\n        if (!companyId) {\r\n            return res.status(401).json({ message: 'ID da empresa não encontrado no token.' });\r\n        }\r\n\r\n        const company = await Company.findById(companyId).select('subscription');\r\n        if (!company) {\r\n            return res.status(401).json({ message: 'Empresa associada não encontrada.' });\r\n        }\r\n\r\n        const { status, endDate } = company.subscription;\r\n        const today = new Date();\r\n\r\n        // A VERIFICAÇÃO PRINCIPAL:\r\n        // O status deve ser 'active' E a data de expiração deve ser maior que a data de hoje.\r\n        if (status === 'active' && endDate > today) {\r\n            // Se tudo estiver OK, permite o acesso à rota.\r\n            next();\r\n        } else {\r\n            // Caso contrário, bloqueia o acesso.\r\n            return res.status(403).json({ message: 'Acesso negado. Sua assinatura não está ativa ou expirou.' });\r\n        }\r\n\r\n    } catch (error) {\r\n        console.error(\"Erro no middleware de verificação de assinatura:\", error);\r\n        res.status(500).json({ message: 'Erro interno ao verificar a assinatura.' });\r\n    }\r\n};\r\n\r\nmodule.exports = { checkSubscription };"
+        }
+    ]
+}

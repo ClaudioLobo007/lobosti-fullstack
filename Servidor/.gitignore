@@ -1,0 +1,5 @@
+# Ficheiro de variáveis de ambiente - NUNCA partilhar!
+.env
+
+# Pasta de dependências do Node.js
+node_modules

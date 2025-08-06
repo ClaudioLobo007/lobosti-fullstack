@@ -1,0 +1,26 @@
+{
+    "sourceFile": "Servidor/routes/announcements.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1753807274857,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1754505756401,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n // D:\\SCripts\\SiteLobos\\Servidor\\routes\\announcements.js\r\n const express = require('express');\r\n const router = express.Router();\r\n \r\n-const AnnouncementSchema = require('../models/Announcement').schema;\r\n+const { schema: AnnouncementSchema } = require('../models/Announcement')\r\n \r\n // Rota para o utilizador final buscar o anúncio ativo\r\n router.get('/active', (req, res) => {\r\n     // Esta rota usa o masterDbMiddleware, que já foi aplicado no server.js\r\n"
+                },
+                {
+                    "date": 1754505934838,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n // D:\\SCripts\\SiteLobos\\Servidor\\routes\\announcements.js\r\n const express = require('express');\r\n const router = express.Router();\r\n \r\n-const { schema: AnnouncementSchema } = require('../models/Announcement')\r\n+const { schema: AnnouncementSchema } = require('../models/Announcement');\r\n \r\n // Rota para o utilizador final buscar o anúncio ativo\r\n router.get('/active', (req, res) => {\r\n     // Esta rota usa o masterDbMiddleware, que já foi aplicado no server.js\r\n"
+                }
+            ],
+            "date": 1753807274857,
+            "name": "Commit-0",
+            "content": "// D:\\SCripts\\SiteLobos\\Servidor\\routes\\announcements.js\r\nconst express = require('express');\r\nconst router = express.Router();\r\n\r\nconst AnnouncementSchema = require('../models/Announcement').schema;\r\n\r\n// Rota para o utilizador final buscar o anúncio ativo\r\nrouter.get('/active', (req, res) => {\r\n    // Esta rota usa o masterDbMiddleware, que já foi aplicado no server.js\r\n    const Announcement = req.masterDb.model('Announcement', AnnouncementSchema);\r\n\r\n    // Encontra o anúncio mais recente que esteja ativo\r\n    Announcement.findOne({ isActive: true }).sort({ createdAt: -1 })\r\n        .then(announcement => {\r\n            res.status(200).json(announcement);\r\n        })\r\n        .catch(error => {\r\n            res.status(500).json({ message: 'Erro ao buscar anúncio.' });\r\n        });\r\n});\r\n\r\nmodule.exports = router;"
+        }
+    ]
+}

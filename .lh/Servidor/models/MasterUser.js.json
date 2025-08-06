@@ -1,0 +1,38 @@
+{
+    "sourceFile": "Servidor/models/MasterUser.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 5,
+            "patches": [
+                {
+                    "date": 1753533000077,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1753533006442,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,4 @@\n-// D:\\SCripts\\SiteLobos\\Servidor\\models\\MasterUser.js\r\n-\r\n const mongoose = require('mongoose');\r\n const Schema = mongoose.Schema;\r\n const MasterUserSchema = new Schema({\r\n     username: { type: String, required: true },\r\n"
+                },
+                {
+                    "date": 1753534884424,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,5 +14,5 @@\n \r\n // Garante que um username seja único por empresa, mesmo no banco mestre\r\n MasterUserSchema.index({ username: 1, company: 1 }, { unique: true });\r\n \r\n-module.exports = mongoose.model('MasterUser', MasterUserSchema);\n\\ No newline at end of file\n+module.exports = mongoose.models.MasterUser || mongoose.model('MasterUser', MasterUserSchema);\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1753539235743,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,18 +1,24 @@\n const mongoose = require('mongoose');\r\n const Schema = mongoose.Schema;\r\n+\r\n const MasterUserSchema = new Schema({\r\n     username: { type: String, required: true },\r\n     password: { type: String, required: true },\r\n-    \r\n-    // Link para a coleção 'mastercompanies'\r\n+    role: { \r\n+        type: String, \r\n+        enum: ['Proprietário', 'Gerente', 'Funcionário'], \r\n+        required: true \r\n+    },\r\n+\r\n     company: { \r\n         type: Schema.Types.ObjectId, \r\n         ref: 'MasterCompany',\r\n         required: true \r\n-    }\r\n+    },\r\n+    resetPasswordToken: { type: String },\r\n+    resetPasswordExpires: { type: Date }\r\n }, { timestamps: true });\r\n \r\n-// Garante que um username seja único por empresa, mesmo no banco mestre\r\n MasterUserSchema.index({ username: 1, company: 1 }, { unique: true });\r\n \r\n module.exports = mongoose.models.MasterUser || mongoose.model('MasterUser', MasterUserSchema);\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1753735858994,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,8 +2,9 @@\n const Schema = mongoose.Schema;\r\n \r\n const MasterUserSchema = new Schema({\r\n     username: { type: String, required: true },\r\n+    email: { type: String, required: true, unique: true, lowercase: true },\r\n     password: { type: String, required: true },\r\n     role: { \r\n         type: String, \r\n         enum: ['Proprietário', 'Gerente', 'Funcionário'], \r\n"
+                },
+                {
+                    "date": 1754505303483,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,5 +21,7 @@\n }, { timestamps: true });\r\n \r\n MasterUserSchema.index({ username: 1, company: 1 }, { unique: true });\r\n \r\n-module.exports = mongoose.models.MasterUser || mongoose.model('MasterUser', MasterUserSchema);\n\\ No newline at end of file\n+module.exports = {\r\n+    schema: MasterUserSchema\r\n+};\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1753533000077,
+            "name": "Commit-0",
+            "content": "// D:\\SCripts\\SiteLobos\\Servidor\\models\\MasterUser.js\r\n\r\nconst mongoose = require('mongoose');\r\nconst Schema = mongoose.Schema;\r\nconst MasterUserSchema = new Schema({\r\n    username: { type: String, required: true },\r\n    password: { type: String, required: true },\r\n    \r\n    // Link para a coleção 'mastercompanies'\r\n    company: { \r\n        type: Schema.Types.ObjectId, \r\n        ref: 'MasterCompany',\r\n        required: true \r\n    }\r\n}, { timestamps: true });\r\n\r\n// Garante que um username seja único por empresa, mesmo no banco mestre\r\nMasterUserSchema.index({ username: 1, company: 1 }, { unique: true });\r\n\r\nmodule.exports = mongoose.model('MasterUser', MasterUserSchema);"
+        }
+    ]
+}

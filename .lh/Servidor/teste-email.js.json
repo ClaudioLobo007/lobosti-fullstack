@@ -1,0 +1,22 @@
+{
+    "sourceFile": "Servidor/teste-email.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1753735135808,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1753735192560,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,9 @@\n     // 2. Definimos os detalhes do e-mail de teste\r\n     const mailOptions = {\r\n         from: `\"Teste LobosTI\" <${process.env.EMAIL_FROM}>`,\r\n         // IMPORTANTE: Coloque aqui um e-mail que você possa verificar\r\n-        to: 'seu-email-de-teste@exemplo.com', \r\n+        to: 'claudio.lobo@lobosti.com.br', \r\n         subject: 'Teste de Envio de E-mail do Servidor',\r\n         html: `\r\n             <h1>Olá!</h1>\r\n             <p>Este é um e-mail de teste enviado diretamente pelo script <strong>teste-email.js</strong>.</p>\r\n"
+                }
+            ],
+            "date": 1753735135808,
+            "name": "Commit-0",
+            "content": "// D:\\SCripts\\SiteLobos\\Servidor\\teste-email.js\r\n\r\nrequire('dotenv').config(); // Carrega as variáveis do seu ficheiro .env\r\nconst nodemailer = require('nodemailer');\r\n\r\n// Função principal de teste\r\nasync function enviarEmailDeTeste() {\r\n    console.log(\"--- A iniciar teste de envio de e-mail ---\");\r\n    console.log(\"A usar as configurações do seu ficheiro .env...\");\r\n\r\n    // 1. Criamos o \"transportador\" exatamente como no seu projeto\r\n    const transporter = nodemailer.createTransport({\r\n        host: process.env.EMAIL_HOST,\r\n        port: process.env.EMAIL_PORT,\r\n        secure: process.env.EMAIL_SECURE === 'true', \r\n        auth: {\r\n            user: process.env.EMAIL_USER,\r\n            pass: process.env.EMAIL_PASS,\r\n        },\r\n        // Adiciona mais logs para depuração\r\n        logger: true,\r\n        debug: true \r\n    });\r\n\r\n    // 2. Definimos os detalhes do e-mail de teste\r\n    const mailOptions = {\r\n        from: `\"Teste LobosTI\" <${process.env.EMAIL_FROM}>`,\r\n        // IMPORTANTE: Coloque aqui um e-mail que você possa verificar\r\n        to: 'seu-email-de-teste@exemplo.com', \r\n        subject: 'Teste de Envio de E-mail do Servidor',\r\n        html: `\r\n            <h1>Olá!</h1>\r\n            <p>Este é um e-mail de teste enviado diretamente pelo script <strong>teste-email.js</strong>.</p>\r\n            <p>Se você recebeu isto, a sua configuração do Nodemailer e as credenciais no ficheiro .env estão a funcionar corretamente.</p>\r\n        `,\r\n    };\r\n\r\n    // 3. Tentamos enviar o e-mail\r\n    try {\r\n        console.log(\"A tentar enviar o e-mail...\");\r\n        let info = await transporter.sendMail(mailOptions);\r\n\r\n        console.log(\"----------------------------------------------------\");\r\n        console.log(\"✅ SUCESSO! E-mail de teste enviado com sucesso!\");\r\n        console.log(\"ID da Mensagem:\", info.messageId);\r\n        console.log(\"Resposta do Servidor:\", info.response);\r\n        console.log(\"----------------------------------------------------\");\r\n\r\n    } catch (error) {\r\n        console.log(\"----------------------------------------------------\");\r\n        console.error(\"❌ FALHA! Ocorreu um erro ao tentar enviar o e-mail:\");\r\n        console.error(error); // Imprime o erro detalhado\r\n        console.log(\"----------------------------------------------------\");\r\n    }\r\n}\r\n\r\n// Executamos a função\r\nenviarEmailDeTeste();"
+        }
+    ]
+}

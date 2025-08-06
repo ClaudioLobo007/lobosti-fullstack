@@ -1,0 +1,26 @@
+{
+    "sourceFile": "Servidor/models/Announcement.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1753807216067,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1753820885785,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,4 @@\n-// D:\\SCripts\\SiteLobos\\Servidor\\models\\Announcement.js\r\n const mongoose = require('mongoose');\r\n const Schema = mongoose.Schema;\r\n \r\n const AnnouncementSchema = new Schema({\r\n"
+                },
+                {
+                    "date": 1754505304976,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,5 +8,7 @@\n }, {\r\n     timestamps: true // Para sabermos quando foi criado\r\n });\r\n \r\n-module.exports = mongoose.models.Announcement || mongoose.model('Announcement', AnnouncementSchema);\n\\ No newline at end of file\n+module.exports = {\r\n+    schema: AnnouncementSchema\r\n+};\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1753807216067,
+            "name": "Commit-0",
+            "content": "// D:\\SCripts\\SiteLobos\\Servidor\\models\\Announcement.js\r\nconst mongoose = require('mongoose');\r\nconst Schema = mongoose.Schema;\r\n\r\nconst AnnouncementSchema = new Schema({\r\n    message: { type: String, required: true },\r\n    isActive: { type: Boolean, default: true },\r\n    link: { type: String, default: '' } // Um link opcional, se quiser direcionar o utilizador\r\n}, {\r\n    timestamps: true // Para sabermos quando foi criado\r\n});\r\n\r\nmodule.exports = mongoose.models.Announcement || mongoose.model('Announcement', AnnouncementSchema);"
+        }
+    ]
+}

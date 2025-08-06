@@ -1,0 +1,26 @@
+{
+    "sourceFile": "Scripts/modals.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1754347966306,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1754350613447,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,7 +23,32 @@\n             }\r\n         });\r\n     }\r\n }\r\n+function setupPrivacyModal() {\r\n+    const privacyModal = document.getElementById('privacyModal');\r\n+    const openBtn = document.getElementById('openPrivacyModalBtn');\r\n+    const closeBtn = document.getElementById('closePrivacyModalBtn');\r\n \r\n+    if (privacyModal && openBtn && closeBtn) {\r\n+        // Abre o modal ao clicar no link do rodapé\r\n+        openBtn.addEventListener('click', (e) => {\r\n+            e.preventDefault();\r\n+            privacyModal.classList.remove('hidden');\r\n+        });\r\n+\r\n+        // Fecha o modal ao clicar no botão 'X'\r\n+        closeBtn.addEventListener('click', () => {\r\n+            privacyModal.classList.add('hidden');\r\n+        });\r\n+        \r\n+        // Fecha o modal ao clicar no fundo escuro\r\n+        privacyModal.addEventListener('click', (e) => {\r\n+            if (e.target === privacyModal) {\r\n+                privacyModal.classList.add('hidden');\r\n+            }\r\n+        });\r\n+    }\r\n+}\r\n+\r\n // Quando este script for carregado, ele executa a configuração\r\n setupTermsModal();\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1754350752275,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -50,5 +50,6 @@\n     }\r\n }\r\n \r\n // Quando este script for carregado, ele executa a configuração\r\n+setupPrivacyModal();\r\n setupTermsModal();\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1754347966306,
+            "name": "Commit-0",
+            "content": "// Função para configurar os listeners do modal de Termos de Serviço\r\nfunction setupTermsModal() {\r\n    const termsModal = document.getElementById('termsModal');\r\n    const openBtn = document.getElementById('openTermsModalBtn');\r\n    const closeBtn = document.getElementById('closeTermsModalBtn');\r\n\r\n    if (termsModal && openBtn && closeBtn) {\r\n        // Abre o modal ao clicar no link do rodapé\r\n        openBtn.addEventListener('click', (e) => {\r\n            e.preventDefault(); // Impede que a página suba ao topo\r\n            termsModal.classList.remove('hidden');\r\n        });\r\n\r\n        // Fecha o modal ao clicar no botão 'X'\r\n        closeBtn.addEventListener('click', () => {\r\n            termsModal.classList.add('hidden');\r\n        });\r\n        \r\n        // Fecha o modal ao clicar no fundo escuro\r\n        termsModal.addEventListener('click', (e) => {\r\n            if (e.target === termsModal) {\r\n                termsModal.classList.add('hidden');\r\n            }\r\n        });\r\n    }\r\n}\r\n\r\n// Quando este script for carregado, ele executa a configuração\r\nsetupTermsModal();"
+        }
+    ]
+}

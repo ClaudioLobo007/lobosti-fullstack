@@ -1,0 +1,18 @@
+{
+    "sourceFile": "package.json",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1752336547628,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1752336547628,
+            "name": "Commit-0",
+            "content": "{\n  \"name\": \"sitelobos\",\n  \"version\": \"1.0.0\",\n  \"main\": \"Script.js\",\n  \"scripts\": {\n    \"test\": \"echo \\\"Error: no test specified\\\" && exit 1\",\n    \"dev\": \"npx tailwindcss -i ./src/input.css -o ./style.css --watch\"\n  },\n  \"keywords\": [],\n  \"author\": \"\",\n  \"license\": \"ISC\",\n  \"description\": \"\",\n  \"devDependencies\": {\n    \"@tailwindcss/cli\": \"^4.1.11\",\n    \"tailwindcss\": \"^4.1.11\"\n  }\n}\n"
+        }
+    ]
+}

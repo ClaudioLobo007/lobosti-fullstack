@@ -1,0 +1,18 @@
+{
+    "sourceFile": "Servidor/routes/contact.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1752498665607,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1752498665607,
+            "name": "Commit-0",
+            "content": "// Em servidor/routes/contact.js\r\n\r\nconst express = require('express');\r\nconst router = express.Router();\r\n// Importamos o nosso serviço de e-mail que já está a funcionar\r\nconst { sendContactFormEmail } = require('../services/emailService');\r\n\r\n// Rota que ouve por requisições POST em /api/contact/send\r\nrouter.post('/send', async (req, res) => {\r\n    try {\r\n        const { name, email, subject, message } = req.body;\r\n\r\n        // Validação simples no servidor\r\n        if (!name || !email || !subject || !message) {\r\n            return res.status(400).json({ message: 'Todos os campos são obrigatórios.' });\r\n        }\r\n\r\n        // Chama a nova função do nosso serviço de e-mail\r\n        await sendContactFormEmail(name, email, subject, message);\r\n\r\n        res.status(200).json({ message: 'Mensagem enviada com sucesso! Entraremos em contato em breve.' });\r\n\r\n    } catch (error) {\r\n        console.error(\"Erro ao enviar e-mail de contato:\", error);\r\n        res.status(500).json({ message: 'Ocorreu um erro ao tentar enviar a mensagem.' });\r\n    }\r\n});\r\n\r\nmodule.exports = router;"
+        }
+    ]
+}

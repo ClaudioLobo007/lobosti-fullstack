@@ -1,0 +1,22 @@
+{
+    "sourceFile": "tailwind.config.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1752273983936,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1753883818838,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n /** @type {import('tailwindcss').Config} */\r\n module.exports = {\r\n   content: [\r\n-    \"./*.{html,js}\", // Monitora os seus arquivos HTML e JS\r\n+    \"./**/*.{html,js}\", // Monitora TODOS os arquivos .html e .js dentro do projeto\r\n   ],\r\n   theme: {\r\n     extend: {},\r\n   },\r\n"
+                }
+            ],
+            "date": 1752273983936,
+            "name": "Commit-0",
+            "content": "/** @type {import('tailwindcss').Config} */\r\nmodule.exports = {\r\n  content: [\r\n    \"./*.{html,js}\", // Monitora os seus arquivos HTML e JS\r\n  ],\r\n  theme: {\r\n    extend: {},\r\n  },\r\n  plugins: [],\r\n}"
+        }
+    ]
+}

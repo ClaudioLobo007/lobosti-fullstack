@@ -1,0 +1,50 @@
+{
+    "sourceFile": "Servidor/models/MasterCompany.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 8,
+            "patches": [
+                {
+                    "date": 1753532762335,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1753532820915,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,10 +9,8 @@\n         type: String, \r\n         required: true, \r\n         unique: true \r\n     },\r\n-    // Campo crucial: armazena o nome do banco de dados privado desta empresa.\r\n-    // Ex: \"empresa_12345678000199\"\r\n     dbName: { \r\n         type: String, \r\n         required: true, \r\n         unique: true \r\n"
+                },
+                {
+                    "date": 1753534873144,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -34,5 +34,5 @@\n     // Adiciona os campos createdAt e updatedAt automaticamente\r\n     timestamps: true \r\n });\r\n \r\n-module.exports = mongoose.model('MasterCompany', MasterCompanySchema);\n\\ No newline at end of file\n+module.exports = mongoose.models.MasterCompany || mongoose.model('MasterCompany', MasterCompanySchema);\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1753538918096,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,8 @@\n         type: String, \r\n         required: true, \r\n         unique: true \r\n     },\r\n-    // A assinatura é gerenciada centralmente aqui.\r\n     subscription: {\r\n         status: {\r\n             type: String,\r\n             enum: ['active', 'inactive', 'trial', 'past_due'],\r\n@@ -28,11 +27,22 @@\n         mercadopagoPreapprovalId: { \r\n             type: String, \r\n             default: null \r\n         },\r\n+    },\r\n+    permissions: {\r\n+        Gerente: {\r\n+            canCreate: { type: Boolean, default: true },\r\n+            canUpdate: { type: String, enum: ['none', 'own', 'all'], default: 'all' },\r\n+            canDelete: { type: String, enum: ['none', 'own', 'all'], default: 'all' }\r\n+        },\r\n+        Funcionário: {\r\n+            canCreate: { type: Boolean, default: true },\r\n+            canUpdate: { type: String, enum: ['none', 'own', 'all'], default: 'none' },\r\n+            canDelete: { type: String, enum: ['none', 'own', 'all'], default: 'none' }\r\n+        }\r\n     }\r\n }, { \r\n-    // Adiciona os campos createdAt e updatedAt automaticamente\r\n     timestamps: true \r\n });\r\n \r\n module.exports = mongoose.models.MasterCompany || mongoose.model('MasterCompany', MasterCompanySchema);\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1753546433217,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,34 +1,22 @@\n const mongoose = require('mongoose');\r\n const Schema = mongoose.Schema;\r\n+\r\n const MasterCompanySchema = new Schema({\r\n-    nomeEmpresa: { \r\n-        type: String, \r\n-        required: true \r\n-    },\r\n-    cnpj: { \r\n-        type: String, \r\n-        required: true, \r\n-        unique: true \r\n-    },\r\n-    dbName: { \r\n-        type: String, \r\n-        required: true, \r\n-        unique: true \r\n-    },\r\n+    nomeEmpresa: { type: String, required: true },\r\n+    cnpj: { type: String, required: true, unique: true },\r\n+    dbName: { type: String, required: true, unique: true },\r\n+    email: { type: String, default: '' },\r\n+    telefoneFixo: { type: String, default: '' },\r\n+    telefoneWhatsapp: { type: String, default: '' },\r\n     subscription: {\r\n         status: {\r\n             type: String,\r\n             enum: ['active', 'inactive', 'trial', 'past_due'],\r\n             default: 'inactive'\r\n         },\r\n-        endDate: { \r\n-            type: Date \r\n-        },\r\n-        mercadopagoPreapprovalId: { \r\n-            type: String, \r\n-            default: null \r\n-        },\r\n+        endDate: { type: Date },\r\n+        mercadopagoPreapprovalId: { type: String, default: null },\r\n     },\r\n     permissions: {\r\n         Gerente: {\r\n             canCreate: { type: Boolean, default: true },\r\n"
+                },
+                {
+                    "date": 1753560327288,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n     telefoneWhatsapp: { type: String, default: '' },\r\n     subscription: {\r\n         status: {\r\n             type: String,\r\n-            enum: ['active', 'inactive', 'trial', 'past_due'],\r\n+            enum: ['active', 'inactive', 'trial', 'past_due', 'pending_approval']],\r\n             default: 'inactive'\r\n         },\r\n         endDate: { type: Date },\r\n         mercadopagoPreapprovalId: { type: String, default: null },\r\n"
+                },
+                {
+                    "date": 1753560334865,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n     telefoneWhatsapp: { type: String, default: '' },\r\n     subscription: {\r\n         status: {\r\n             type: String,\r\n-            enum: ['active', 'inactive', 'trial', 'past_due', 'pending_approval']],\r\n+            enum: ['active', 'inactive', 'trial', 'past_due', 'pending_approval'],\r\n             default: 'inactive'\r\n         },\r\n         endDate: { type: Date },\r\n         mercadopagoPreapprovalId: { type: String, default: null },\r\n"
+                },
+                {
+                    "date": 1753738984851,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,8 +7,11 @@\n     dbName: { type: String, required: true, unique: true },\r\n     email: { type: String, default: '' },\r\n     telefoneFixo: { type: String, default: '' },\r\n     telefoneWhatsapp: { type: String, default: '' },\r\n+    isVerified: { type: Boolean, default: false },\r\n+    verificationToken: { type: String },\r\n+    verificationExpires: { type: Date },\r\n     subscription: {\r\n         status: {\r\n             type: String,\r\n             enum: ['active', 'inactive', 'trial', 'past_due', 'pending_approval'],\r\n"
+                },
+                {
+                    "date": 1754505302714,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,5 +35,7 @@\n }, { \r\n     timestamps: true \r\n });\r\n \r\n-module.exports = mongoose.models.MasterCompany || mongoose.model('MasterCompany', MasterCompanySchema);\n\\ No newline at end of file\n+module.exports = {\r\n+    schema: MasterCompanySchema\r\n+};\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1753532762335,
+            "name": "Commit-0",
+            "content": "const mongoose = require('mongoose');\r\nconst Schema = mongoose.Schema;\r\nconst MasterCompanySchema = new Schema({\r\n    nomeEmpresa: { \r\n        type: String, \r\n        required: true \r\n    },\r\n    cnpj: { \r\n        type: String, \r\n        required: true, \r\n        unique: true \r\n    },\r\n    // Campo crucial: armazena o nome do banco de dados privado desta empresa.\r\n    // Ex: \"empresa_12345678000199\"\r\n    dbName: { \r\n        type: String, \r\n        required: true, \r\n        unique: true \r\n    },\r\n    // A assinatura é gerenciada centralmente aqui.\r\n    subscription: {\r\n        status: {\r\n            type: String,\r\n            enum: ['active', 'inactive', 'trial', 'past_due'],\r\n            default: 'inactive'\r\n        },\r\n        endDate: { \r\n            type: Date \r\n        },\r\n        mercadopagoPreapprovalId: { \r\n            type: String, \r\n            default: null \r\n        },\r\n    }\r\n}, { \r\n    // Adiciona os campos createdAt e updatedAt automaticamente\r\n    timestamps: true \r\n});\r\n\r\nmodule.exports = mongoose.model('MasterCompany', MasterCompanySchema);"
+        }
+    ]
+}

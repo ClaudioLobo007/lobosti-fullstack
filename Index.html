@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LobosTI - Soluções em Tecnologia</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #0f172a;
+            color: #e2e8f0;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+        }
+        
+        .wolf-logo {
+            filter: drop-shadow(0 0 5px rgba(99, 102, 241, 0.7));
+        }
+        
+        .login-form {
+            backdrop-filter: blur(10px);
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #6366f1;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .animated-wolf {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
+</head>
+<body>
+    <header id="header-placeholder"></header>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="hero-gradient pt-32 pb-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="lg:grid lg:grid-cols-2 lg:gap-12 items-center">
+                <div class="mb-12 lg:mb-0">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-6 text-white">
+                        Soluções em TI com a <span class="text-indigo-500">força</span> de uma alcateia
+                    </h1>
+                    <p class="text-lg text-gray-300 mb-8">
+                        Nós da LobosTI oferecemos serviços especializados em tecnologia da informação para impulsionar seu negócio ao próximo nível.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#servicos" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-6 rounded-lg transition duration-300">
+                            Nossos Serviços <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                        <a href="#contato" class="border border-indigo-500 text-indigo-400 hover:bg-indigo-900 hover:bg-opacity-30 font-medium py-3 px-6 rounded-lg transition duration-300">
+                            Fale Conosco
+                        </a>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="animated-wolf">
+                        <img src="https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Fluxo de Dados Digitais" class="w-full max-w-md mx-auto">
+                    </div>
+                    <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-indigo-600 rounded-full filter blur-3xl opacity-20"></div>
+                    <div class="absolute -top-10 -right-10 w-32 h-32 bg-purple-600 rounded-full filter blur-3xl opacity-20"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Serviços Section -->
+    <section id="servicos" class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-900">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Nossos <span class="text-indigo-500">Serviços</span></h2>
+                <p class="text-lg text-gray-400 max-w-2xl mx-auto">
+                    Oferecemos soluções completas em TI para empresas de todos os tamanhos.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Serviço 1: Organizador de Boletos -->
+                <div class="service-card bg-gray-800 rounded-xl p-8 transition duration-300 hover:shadow-lg">
+                    <div class="w-14 h-14 bg-yellow-600 bg-opacity-20 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-file-invoice-dollar text-yellow-500 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-3">Organizador de Boletos</h3>
+                    <p class="text-gray-400 mb-4">
+                        Sistema inteligente para organização, controle e pagamento de boletos e contas recorrentes.
+                    </p>
+                    <div class="mt-4 flex flex-col items-start space-y-2">
+                        <a href="pages/organizador-boletos.html" class="text-indigo-400 font-medium inline-flex items-center hover:text-indigo-300">
+                            Saiba mais <i class="fas fa-chevron-right ml-1 text-sm"></i>
+                        </a>
+                        <a href="/index.html#login" id="boleto-card-link" class="text-yellow-500 font-medium inline-flex items-center">
+                            Faça Login <i class="fas fa-chevron-right ml-1 text-sm"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Serviço 2 -->
+                <div class="service-card bg-gray-800 rounded-xl p-8 transition duration-300 hover:shadow-lg">
+                    <div class="w-14 h-14 bg-blue-600 bg-opacity-20 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-code text-blue-500 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-3">Desenvolvimento</h3>
+                    <p class="text-gray-400 mb-4">
+                        Soluções personalizadas de software e aplicativos para atender às necessidades específicas do seu negócio.
+                    </p>
+                    <a href="/pages/Desenvolvimento.html" class="text-blue-500 font-medium inline-flex items-center">
+                        Saiba mais <i class="fas fa-chevron-right ml-1 text-sm"></i>
+                    </a>
+                </div>
+                
+                <!-- Serviço 3 -->
+                <div class="service-card bg-gray-800 rounded-xl p-8 transition duration-300 hover:shadow-lg">
+                    <div class="w-14 h-14 bg-green-600 bg-opacity-20 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-network-wired text-green-500 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-3">Infraestrutura</h3>
+                    <p class="text-gray-400 mb-4">
+                        Projeto, implementação e manutenção de redes corporativas para máxima eficiência operacional.
+                    </p>
+                    <a href="/pages/infraestrutura.html" class="text-green-500 font-medium inline-flex items-center">
+                        Saiba mais <i class="fas fa-chevron-right ml-1 text-sm"></i>
+                    </a>
+                </div>
+                
+                <!-- Serviço 4 -->
+                <div class="service-card bg-gray-800 rounded-xl p-8 transition duration-300 hover:shadow-lg">
+                    <div class="w-14 h-14 bg-red-600 bg-opacity-20 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-headset text-red-500 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-3">Suporte Técnico</h3>
+                    <p class="text-gray-400 mb-4">
+                        Suporte especializado remoto e presencial para resolver problemas e manter sua operação fluindo.
+                    </p>
+                    <a href="/pages/suporte.html" class="text-red-500 font-medium inline-flex items-center">
+                        Saiba mais <i class="fas fa-chevron-right ml-1 text-sm"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Login Section -->
+    <section id="login" class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-800">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col lg:flex-row items-center justify-between">
+                <div class="lg:w-1/2 mb-12 lg:mb-0">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
+                        Acesse sua <span class="text-indigo-500">conta</span>
+                    </h2>
+                    <p class="text-lg text-gray-400 mb-8 max-w-lg">
+                        Faça login para acessar nossos serviços exclusivos e gerenciar sua infraestrutura de TI de forma centralizada.
+                    </p>
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 bg-gray-700 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-lock text-indigo-500 text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-medium">Segurança garantida</h4>
+                            <p class="text-gray-400 text-sm">Autenticação de dois fatores disponível</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lg:w-1/2 max-w-md w-full">
+                    <div id="login-section-content" class="login-form rounded-xl p-8 shadow-lg">
+                        <h3 class="text-2xl font-bold text-white mb-6 text-center">Acesso ao Sistema</h3>
+                            <form id="mainLoginForm">
+                                <div id="login-step-1">
+                                    <div class="mb-6">
+                                        <label for="mainCnpjInput" class="block text-gray-300 text-sm font-medium mb-2">CNPJ da Empresa</label>
+                                        <input type="text" id="mainCnpjInput" required class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-white placeholder-gray-400 transition duration-300" placeholder="00.000.000/0000-00">
+                                        <div id="cnpjError" class="text-red-400 text-sm mt-1 h-4"></div>
+                                    </div>
+                                    <div class="space-y-4">
+                                        <button type="button" id="nextStepBtn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-4 rounded-lg transition duration-300 flex items-center justify-center">
+                                            Avançar <i class="fas fa-arrow-right ml-2"></i>
+                                        </button>
+                                        <button type="button" id="signUpBtn" class="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-4 rounded-lg transition duration-300 hidden">
+                                            Cadastre-se
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div id="login-step-2" class="hidden">
+                                    <div class="mb-4">
+                                        <label for="mainUsernameInput" class="block text-gray-300 text-sm font-medium mb-2">Nome de Usuário</label>
+                                        <input type="text" id="mainUsernameInput" required class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-white placeholder-gray-400 transition duration-300" placeholder="Seu usuário">
+                                        <div id="usernameError" class="text-red-400 text-sm mt-1 h-4"></div>
+                                    </div>
+                                    <div class="mb-6">
+                                        <label for="mainUserPasswordInput" class="block text-gray-300 text-sm font-medium mb-2">Sua Senha</label>
+                                        <div class="relative">
+                                            <input type="password" id="mainUserPasswordInput" required class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-white placeholder-gray-400 transition duration-300 pr-10" placeholder="••••••••">
+                                            <div id="passwordError" class="text-red-400 text-sm mt-1 h-4"></div>
+                                            <button type="button" id="togglePasswordBtn" class="absolute inset-y-0 right-0 flex items-center px-4 text-gray-400 hover:text-white">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <button type="submit" id="mainLoginSubmitBtn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-4 rounded-lg transition duration-300 flex items-center justify-center">
+                                        Entrar no Sistema <i class="fas fa-sign-in-alt ml-2"></i>
+                                    </button>
+                                    <button type="button" id="backToStep1Btn" class="w-full text-center text-gray-400 text-sm mt-4 hover:text-white transition duration-200">Voltar</button>
+                                    <div class="text-center mt-4">
+                                        <button type="button" id="forgotPasswordBtn" class="text-sm text-indigo-400 hover:underline">Esqueci-me da senha</button>
+                                    </div>    
+                                </div>
+                            </form>
+                            <div id="mainLoginFormFeedback" class="mt-4 text-center text-sm"></div>
+                        <div id="mainLoginFormFeedback" class="mt-4 text-center text-sm"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contato Section -->
+    <section id="contato" class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-900">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Entre em <span class="text-indigo-500">Contato</span></h2>
+                <p class="text-lg text-gray-400 max-w-2xl mx-auto">
+                    Pronto para transformar sua infraestrutura de TI? Nossa equipe está aqui para ajudar.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div>
+                    <div class="bg-gray-800 rounded-xl p-8 h-full">
+                        <h3 class="text-xl font-semibold text-white mb-6">Informações de Contato</h3>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0">
+                                    <div class="w-10 h-10 bg-indigo-600 bg-opacity-20 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-map-marker-alt text-indigo-500"></i>
+                                    </div>
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="text-white font-medium">Endereço</h4>
+                                    <p class="text-gray-400">Loja Online</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0">
+                                    <div class="w-10 h-10 bg-purple-600 bg-opacity-20 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-phone-alt text-purple-500"></i>
+                                    </div>
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="text-white font-medium">Telefone</h4>
+                                    <p class="text-gray-400">(21) 98765-4321</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0">
+                                    <div class="w-10 h-10 bg-blue-600 bg-opacity-20 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-envelope text-blue-500"></i>
+                                    </div>
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="text-white font-medium">E-mail</h4>
+                                    <p class="text-gray-400">lobosti@outlook.com</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8">
+                            <h4 class="text-white font-medium mb-4">Siga-nos</h4>
+                            <div class="flex space-x-4">
+                                <a href="#" class="w-10 h-10 bg-gray-700 hover:bg-indigo-600 rounded-full flex items-center justify-center transition duration-300">
+                                    <i class="fab fa-facebook-f text-white"></i>
+                                </a>
+                                <a href="#" class="w-10 h-10 bg-gray-700 hover:bg-blue-400 rounded-full flex items-center justify-center transition duration-300">
+                                    <i class="fab fa-twitter text-white"></i>
+                                </a>
+                                <a href="#" class="w-10 h-10 bg-gray-700 hover:bg-pink-600 rounded-full flex items-center justify-center transition duration-300">
+                                    <i class="fab fa-instagram text-white"></i>
+                                </a>
+                                <a href="#" class="w-10 h-10 bg-gray-700 hover:bg-blue-600 rounded-full flex items-center justify-center transition duration-300">
+                                    <i class="fab fa-linkedin-in text-white"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="bg-gray-800 rounded-xl p-8 h-full">
+                        <h3 class="text-xl font-semibold text-white mb-6">Envie uma Mensagem</h3>
+                        
+                        <form id="contactForm">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                                <div>
+                                    <label for="contactName" class="block text-gray-300 text-sm font-medium mb-2">Nome</label>
+                                    <input type="text" id="contactName" required class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-white placeholder-gray-400 transition duration-300" placeholder="Seu nome">
+                                </div>
+                                <div>
+                                    <label for="contactEmail" class="block text-gray-300 text-sm font-medium mb-2">E-mail</label>
+                                    <input type="email" id="contactEmail" required class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-white placeholder-gray-400 transition duration-300" placeholder="seu@email.com">
+                                </div>
+                            </div>
+                            
+                            <div class="mb-6">
+                                <label for="contactSubject" class="block text-gray-300 text-sm font-medium mb-2">Assunto</label>
+                                <input type="text" id="contactSubject" required class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-white placeholder-gray-400 transition duration-300" placeholder="Qual é o assunto?">
+                            </div>
+                            
+                            <div class="mb-6">
+                                <label for="contactMessage" class="block text-gray-300 text-sm font-medium mb-2">Mensagem</label>
+                                <textarea id="contactMessage" rows="4" required class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-white placeholder-gray-400 transition duration-300" placeholder="Sua mensagem..."></textarea>
+                            </div>
+                            
+                            <button type="submit" id="contactSubmitBtn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-4 rounded-lg transition duration-300 flex items-center justify-center">
+                                Enviar Mensagem <i class="fas fa-paper-plane ml-2"></i>
+                            </button>
+                        </form>
+                        <div id="contactFormFeedback" class="mt-4 text-center text-sm"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <div id="modals-placeholder"></div>
+    <footer id="footer-placeholder"></footer>
+
+    <div id="registerModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+        <div class="bg-gray-800 rounded-lg shadow-2xl p-8 w-full max-w-2xl text-white relative transform transition-all scale-95">
+            
+            <button id="closeRegisterModalBtn" class="absolute top-4 right-4 text-gray-400 hover:text-white transition">
+                <i class="fas fa-times fa-lg"></i>
+            </button>
+
+            <h2 class="text-2xl font-bold mb-6 text-center text-indigo-400">Cadastro de Nova Empresa</h2>
+
+            <form id="registerForm">
+                <div id="register-step-1">
+                    <h3 class="text-lg font-semibold mb-4 border-b border-gray-600 pb-2">1. Dados da Empresa</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="registerCnpj" class="block text-sm font-medium text-gray-300 mb-1">CNPJ</label>
+                            <input type="text" id="registerCnpj" name="cnpj" required class="w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2 focus:ring-indigo-500 focus:border-indigo-500">
+                            <div id="registerCnpjError" class="text-red-400 text-sm mt-1 h-4"></div>
+                        </div>
+                        <div>
+                            <label for="registerCompanyName" class="block text-sm font-medium text-gray-300 mb-1">Nome da Empresa</label>
+                            <input type="text" id="registerCompanyName" name="nomeEmpresa" required class="w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2 focus:ring-indigo-500 focus:border-indigo-500">
+                        </div>
+                        <div>
+                            <label for="registerEmail" class="block text-sm font-medium text-gray-300 mb-1">E-mail da Empresa</label>
+                            <input type="email" id="registerEmail" name="email" required class="w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2 focus:ring-indigo-500 focus:border-indigo-500">
+                        </div>
+                        <div>
+                            <label for="registerWhatsapp" class="block text-sm font-medium text-gray-300 mb-1">WhatsApp</label>
+                            <input type="text" id="registerWhatsapp" name="telefoneWhatsapp" required class="w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2 focus:ring-indigo-500 focus:border-indigo-500">
+                        </div>
+                    </div>
+                    <button type="button" id="goToRegisterStep2Btn" class="w-full mt-6 bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-lg">
+                        Avançar para Dados do Proprietário <i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+
+                <div id="register-step-2" class="hidden">
+                    <h3 class="text-lg font-semibold mb-4 border-b border-gray-600 pb-2">2. Dados do Proprietário</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="ownerUsername" class="block text-sm font-medium text-gray-300 mb-1">Login (Nome de Usuário)</label>
+                            <input type="text" id="ownerUsername" name="username" required class="w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2">
+                        </div>
+                        <div>
+                            <label for="ownerEmail" class="block text-sm font-medium text-gray-300 mb-1">E-mail do Proprietário</label>
+                            <input type="email" id="ownerEmail" name="ownerEmail" required class="w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2">
+                        </div>
+                        <div>
+                            <label for="ownerPassword" class="block text-sm font-medium text-gray-300 mb-1">Senha</label>
+                            <input type="password" id="ownerPassword" name="password" required class="w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2">
+                        </div>
+                        <div>
+                            <label for="ownerConfirmPassword" class="block text-sm font-medium text-gray-300 mb-1">Confirmar Senha</label>
+                            <input type="password" id="ownerConfirmPassword" name="confirmPassword" required class="w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2">
+                            <div id="passwordConfirmError" class="text-red-400 text-sm mt-1 h-4"></div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4 mt-6">
+                        <button type="button" id="backToRegisterStep1Btn" class="w-1/3 bg-gray-600 hover:bg-gray-500 text-white font-medium py-2 px-4 rounded-lg">
+                            <i class="fas fa-arrow-left mr-2"></i> Voltar
+                        </button>
+                        <button type="submit" id="submitRegistrationBtn" class="w-2/3 bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg">
+                            Finalizar Cadastro <i class="fas fa-check ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+                <div id="registrationFeedback" class="mt-4 text-center text-sm h-5"></div>
+            </form>
+        </div>
+    </div>
+
+<script src="https://unpkg.com/imask"></script>
+<script type="module">
+import { API_BASE_URL } from './scripts/config.js';
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    // FUNÇÃO PARA CARREGAR COMPONENTES (HEADER, FOOTER, MODAIS)
+    const loadComponent = (url, placeholder) => {
+        const basePath = window.location.pathname.includes('/pages/') ? '../' : '';
+        return fetch(basePath + url)
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error(`Erro ao carregar ${url}: ${res.statusText}`);
+                }
+                return res.text();
+            })
+            .then(data => {
+                if (placeholder) {
+                    placeholder.innerHTML = data;
+                }
+            });
+    };
+
+    // CARREGA TODOS OS COMPONENTES PRIMEIRO
+    Promise.all([
+        loadComponent('components/header.html', document.getElementById("header-placeholder")),
+        loadComponent('components/footer.html', document.getElementById("footer-placeholder")),
+        loadComponent('components/modals.html', document.getElementById("modals-placeholder"))
+    ]).then(async () => {
+        // --- TODA A LÓGICA AGORA FICA DENTRO DO .then() ---
+
+        // 1. ADICIONA O EVENTO DO MENU MOBILE (AGORA O BOTÃO JÁ EXISTE)
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+        const copyrightTextElement = document.getElementById('copyright-text');
+        if (copyrightTextElement) {
+            const currentYear = new Date().getFullYear();
+            copyrightTextElement.innerHTML = `&copy; ${currentYear} LobosTI. Todos os direitos reservados.`;
+        }
+        
+        // Carrega o script que controla os modais (Termos de Uso, Privacidade)
+        const modalScript = document.createElement('script');
+        const basePath = window.location.pathname.includes('/pages/') ? '../' : '';
+        modalScript.src = `${basePath}scripts/modals.js`;
+        document.body.appendChild(modalScript);
+
+        // =================================================================================
+        // FUNÇÕES GERAIS E DE LÓGICA
+        // =================================================================================
+        
+        /**
+         * Atualiza toda a interface do Index.html para um utilizador autenticado.
+         * @param {object} user - O objeto do utilizador logado.
+         * @param {object} company - O objeto da empresa do utilizador.
+         */
+        function updateUIForLoggedInUser(user, company) {
+            // ATUALIZA A BARRA DE NAVEGAÇÃO (DESKTOP)
+            const desktopMenu = document.getElementById('desktop-menu-items');
+            const navLoginLink = document.getElementById('nav-login-link');
+            if (desktopMenu && navLoginLink && !document.getElementById('desktop-logout-btn')) {
+                navLoginLink.textContent = 'Aceder ao Painel';
+                navLoginLink.href = 'OrgBoletos.html';
+                const logoutButton = document.createElement('button');
+                logoutButton.id = 'desktop-logout-btn';
+                logoutButton.className = 'bg-red-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-red-700';
+                logoutButton.textContent = 'Sair';
+                desktopMenu.appendChild(logoutButton);
+                logoutButton.addEventListener('click', () => {
+                    localStorage.removeItem('authToken');
+                    window.location.reload();
+                });
+            }
+
+            // ATUALIZA A BARRA DE NAVEGAÇÃO (MOBILE)
+            const mobileMenuItems = document.getElementById('mobile-menu-items');
+            const mobileLoginLink = document.getElementById('mobile-nav-login-link');
+            if (mobileMenuItems && mobileLoginLink && !document.getElementById('mobile-logout-btn')) {
+                mobileLoginLink.textContent = 'Aceder ao Painel';
+                mobileLoginLink.href = 'OrgBoletos.html';
+                const logoutButtonMobile = document.createElement('a');
+                logoutButtonMobile.id = 'mobile-logout-btn';
+                logoutButtonMobile.href = '#';
+                logoutButtonMobile.className = 'bg-red-600 text-white block px-3 py-2 rounded-md text-base font-medium';
+                logoutButtonMobile.textContent = 'Sair';
+                logoutButtonMobile.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    localStorage.removeItem('authToken');
+                    window.location.reload();
+                });
+                mobileMenuItems.appendChild(logoutButtonMobile);
+            }
+
+            // ATUALIZA A SECÇÃO DE LOGIN PRINCIPAL
+            const loginSectionContent = document.getElementById('login-section-content');
+            if (loginSectionContent) {
+                loginSectionContent.innerHTML = `
+                    <h3 class="text-2xl font-bold text-white mb-4 text-center">Sessão Iniciada</h3>
+                    <div class="text-center text-gray-300">
+                        <p>Você já está autenticado.</p>
+                        <p class="mt-2 text-sm">Para aceder ao sistema, utilize o menu no topo da página ou o card de serviços.</p>
+                    </div>
+                `;
+            }
+
+            // ATUALIZA O CARD DE SERVIÇO 'ORGANIZADOR DE BOLETOS'
+            const boletoCardLink = document.getElementById('boleto-card-link');
+            if (boletoCardLink) {
+                const subscription = company.subscription;
+                const isSubscriptionActive = subscription && subscription.status === 'active' && new Date(subscription.endDate) > new Date();
+                
+                boletoCardLink.classList.remove('text-yellow-500', 'text-green-500', 'text-red-500');
+                boletoCardLink.href = 'OrgBoletos.html';
+
+                if (user.role === 'Proprietário') {
+                    if (isSubscriptionActive) {
+                        boletoCardLink.innerHTML = 'Aceder ao Painel <i class="fas fa-chevron-right ml-1 text-sm"></i>';
+                        boletoCardLink.classList.add('text-green-500');
+                    } else {
+                        boletoCardLink.innerHTML = 'Renovar Assinatura <i class="fas fa-chevron-right ml-1 text-sm"></i>';
+                        boletoCardLink.classList.add('text-red-500');
+                    }
+                } else {
+                    boletoCardLink.innerHTML = 'Aceder ao Sistema <i class="fas fa-chevron-right ml-1 text-sm"></i>';
+                    boletoCardLink.classList.add('text-green-500');
+                }
+            }
+        }
+        
+        function clearLoginErrors() {
+            const fields = ['cnpjError', 'usernameError', 'passwordError', 'mainLoginFormFeedback'];
+            fields.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.textContent = '';
+            });
+        }
+        
+        // --- ADICIONADO: FUNÇÃO DO EASTER EGG ---
+        function activateAdminLogin() {
+            const loginStep1 = document.getElementById('login-step-1');
+            const loginStep2 = document.getElementById('login-step-2');
+            const mainUsernameInput = document.getElementById('mainUsernameInput');
+            const mainLoginForm = document.getElementById('mainLoginForm');
+            
+            if (loginStep1 && loginStep2 && mainUsernameInput && mainLoginForm) {
+                document.getElementById('mainCnpjInput').removeAttribute('required');
+                mainLoginForm.dataset.isAdmin = "true";
+                loginStep1.classList.add('hidden');
+                mainUsernameInput.previousElementSibling.textContent = 'Usuário Administrador';
+                loginStep2.classList.remove('hidden');
+                mainUsernameInput.focus();
+            }
+        }
+
+
+        // 2. VERIFICAÇÃO DE SESSÃO E INICIALIZAÇÃO
+        const token = localStorage.getItem('authToken');
+        if (token) {
+            // LÓGICA PARA USUÁRIO LOGADO
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/auth/me`, { headers: { 'Authorization': `Bearer ${token}` } });
+                if (response.ok) {
+                    const data = await response.json();
+                    updateUIForLoggedInUser(data.user, data.company);
+                } else {
+                    localStorage.removeItem('authToken');
+                }
+            } catch (error) {
+                console.error("Erro ao verificar sessão:", error);
+                localStorage.removeItem('authToken');
+            }
+        } else {
+            // 3. LÓGICA EXECUTADA APENAS SE O USUÁRIO NÃO ESTIVER LOGADO
+            
+            // --- ADICIONADO: SETUP DO LISTENER DO EASTER EGG ---
+            const wolfImageElement = document.querySelector('.animated-wolf');
+            if (wolfImageElement) {
+                let clickCount = 0;
+                let clickTimer = null;
+                wolfImageElement.addEventListener('click', () => {
+                    if (document.getElementById('mainLoginForm')) {
+                        clickCount++;
+                        clearTimeout(clickTimer);
+                        clickTimer = setTimeout(() => { clickCount = 0; }, 2000);
+                        if (clickCount === 7) {
+                            activateAdminLogin();
+                            clickCount = 0;
+                            clearTimeout(clickTimer);
+                        }
+                    }
+                });
+            }
+
+            let cnpjMask, registerCnpjMask, registerWhatsappMask;
+            
+            // --- Lógica do formulário de Login ---
+            const mainLoginForm = document.getElementById('mainLoginForm');
+            if (mainLoginForm) {
+                const mainCnpjInput = document.getElementById('mainCnpjInput');
+                const nextStepBtn = document.getElementById('nextStepBtn');
+                const signUpBtn = document.getElementById('signUpBtn');
+                const backToStep1Btn = document.getElementById('backToStep1Btn');
+                
+                cnpjMask = IMask(mainCnpjInput, { mask: '00.000.000/0000-00' });
+                
+                cnpjMask.on('accept', () => {
+                    document.getElementById('mainLoginFormFeedback').textContent = '';
+                    signUpBtn.classList.add('hidden');
+                });
+
+                nextStepBtn.addEventListener('click', handleNextStepClick);
+                backToStep1Btn.addEventListener('click', handleBackToStep1Click);
+                mainLoginForm.addEventListener('submit', handleLoginFormSubmit);
+
+                async function handleNextStepClick() {
+                    const mainLoginFormFeedback = document.getElementById('mainLoginFormFeedback');
+                    const signUpBtn = document.getElementById('signUpBtn');
+                    const nextStepBtn = document.getElementById('nextStepBtn');
+                    const loginStep1 = document.getElementById('login-step-1');
+                    const loginStep2 = document.getElementById('login-step-2');
+                    
+                    mainLoginFormFeedback.textContent = '';
+                    signUpBtn.classList.add('hidden');
+                    
+                    if (!cnpjMask || cnpjMask.unmaskedValue.length !== 14) {
+                        mainLoginFormFeedback.textContent = 'Por favor, preencha o CNPJ completo.';
+                        return;
+                    }
+
+                    nextStepBtn.disabled = true;
+                    nextStepBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verificando...';
+                    try {
+                        const response = await fetch(`${API_BASE_URL}/api/auth/find-company-by-cnpj`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ cnpj: cnpjMask.value }) });
+                        const result = await response.json();
+                        if (!response.ok) { throw new Error(result.message); }
+                        loginStep1.classList.add('hidden');
+                        loginStep2.classList.remove('hidden');
+                    } catch (error) {
+                        mainLoginFormFeedback.textContent = error.message;
+                        if (error.message && error.message.toLowerCase().includes("nenhuma empresa encontrada")) {
+                            signUpBtn.classList.remove('hidden');
+                        }
+                    } finally {
+                        nextStepBtn.disabled = false;
+                        nextStepBtn.innerHTML = 'Avançar <i class="fas fa-arrow-right ml-2"></i>';
+                    }
+                }
+                
+                function handleBackToStep1Click() {
+                    const loginStep1 = document.getElementById('login-step-1');
+                    const loginStep2 = document.getElementById('login-step-2');
+                    loginStep2.classList.add('hidden');
+                    if(cnpjMask) cnpjMask.value = '';
+                    loginStep1.classList.remove('hidden');
+                    document.getElementById('mainLoginFormFeedback').textContent = '';
+                    mainLoginForm.dataset.isAdmin = "false";
+                    document.getElementById('mainCnpjInput').setAttribute('required', '');
+                    clearLoginErrors();
+                }
+                
+                async function handleLoginFormSubmit(e) {
+                    e.preventDefault();
+                    const mainLoginSubmitBtn = document.getElementById('mainLoginSubmitBtn');
+                    const mainUsernameInput = document.getElementById('mainUsernameInput');
+                    const mainUserPasswordInput = document.getElementById('mainUserPasswordInput');
+                    mainLoginSubmitBtn.disabled = true;
+                    mainLoginSubmitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verificando...';
+                    clearLoginErrors();
+                    const isAdminLoginMode = e.target.dataset.isAdmin === "true";
+
+                    const payload = isAdminLoginMode ? 
+                        { username: mainUsernameInput.value, password: mainUserPasswordInput.value } :
+                        { cnpj: cnpjMask.value, username: mainUsernameInput.value, password: mainUserPasswordInput.value };
+                    try {
+                        const response = await fetch(API_BASE_URL + (isAdminLoginMode ? '/api/auth/login/admin' : '/api/auth/login/direct'), { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                        const result = await response.json();
+                        if (!response.ok) { 
+                            const error = new Error(result.message || 'Erro de validação.');
+                            error.details = result.errors;
+                            throw error;
+                        }
+                        localStorage.setItem('authToken', result.token);
+                        window.location.reload();
+                    } catch (error) {
+                        if (error.details) {
+                            error.details.forEach(err => {
+                                const errorElement = document.getElementById(`${err.path}Error`);
+                                if (errorElement) { errorElement.textContent = err.msg; }
+                            });
+                        } else {
+                            document.getElementById('mainLoginFormFeedback').textContent = error.message || 'Ocorreu um erro.';
+                        }
+                    } finally {
+                        mainLoginSubmitBtn.disabled = false;
+                        mainLoginSubmitBtn.innerHTML = 'Entrar no Sistema <i class="fas fa-sign-in-alt ml-2"></i>';
+                        e.target.dataset.isAdmin = "false";
+                    }
+                }
+            }
+            
+            // --- Lógica do Modal de Cadastro ---
+            const registerModal = document.getElementById('registerModal');
+            if (registerModal) {
+                const signUpBtn = document.getElementById('signUpBtn');
+                const closeRegisterModalBtn = document.getElementById('closeRegisterModalBtn');
+                const registerForm = document.getElementById('registerForm');
+                const goToRegisterStep2Btn = document.getElementById('goToRegisterStep2Btn');
+                const backToRegisterStep1Btn = document.getElementById('backToRegisterStep1Btn');
+                const registerCnpjInput = document.getElementById('registerCnpj');
+                const registerWhatsappInput = document.getElementById('registerWhatsapp');
+
+                registerCnpjMask = IMask(registerCnpjInput, { mask: '00.000.000/0000-00' });
+                registerWhatsappMask = IMask(registerWhatsappInput, { mask: '(00) 00000-0000' });
+
+                signUpBtn.addEventListener('click', () => {
+                    const mainCnpjInput = document.getElementById('mainCnpjInput');
+                    if (mainCnpjInput && registerCnpjMask) { 
+                        registerCnpjMask.value = mainCnpjInput.value; 
+                    }
+                    registerModal.classList.remove('hidden');
+                });
+                
+                closeRegisterModalBtn.addEventListener('click', () => {
+                    registerModal.classList.add('hidden');
+                    registerForm.reset();
+                });
+
+                goToRegisterStep2Btn.addEventListener('click', handleGoToRegisterStep2);
+                backToRegisterStep1Btn.addEventListener('click', () => {
+                    document.getElementById('register-step-2').classList.add('hidden');
+                    document.getElementById('register-step-1').classList.remove('hidden');
+                });
+                registerForm.addEventListener('submit', handleRegisterFormSubmit);
+
+                function handleGoToRegisterStep2() {
+                    const registrationFeedback = document.getElementById('registrationFeedback');
+                    registrationFeedback.textContent = '';
+                    const companyName = document.getElementById('registerCompanyName').value;
+                    const companyEmail = document.getElementById('registerEmail').value;
+
+                    if (registerCnpjMask && registerCnpjMask.unmaskedValue.length === 14 && companyName.trim() !== '' && companyEmail.trim() !== '' && registerWhatsappMask && registerWhatsappMask.unmaskedValue.length >= 10) {
+                        document.getElementById('register-step-1').classList.add('hidden');
+                        document.getElementById('register-step-2').classList.remove('hidden');
+                    } else {
+                        registrationFeedback.textContent = 'Por favor, preencha todos os dados da empresa para avançar.';
+                    }
+                }
+
+                async function handleRegisterFormSubmit(e) {
+                    e.preventDefault();
+                    const password = document.getElementById('ownerPassword').value;
+                    const confirmPassword = document.getElementById('ownerConfirmPassword').value;
+                    if (password !== confirmPassword) {
+                        document.getElementById('passwordConfirmError').textContent = 'As senhas não coincidem.';
+                        return;
+                    }
+                    document.getElementById('passwordConfirmError').textContent = '';
+
+                    const submitBtn = document.getElementById('submitRegistrationBtn');
+                    submitBtn.disabled = true;
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Finalizando...';
+
+                    const registrationFeedback = document.getElementById('registrationFeedback');
+                    registrationFeedback.textContent = '';
+
+                    const payload = {
+                        cnpj: registerCnpjMask.unmaskedValue,
+                        nomeEmpresa: document.getElementById('registerCompanyName').value,
+                        email: document.getElementById('registerEmail').value,
+                        telefoneWhatsapp: registerWhatsappMask.unmaskedValue,
+                        username: document.getElementById('ownerUsername').value,
+                        ownerEmail: document.getElementById('ownerEmail').value,
+                        password: password,
+                    };
+
+                    try {
+                        const response = await fetch(`${API_BASE_URL}/api/auth/register-company`, { 
+                            method: 'POST', 
+                            headers: { 'Content-Type': 'application/json' }, 
+                            body: JSON.stringify(payload) 
+                        });
+
+                        const result = await response.json();
+                        if (!response.ok) { throw new Error(result.message || 'Ocorreu um erro no cadastro.'); }
+
+                        registrationFeedback.className = 'mt-4 text-center text-sm h-5 text-green-400';
+                        registrationFeedback.textContent = 'Cadastro realizado com sucesso! Pode fechar e fazer o login.';
+
+                        setTimeout(() => {
+                            closeRegisterModalBtn.click();
+                            const mainCnpjInput = document.getElementById('mainCnpjInput');
+                            if(mainCnpjInput) {
+                                mainCnpjInput.value = payload.cnpj;
+                                mainCnpjInput.focus();
+                            }
+                        }, 3000);
+                    } catch (error) {
+                        registrationFeedback.className = 'mt-4 text-center text-sm h-5 text-red-400';
+                        registrationFeedback.textContent = error.message;
+                    } finally {
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = 'Finalizar Cadastro <i class="fas fa-check ml-2"></i>';
+                    }
+                }
+            }
+
+            // --- Lógica do "Esqueci minha senha" ---
+            const forgotPasswordModal = document.getElementById('forgotPasswordModal');
+            if (forgotPasswordModal) {
+                const forgotPasswordBtn = document.getElementById('forgotPasswordBtn');
+                const closeForgotPasswordModalBtn = document.getElementById('closeForgotPasswordModalBtn');
+                const forgotPasswordForm = document.getElementById('forgotPasswordForm');
+
+                if (forgotPasswordBtn) {
+                    forgotPasswordBtn.addEventListener('click', () => {
+                        forgotPasswordModal.classList.remove('hidden');
+                        document.getElementById('recoveryEmailInput').focus();
+                    });
+                }
+                if (closeForgotPasswordModalBtn) {
+                    closeForgotPasswordModalBtn.addEventListener('click', () => {
+                        forgotPasswordModal.classList.add('hidden');
+                    });
+                }
+                if (forgotPasswordForm) {
+                    forgotPasswordForm.addEventListener('submit', handleForgotPasswordSubmit);
+                }
+                
+                async function handleForgotPasswordSubmit(e) {
+                    e.preventDefault();
+                    const recoverySubmitBtn = document.getElementById('recoverySubmitBtn');
+                    const recoveryFormFeedback = document.getElementById('recoveryFormFeedback');
+                    const email = document.getElementById('recoveryEmailInput').value;
+                    
+                    recoverySubmitBtn.disabled = true;
+                    recoverySubmitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+                    recoveryFormFeedback.textContent = '';
+                    try {
+                        const response = await fetch(`${API_BASE_URL}/api/auth/forgot-password`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ email })
+                        });
+                        const result = await response.json();
+                        if (!response.ok) { throw new Error(result.message); }
+                        recoveryFormFeedback.className = 'mt-4 text-center text-sm h-5 text-green-400';
+                        recoveryFormFeedback.textContent = result.message;
+                        setTimeout(() => {
+                            forgotPasswordModal.classList.add('hidden');
+                        }, 4000);
+                    } catch (error) {
+                        recoveryFormFeedback.className = 'mt-4 text-center text-sm h-5 text-red-400';
+                        recoveryFormFeedback.textContent = error.message;
+                    } finally {
+                        recoverySubmitBtn.disabled = false;
+                        recoverySubmitBtn.innerHTML = 'Enviar Link de Recuperação <i class="fas fa-paper-plane ml-2"></i>';
+                    }
+                }
+            }
+
+            // --- Lógica do formulário de Contato ---
+            const contactForm = document.getElementById('contactForm');
+            if (contactForm) {
+                contactForm.addEventListener('submit', handleContactFormSubmit);
+
+                async function handleContactFormSubmit(e) {
+                    e.preventDefault();
+                    const contactSubmitBtn = document.getElementById('contactSubmitBtn');
+                    const contactFormFeedback = document.getElementById('contactFormFeedback');
+                    contactSubmitBtn.disabled = true;
+                    contactSubmitBtn.innerHTML = 'Enviando... <i class="fas fa-spinner fa-spin ml-2"></i>';
+                    contactFormFeedback.textContent = '';
+                    const payload = {
+                        name: document.getElementById('contactName').value,
+                        email: document.getElementById('contactEmail').value,
+                        subject: document.getElementById('contactSubject').value,
+                        message: document.getElementById('contactMessage').value,
+                    };
+                    try {
+                        const response = await fetch(`${API_BASE_URL}/api/contact/send`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload), });
+                        const result = await response.json();
+                        if (!response.ok) { throw new Error(result.message || 'Ocorreu um erro.'); }
+                        contactFormFeedback.className = 'mt-4 text-center text-sm text-green-400';
+                        contactFormFeedback.textContent = result.message;
+                        contactForm.reset();
+                    } catch (error) {
+                        contactFormFeedback.className = 'mt-4 text-center text-sm text-red-400';
+                        contactFormFeedback.textContent = error.message;
+                    } finally {
+                        contactSubmitBtn.disabled = false;
+                        contactSubmitBtn.innerHTML = 'Enviar Mensagem <i class="fas fa-paper-plane ml-2"></i>';
+                    }
+                }
+            }
+        }
+    }).catch(error => console.error("Erro crítico ao carregar componentes:", error));
+});
+</script>
+
+<div id="forgotPasswordModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+    <div class="bg-gray-800 rounded-lg shadow-2xl p-8 w-full max-w-md text-white relative transform transition-all scale-95">
+        
+        <button id="closeForgotPasswordModalBtn" class="absolute top-4 right-4 text-gray-400 hover:text-white transition">
+            <i class="fas fa-times fa-lg"></i>
+        </button>
+
+        <h2 class="text-2xl font-bold mb-6 text-center text-indigo-400">Recuperar Senha</h2>
+        <p class="text-center text-gray-400 mb-6 text-sm">
+            Insira o e-mail do **proprietário** da sua empresa. Um link para redefinir a senha será enviado para esse endereço.
+        </p>
+
+        <form id="forgotPasswordForm">
+            <div class="mb-4">
+                <label for="recoveryEmailInput" class="block text-gray-300 text-sm font-medium mb-2">E-mail do Proprietário</label>
+                <input type="email" id="recoveryEmailInput" required class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-white placeholder-gray-400">
+            </div>
+            <button type="submit" id="recoverySubmitBtn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-4 rounded-lg transition duration-300 flex items-center justify-center">
+                Enviar Link de Recuperação <i class="fas fa-paper-plane ml-2"></i>
+            </button>
+        </form>
+        <div id="recoveryFormFeedback" class="mt-4 text-center text-sm h-5"></div>
+    </div>
+</div>
+
+
+
+
+
+</body>
+</html>

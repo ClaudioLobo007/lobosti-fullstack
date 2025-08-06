@@ -1,0 +1,62 @@
+{
+    "sourceFile": "Servidor/models/Boleto.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 11,
+            "patches": [
+                {
+                    "date": 1752269306145,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1752272532101,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,28 +1,28 @@\n-// models/Boleto.js\r\n-\r\n const mongoose = require('mongoose');\r\n const Schema = mongoose.Schema;\r\n \r\n const BoletoSchema = new Schema({\r\n     name: { type: String, required: true },\r\n-    description: { type: String },\r\n-    barcode: { type: String },\r\n     company: {\r\n         type: Schema.Types.ObjectId,\r\n-        ref: 'Company', // <-- Ligação à Empresa\r\n+        ref: 'Company',\r\n         required: true\r\n     },\r\n     user: {\r\n         type: Schema.Types.ObjectId,\r\n-        ref: 'User', // <-- Ligação ao Usuário que o criou\r\n+        ref: 'User',\r\n         required: true\r\n     },\r\n     parcels: [{\r\n         number: { type: Number, required: true },\r\n         amount: { type: Number, required: true },\r\n         dueDate: { type: String, required: true },\r\n         paid: { type: Boolean, default: false },\r\n+        \r\n+        // MUDANÇA 2: Adicionamos os campos que faltavam aqui.\r\n+        description: { type: String },\r\n+        barcode: { type: String }\r\n     }]\r\n });\r\n \r\n module.exports = mongoose.model('Boleto', BoletoSchema);\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1752773965792,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,8 +2,9 @@\n const Schema = mongoose.Schema;\r\n \r\n const BoletoSchema = new Schema({\r\n     name: { type: String, required: true },\r\n+    nfeNumber: { type: String },\r\n     company: {\r\n         type: Schema.Types.ObjectId,\r\n         ref: 'Company',\r\n         required: true\r\n"
+                },
+                {
+                    "date": 1752792715576,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,28 @@\n+const mongoose = require('mongoose');\r\n+const Schema = mongoose.Schema;\r\n+\r\n+const BoletoSchema = new Schema({\r\n+    name: { type: String, required: true },\r\n+    nfeNumber: { type: String },\r\n+    company: {\r\n+        type: Schema.Types.ObjectId,\r\n+        ref: 'Company',\r\n+        required: true\r\n+    },\r\n+    user: {\r\n+        type: Schema.Types.ObjectId,\r\n+        ref: 'User',\r\n+        required: true\r\n+    },\r\n+    parcels: [{\r\n+        number: { type: Number, required: true },\r\n+        amount: { type: Number, required: true },\r\n+        dueDate: { type: String, required: true },\r\n+        paid: { type: Boolean, default: false },\r\n+        description: { type: String },\r\n+        barcode: { type: String },\r\n+        attachmentUrl: { type: String, default: null }\r\n+    }]\r\n+});\r\n+\r\n+module.exports = mongoose.model('Boleto', BoletoSchema);\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1752941841948,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,8 +3,13 @@\n \r\n const BoletoSchema = new Schema({\r\n     name: { type: String, required: true },\r\n     nfeNumber: { type: String },\r\n+    category: {\r\n+        type: Schema.Types.ObjectId,\r\n+        ref: 'Category',\r\n+        default: null // Permite que boletos não tenham categoria\r\n+    },\r\n     company: {\r\n         type: Schema.Types.ObjectId,\r\n         ref: 'Company',\r\n         required: true\r\n@@ -24,34 +29,5 @@\n         attachmentUrl: { type: String, default: null }\r\n     }]\r\n });\r\n \r\n-module.exports = mongoose.model('Boleto', BoletoSchema);\n-const mongoose = require('mongoose');\r\n-const Schema = mongoose.Schema;\r\n-\r\n-const BoletoSchema = new Schema({\r\n-    name: { type: String, required: true },\r\n-    nfeNumber: { type: String },\r\n-    company: {\r\n-        type: Schema.Types.ObjectId,\r\n-        ref: 'Company',\r\n-        required: true\r\n-    },\r\n-    user: {\r\n-        type: Schema.Types.ObjectId,\r\n-        ref: 'User',\r\n-        required: true\r\n-    },\r\n-    parcels: [{\r\n-        number: { type: Number, required: true },\r\n-        amount: { type: Number, required: true },\r\n-        dueDate: { type: String, required: true },\r\n-        paid: { type: Boolean, default: false },\r\n-        \r\n-        // MUDANÇA 2: Adicionamos os campos que faltavam aqui.\r\n-        description: { type: String },\r\n-        barcode: { type: String }\r\n-    }]\r\n-});\r\n-\r\n module.exports = mongoose.model('Boleto', BoletoSchema);\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1752941874867,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n     nfeNumber: { type: String },\r\n     category: {\r\n         type: Schema.Types.ObjectId,\r\n         ref: 'Category',\r\n-        default: null // Permite que boletos não tenham categoria\r\n+        default: null\r\n     },\r\n     company: {\r\n         type: Schema.Types.ObjectId,\r\n         ref: 'Company',\r\n"
+                },
+                {
+                    "date": 1753461286331,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,5 +29,7 @@\n         attachmentUrl: { type: String, default: null }\r\n     }]\r\n });\r\n \r\n+BoletoSchema.index({ name: 1, company: 1 }, { unique: true });\r\n+\r\n module.exports = mongoose.model('Boleto', BoletoSchema);\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1753467025976,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,7 +29,7 @@\n         attachmentUrl: { type: String, default: null }\r\n     }]\r\n });\r\n \r\n-BoletoSchema.index({ name: 1, company: 1 }, { unique: true });\r\n+// BoletoSchema.index({ name: 1, company: 1 }, { unique: true });\r\n \r\n module.exports = mongoose.model('Boleto', BoletoSchema);\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1753467139775,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,7 +29,5 @@\n         attachmentUrl: { type: String, default: null }\r\n     }]\r\n });\r\n \r\n-// BoletoSchema.index({ name: 1, company: 1 }, { unique: true });\r\n-\r\n module.exports = mongoose.model('Boleto', BoletoSchema);\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1753534827777,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,5 +29,5 @@\n         attachmentUrl: { type: String, default: null }\r\n     }]\r\n });\r\n \r\n-module.exports = mongoose.model('Boleto', BoletoSchema);\n\\ No newline at end of file\n+module.exports = mongoose.models.Boleto || mongoose.model('Boleto', BoletoSchema);\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1753542558712,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,13 +8,9 @@\n         type: Schema.Types.ObjectId,\r\n         ref: 'Category',\r\n         default: null\r\n     },\r\n-    company: {\r\n-        type: Schema.Types.ObjectId,\r\n-        ref: 'Company',\r\n-        required: true\r\n-    },\r\n+    // O campo 'company' foi removido daqui\r\n     user: {\r\n         type: Schema.Types.ObjectId,\r\n         ref: 'User',\r\n         required: true\r\n@@ -29,5 +25,6 @@\n         attachmentUrl: { type: String, default: null }\r\n     }]\r\n });\r\n \r\n+// Garante que o modelo só seja compilado uma vez\r\n module.exports = mongoose.models.Boleto || mongoose.model('Boleto', BoletoSchema);\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1754505304418,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,5 +26,7 @@\n     }]\r\n });\r\n \r\n // Garante que o modelo só seja compilado uma vez\r\n-module.exports = mongoose.models.Boleto || mongoose.model('Boleto', BoletoSchema);\n\\ No newline at end of file\n+module.exports = {\r\n+    schema: BoletoSchema\r\n+};\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1752269306145,
+            "name": "Commit-0",
+            "content": "// models/Boleto.js\r\n\r\nconst mongoose = require('mongoose');\r\nconst Schema = mongoose.Schema;\r\n\r\nconst BoletoSchema = new Schema({\r\n    name: { type: String, required: true },\r\n    description: { type: String },\r\n    barcode: { type: String },\r\n    company: {\r\n        type: Schema.Types.ObjectId,\r\n        ref: 'Company', // <-- Ligação à Empresa\r\n        required: true\r\n    },\r\n    user: {\r\n        type: Schema.Types.ObjectId,\r\n        ref: 'User', // <-- Ligação ao Usuário que o criou\r\n        required: true\r\n    },\r\n    parcels: [{\r\n        number: { type: Number, required: true },\r\n        amount: { type: Number, required: true },\r\n        dueDate: { type: String, required: true },\r\n        paid: { type: Boolean, default: false },\r\n    }]\r\n});\r\n\r\nmodule.exports = mongoose.model('Boleto', BoletoSchema);"
+        }
+    ]
+}

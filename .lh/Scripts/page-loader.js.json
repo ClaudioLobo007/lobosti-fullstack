@@ -1,0 +1,26 @@
+{
+    "sourceFile": "Scripts/page-loader.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1754500527694,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1754500575040,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,4 @@\n-// D:\\SCripts\\SiteLobos\\Scripts\\page-loader.js\r\n-\r\n /**\r\n  * Este script é responsável por carregar componentes reutilizáveis (header, footer, modals)\r\n  * em todas as páginas de serviços e inicializar as suas funcionalidades.\r\n  */\r\n"
+                },
+                {
+                    "date": 1754500802926,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -51,7 +51,12 @@\n             mobileMenuButton.addEventListener('click', () => {\r\n                 mobileMenu.classList.toggle('hidden');\r\n             });\r\n         }\r\n+        const copyrightTextElement = document.getElementById('copyright-text');\r\n+        if (copyrightTextElement) {\r\n+            const currentYear = new Date().getFullYear();\r\n+            copyrightTextElement.innerHTML = `&copy; ${currentYear} LobosTI. Todos os direitos reservados.`;\r\n+        }\r\n \r\n     }).catch(error => console.error(\"Erro crítico ao carregar componentes:\", error));\r\n });\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1754500527694,
+            "name": "Commit-0",
+            "content": "// D:\\SCripts\\SiteLobos\\Scripts\\page-loader.js\r\n\r\n/**\r\n * Este script é responsável por carregar componentes reutilizáveis (header, footer, modals)\r\n * em todas as páginas de serviços e inicializar as suas funcionalidades.\r\n */\r\ndocument.addEventListener(\"DOMContentLoaded\", function() {\r\n    // 1. Identifica os locais onde os componentes serão inseridos.\r\n    const headerPlaceholder = document.getElementById(\"header-placeholder\");\r\n    const footerPlaceholder = document.getElementById(\"footer-placeholder\");\r\n    const modalsPlaceholder = document.getElementById(\"modals-placeholder\");\r\n\r\n    // 2. Determina o caminho base para encontrar a pasta de componentes.\r\n    // Se a página estiver dentro de /pages/, o caminho será '../'. Caso contrário, será './'.\r\n    const basePath = window.location.pathname.includes('/pages/') ? '../' : './';\r\n\r\n    /**\r\n     * Função reutilizável para buscar o conteúdo de um ficheiro HTML e inseri-lo num placeholder.\r\n     * @param {string} url - O caminho para o ficheiro do componente.\r\n     * @param {HTMLElement} placeholder - O elemento onde o conteúdo será inserido.\r\n     */\r\n    const loadComponent = (url, placeholder) => {\r\n        return fetch(url)\r\n            .then(res => {\r\n                if (!res.ok) {\r\n                    throw new Error(`Erro ao carregar componente: ${url}`);\r\n                }\r\n                return res.text();\r\n            })\r\n            .then(data => {\r\n                if (placeholder) placeholder.innerHTML = data;\r\n            });\r\n    };\r\n\r\n    // 3. Carrega todos os componentes em paralelo para um carregamento mais rápido.\r\n    Promise.all([\r\n        loadComponent(`${basePath}components/header.html`, headerPlaceholder),\r\n        loadComponent(`${basePath}components/footer.html`, footerPlaceholder),\r\n        loadComponent(`${basePath}components/modals.html`, modalsPlaceholder)\r\n    ]).then(() => {\r\n        // 4. Após todos os componentes serem carregados, inicializa os seus scripts.\r\n\r\n        // Inicializa a lógica dos modais (termos de uso, privacidade)\r\n        const modalScript = document.createElement('script');\r\n        modalScript.src = `${basePath}scripts/modals.js`;\r\n        document.body.appendChild(modalScript);\r\n\r\n        // Inicializa a lógica do menu mobile do cabeçalho\r\n        const mobileMenuButton = document.getElementById('mobile-menu-button');\r\n        const mobileMenu = document.getElementById('mobile-menu');\r\n\r\n        if (mobileMenuButton && mobileMenu) {\r\n            mobileMenuButton.addEventListener('click', () => {\r\n                mobileMenu.classList.toggle('hidden');\r\n            });\r\n        }\r\n\r\n    }).catch(error => console.error(\"Erro crítico ao carregar componentes:\", error));\r\n});"
+        }
+    ]
+}

@@ -1,0 +1,18 @@
+{
+    "sourceFile": "Servidor/nodemon.json",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1753707509543,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1753707509543,
+            "name": "Commit-0",
+            "content": "{\r\n  \"events\": {\r\n    \"start\": \"cls || clear\"\r\n  }\r\n}"
+        }
+    ]
+}

@@ -1,0 +1,18 @@
+{
+    "sourceFile": "Servidor/tests/api.test.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1754507021901,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1754507021901,
+            "name": "Commit-0",
+            "content": "const request = require('supertest');\r\nconst app = require('../server');\r\ndescribe('Testes da API Principal', () => {\r\n    it('Deve responder com sucesso na rota GET /', async () => {\r\n        const response = await request(app)\r\n            .get('/');\r\n        expect(response.statusCode).toBe(200);\r\n        expect(response.text).toContain('API do Organizador de Boletos está no ar!');\r\n    });\r\n\r\n});"
+        }
+    ]
+}

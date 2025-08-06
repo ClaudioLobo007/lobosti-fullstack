@@ -1,0 +1,18 @@
+{
+    "sourceFile": "teste_grafico.html",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1753292186625,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1753292186625,
+            "name": "Commit-0",
+            "content": "<!DOCTYPE html>\r\n<html lang=\"pt-BR\">\r\n<head>\r\n    <meta charset=\"UTF-8\">\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n    <title>Teste de Gráfico</title>\r\n    <script src=\"https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js\"></script>\r\n    <style>\r\n        body { background-color: #0f172a; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }\r\n        .chart-container { width: 80%; max-width: 800px; padding: 20px; background-color: #1e293b; border-radius: 8px; }\r\n    </style>\r\n</head>\r\n<body>\r\n\r\n    <div class=\"chart-container\">\r\n        <canvas id=\"meuGraficoDeTeste\"></canvas>\r\n    </div>\r\n\r\n    <script>\r\n        // 3. Este é o código JavaScript para desenhar o gráfico.\r\n        // Espera que a página esteja completamente carregada.\r\n        document.addEventListener('DOMContentLoaded', () => {\r\n            \r\n            // Pega a referência do nosso canvas.\r\n            const ctx = document.getElementById('meuGraficoDeTeste').getContext('2d');\r\n\r\n            // Dados de exemplo, exatamente como os da sua API.\r\n            const dadosExemplo = [\r\n                { categoryName: 'Fornecedores', totalAmount: 1250.77 },\r\n                { categoryName: 'Impostos', totalAmount: 850.25 },\r\n                { categoryName: 'Marketing', totalAmount: 450.50 }\r\n            ];\r\n\r\n            // Cria um novo gráfico.\r\n            new Chart(ctx, {\r\n                type: 'pie', // Tipo de gráfico\r\n                data: {\r\n                    labels: dadosExemplo.map(item => item.categoryName),\r\n                    datasets: [{\r\n                        label: 'Despesas',\r\n                        data: dadosExemplo.map(item => item.totalAmount),\r\n                        backgroundColor: ['#4f46e5', '#10b981', '#f59e0b'],\r\n                    }]\r\n                },\r\n                options: {\r\n                    plugins: {\r\n                        title: {\r\n                            display: true,\r\n                            text: 'Gráfico de Teste - Se isto aparecer, o Chart.js funciona!',\r\n                            color: '#FFFFFF',\r\n                            font: { size: 20 }\r\n                        },\r\n                        legend: {\r\n                            labels: { color: '#FFFFFF' }\r\n                        }\r\n                    }\r\n                }\r\n            });\r\n        });\r\n    </script>\r\n</body>\r\n</html>"
+        }
+    ]
+}

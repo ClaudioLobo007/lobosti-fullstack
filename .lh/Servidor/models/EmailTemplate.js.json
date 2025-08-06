@@ -1,0 +1,18 @@
+{
+    "sourceFile": "Servidor/models/EmailTemplate.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1754143894572,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1754143894572,
+            "name": "Commit-0",
+            "content": "const mongoose = require('mongoose');\r\n\r\nconst EmailTemplateSchema = new mongoose.Schema({\r\n    name: { // Um nome único para identificar o template, ex: 'passwordReset'\r\n        type: String,\r\n        required: true,\r\n        unique: true,\r\n        trim: true\r\n    },\r\n    subject: { // O assunto do e-mail\r\n        type: String,\r\n        required: true\r\n    },\r\n    body: { // O corpo do e-mail (pode conter HTML e placeholders)\r\n        type: String,\r\n        required: true\r\n    }\r\n}, { timestamps: true });\r\n\r\n// Exportamos apenas o schema, para manter a consistência com os seus outros modelos\r\nmodule.exports = {\r\n    schema: EmailTemplateSchema\r\n};"
+        }
+    ]
+}

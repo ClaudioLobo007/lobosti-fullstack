@@ -1,0 +1,22 @@
+{
+    "sourceFile": "Servidor/tests/seed.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1754508978212,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1754509361466,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,18 +1,17 @@\n // D:\\SCripts\\SiteLobos\\Servidor\\tests\\seed.js\r\n \r\n-const mongoose = require('mongoose');\r\n const { schema: EmailTemplateSchema } = require('../models/EmailTemplate');\r\n \r\n /**\r\n  * Insere os dados essenciais na base de dados de teste.\r\n- * Atualmente, insere os templates de e-mail necessários para as rotas de autenticação.\r\n+ * @param {mongoose.Connection} dbConnection - A conexão ativa com a base de dados de teste.\r\n  */\r\n-const seedDatabase = async () => {\r\n-    // Obtém o modelo a partir da conexão de teste ativa\r\n-    const EmailTemplate = mongoose.model('EmailTemplate', EmailTemplateSchema);\r\n+const seedDatabase = async (dbConnection) => {\r\n+    // A MUDANÇA ESTÁ AQUI: Usamos a conexão fornecida para criar o modelo.\r\n+    const EmailTemplate = dbConnection.model('EmailTemplate', EmailTemplateSchema);\r\n \r\n-    // Cria os templates de e-mail que as nossas rotas precisam para funcionar\r\n+    // O resto da função continua igual.\r\n     await EmailTemplate.create([\r\n         {\r\n             name: 'emailVerification',\r\n             subject: 'Verifique o seu e-mail',\r\n"
+                }
+            ],
+            "date": 1754508978212,
+            "name": "Commit-0",
+            "content": "// D:\\SCripts\\SiteLobos\\Servidor\\tests\\seed.js\r\n\r\nconst mongoose = require('mongoose');\r\nconst { schema: EmailTemplateSchema } = require('../models/EmailTemplate');\r\n\r\n/**\r\n * Insere os dados essenciais na base de dados de teste.\r\n * Atualmente, insere os templates de e-mail necessários para as rotas de autenticação.\r\n */\r\nconst seedDatabase = async () => {\r\n    // Obtém o modelo a partir da conexão de teste ativa\r\n    const EmailTemplate = mongoose.model('EmailTemplate', EmailTemplateSchema);\r\n\r\n    // Cria os templates de e-mail que as nossas rotas precisam para funcionar\r\n    await EmailTemplate.create([\r\n        {\r\n            name: 'emailVerification',\r\n            subject: 'Verifique o seu e-mail',\r\n            body: '<h1>Bem-vindo!</h1><p>Clique aqui para verificar: {{verificationLink}}</p>'\r\n        },\r\n        {\r\n            name: 'passwordReset',\r\n            subject: 'Recuperação de Senha',\r\n            body: '<h1>Recuperação</h1><p>Clique aqui para redefinir: {{resetLink}}</p>'\r\n        },\r\n        {\r\n            name: 'dailyReport',\r\n            subject: 'Relatório Diário de Boletos',\r\n            body: '<h1>Relatório para {{companyName}}</h1><div>{{parcelsHtml}}</div>'\r\n        }\r\n    ]);\r\n\r\n    console.log('🌱 Base de dados de teste semeada com templates de e-mail.');\r\n};\r\n\r\nmodule.exports = { seedDatabase };"
+        }
+    ]
+}

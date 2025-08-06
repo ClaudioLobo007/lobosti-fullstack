@@ -1,0 +1,34 @@
+{
+    "sourceFile": "Servidor/models/Category.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 4,
+            "patches": [
+                {
+                    "date": 1752941654203,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1753533049892,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,20 +1,15 @@\n+// D:\\SCripts\\SiteLobos\\Servidor\\models\\Category.js\r\n+\r\n const mongoose = require('mongoose');\r\n const Schema = mongoose.Schema;\r\n \r\n const CategorySchema = new Schema({\r\n     name: {\r\n         type: String,\r\n         required: true,\r\n-        trim: true\r\n-    },\r\n-    company: {\r\n-        type: Schema.Types.ObjectId,\r\n-        ref: 'Company',\r\n-        required: true\r\n+        trim: true,\r\n+        unique: true // O nome da categoria agora é único dentro do banco da empresa\r\n     }\r\n });\r\n \r\n-// Garante que não haja categorias com o mesmo nome para a mesma empresa\r\n-CategorySchema.index({ name: 1, company: 1 }, { unique: true });\r\n-\r\n module.exports = mongoose.model('Category', CategorySchema);\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1753533057659,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,4 @@\n-// D:\\SCripts\\SiteLobos\\Servidor\\models\\Category.js\r\n-\r\n const mongoose = require('mongoose');\r\n const Schema = mongoose.Schema;\r\n \r\n const CategorySchema = new Schema({\r\n"
+                },
+                {
+                    "date": 1753534838813,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,5 +9,5 @@\n         unique: true // O nome da categoria agora é único dentro do banco da empresa\r\n     }\r\n });\r\n \r\n-module.exports = mongoose.model('Category', CategorySchema);\n\\ No newline at end of file\n+module.exports = mongoose.models.Category || mongoose.model('Category', CategorySchema);\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1754505305408,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,5 +9,7 @@\n         unique: true // O nome da categoria agora é único dentro do banco da empresa\r\n     }\r\n });\r\n \r\n-module.exports = mongoose.models.Category || mongoose.model('Category', CategorySchema);\n\\ No newline at end of file\n+module.exports = {\r\n+    schema: CategorySchema\r\n+};\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1752941654203,
+            "name": "Commit-0",
+            "content": "const mongoose = require('mongoose');\r\nconst Schema = mongoose.Schema;\r\n\r\nconst CategorySchema = new Schema({\r\n    name: {\r\n        type: String,\r\n        required: true,\r\n        trim: true\r\n    },\r\n    company: {\r\n        type: Schema.Types.ObjectId,\r\n        ref: 'Company',\r\n        required: true\r\n    }\r\n});\r\n\r\n// Garante que não haja categorias com o mesmo nome para a mesma empresa\r\nCategorySchema.index({ name: 1, company: 1 }, { unique: true });\r\n\r\nmodule.exports = mongoose.model('Category', CategorySchema);"
+        }
+    ]
+}

@@ -1,0 +1,18 @@
+{
+    "sourceFile": "Servidor/middleware/authMiddleware.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1754502882233,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1754502882233,
+            "name": "Commit-0",
+            "content": "const jwt = require('jsonwebtoken');\r\n\r\nconst protect = (req, res, next) => {\r\n    let token;\r\n\r\n    // Verifica se o token está no cabeçalho da requisição e começa com \"Bearer\"\r\n    if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {\r\n        try {\r\n            // Extrai o token (remove a palavra \"Bearer \")\r\n            token = req.headers.authorization.split(' ')[1];\r\n\r\n            // Verifica se o token é válido usando nossa chave secreta\r\n            const decoded = jwt.verify(token, process.env.JWT_SECRET);\r\n\r\n            // Anexa os dados do usuário decodificado ao objeto da requisição\r\n            // Agora, todas as rotas protegidas terão acesso a req.user\r\n            req.user = decoded; \r\n\r\n            next(); // Passa para a próxima função (o controller da rota)\r\n        } catch (error) {\r\n            console.error('Token inválido', error);\r\n            res.status(401).json({ message: 'Não autorizado, token inválido.' });\r\n        }\r\n    }\r\n\r\n    if (!token) {\r\n        res.status(401).json({ message: 'Não autorizado, nenhum token encontrado.' });\r\n    }\r\n};\r\n\r\n/**\r\n * Middleware de autorização baseado em cargos (roles).\r\n * Cria um middleware que verifica se o cargo do utilizador logado\r\n * está incluído na lista de cargos permitidos.\r\n * * @param {...string} roles - Uma lista de cargos que têm permissão para aceder à rota.\r\n */\r\nconst authorize = (...roles) => {\r\n    return (req, res, next) => {\r\n        // Verifica se o cargo do utilizador (anexado pelo middleware 'protect')\r\n        // não está na lista de cargos permitidos para esta rota.\r\n        if (!roles.includes(req.user.role)) {\r\n            // Se não tiver permissão, retorna um erro 403 (Forbidden)\r\n            return res.status(403).json({ message: 'Acesso negado. Você não tem permissão para realizar esta ação.' });\r\n        }\r\n\r\n        // Se o cargo for permitido, continua para o próximo passo.\r\n        next();\r\n    };\r\n};\r\n\r\nmodule.exports = { protect, authorize };"
+        }
+    ]
+}

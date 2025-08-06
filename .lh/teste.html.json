@@ -1,0 +1,18 @@
+{
+    "sourceFile": "teste.html",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1753826110133,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1753826110133,
+            "name": "Commit-0",
+            "content": "<!DOCTYPE html>\r\n<html lang=\"pt-BR\">\r\n<head>\r\n    <meta charset=\"UTF-8\">\r\n    <title>Página de Teste</title>\r\n    <script src=\"https://cdn.tailwindcss.com\"></script>\r\n    <link rel=\"stylesheet\" href=\"style.css\">\r\n</head>\r\n<body>\r\n\r\n    <div id=\"mainAppContent\">\r\n        <h1 class=\"text-white text-2xl p-4\">Página de Teste de Renderização</h1>\r\n\r\n        <div id=\"calendarDays\" class=\"grid grid-cols-7 gap-1 border-4 border-red-500 min-h-[100px]\">\r\n            </div>\r\n    </div>\r\n\r\n    <script type=\"module\" src=\"scripts/main.js\"></script>\r\n\r\n</body>\r\n</html>"
+        }
+    ]
+}

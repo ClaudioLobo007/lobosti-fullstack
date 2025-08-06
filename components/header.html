@@ -1,0 +1,36 @@
+    <!-- Navbar -->
+<nav class="bg-gray-900 border-b border-gray-800 fixed w-full z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-20">
+            <div class="flex items-center">
+            <div class="flex-shrink-0">
+                <a href="/index.html" aria-label="Página Inicial">
+                    <img class="h-28 w-auto" src="/public/images/logo-lobosti.png" alt="Logotipo LobosTI">
+                </a>
+            </div>
+            </div>
+            <div class="hidden md:block">
+            <div id="desktop-menu-items" class="ml-10 flex items-baseline space-x-8">
+                <a href="/index.html" class="nav-link text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Início</a>
+                <a href="/index.html#servicos" class="nav-link text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Serviços</a>
+                <a id="nav-login-link" href="/index.html#login" class="nav-link text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Login</a>
+                <a href="/index.html#contato" class="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-700 transition duration-300">Contato</a>
+            </div>
+            </div>
+            <div class="-mr-2 flex md:hidden">
+                <button type="button" id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none">
+                    <span class="sr-only">Abrir menu</span>
+                    <i class="fas fa-bars fa-lg"></i> </button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="hidden md:hidden" id="mobile-menu">
+    <div id="mobile-menu-items" class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+        <a href="/index.html" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Início</a>
+        <a href="/index.html#servicos" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Serviços</a>
+        <a href="/index.html#login" id="mobile-nav-login-link" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Login</a>
+        <a href="/index.html#contato" class="bg-indigo-600 text-white block px-3 py-2 rounded-md text-base font-medium">Contato</a>
+    </div>
+    </div>
+</nav>
