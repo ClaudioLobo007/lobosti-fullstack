@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "main": "Script.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build:css": "chmod +x ./node_modules/.bin/tailwindcss && tailwindcss -i ./src/input.css -o ./style.css"
+    "build:css": "tailwindcss -i ./src/input.css -o ./dist/style.css",
+    "build:copy": "cpy \"**/*.html\" \"Scripts\" \"public\" \"pages\" \"src\" dist --parents",
+    "build": "npm run build:copy && npm run build:css"
   },
   "keywords": [],
   "author": "",
@@ -12,6 +13,7 @@
   "description": "",
   "devDependencies": {
     "@tailwindcss/cli": "^4.1.11",
+    "cpy-cli": "^5.0.0",
     "tailwindcss": "^4.1.11"
   }
 }
