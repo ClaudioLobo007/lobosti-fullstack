@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 4,
+            "activePatchIndex": 5,
             "patches": [
                 {
                     "date": 1752672269312,
@@ -24,6 +24,10 @@
                 {
                     "date": 1754410316517,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,1 +1,1 @@\n-export const API_BASE_URL = 'http://localhost:5000';\n\\ No newline at end of file\n+export const API_BASE_URL = 'http://192.168.15.5:5000';\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1754515484638,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,1 +1,1 @@\n-export const API_BASE_URL = 'http://192.168.15.5:5000';\n\\ No newline at end of file\n+export const API_BASE_URL = 'https://lobosti-api.onrender.com';\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1752672269312,
