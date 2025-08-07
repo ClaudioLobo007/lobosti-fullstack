@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 1,
+            "activePatchIndex": 2,
             "patches": [
                 {
                     "date": 1752273983936,
@@ -12,6 +12,10 @@
                 {
                     "date": 1753883818838,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n /** @type {import('tailwindcss').Config} */\r\n module.exports = {\r\n   content: [\r\n-    \"./*.{html,js}\", // Monitora os seus arquivos HTML e JS\r\n+    \"./**/*.{html,js}\", // Monitora TODOS os arquivos .html e .js dentro do projeto\r\n   ],\r\n   theme: {\r\n     extend: {},\r\n   },\r\n"
+                },
+                {
+                    "date": 1754532708533,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,11 @@\n /** @type {import('tailwindcss').Config} */\r\n module.exports = {\r\n   content: [\r\n-    \"./**/*.{html,js}\", // Monitora TODOS os arquivos .html e .js dentro do projeto\r\n+    './*.html',\r\n+    './pages/**/*.html',\r\n+    './components/**/*.html',\r\n+    './Scripts/**/*.js'\r\n   ],\r\n   theme: {\r\n     extend: {},\r\n   },\r\n"
                 }
             ],
             "date": 1752273983936,

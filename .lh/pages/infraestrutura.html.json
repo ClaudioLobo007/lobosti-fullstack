@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 9,
+            "activePatchIndex": 11,
             "patches": [
                 {
                     "date": 1754346228934,
@@ -44,6 +44,14 @@
                 {
                     "date": 1754520293117,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,21 +3,10 @@\n <head>\r\n     <meta charset=\"UTF-8\">\r\n     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n     <title>Infraestrutura de TI - LobosTI</title>\r\n-    <script src=\"https://cdn.tailwindcss.com\"></script>\r\n     <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css\">\r\n-    \r\n-    <link rel=\"stylesheet\" href=\"../style.css\"> \r\n-    \r\n-    <style>\r\n-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');\r\n-        body {\r\n-            font-family: 'Poppins', sans-serif;\r\n-            background-color: #0f172a;\r\n-            color: #e2e8f0;\r\n-        }\r\n-    </style>\r\n+    <link rel=\"stylesheet\" href=\"../style.css\">\r\n </head>\r\n <body>\r\n \r\n     <header id=\"header-placeholder\"></header>\r\n"
+                },
+                {
+                    "date": 1754534238269,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,10 +3,16 @@\n <head>\r\n     <meta charset=\"UTF-8\">\r\n     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n     <title>Infraestrutura de TI - LobosTI</title>\r\n+    <script src=\"https://cdn.tailwindcss.com\"></script>\r\n     <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css\">\r\n-    <link rel=\"stylesheet\" href=\"../style.css\">\r\n+    \r\n+    <link rel=\"stylesheet\" href=\"../style.css\"> \r\n+    \r\n+    <style>\r\n+\r\n+    </style>\r\n </head>\r\n <body>\r\n \r\n     <header id=\"header-placeholder\"></header>\r\n"
+                },
+                {
+                    "date": 1754534274072,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,16 +3,11 @@\n <head>\r\n     <meta charset=\"UTF-8\">\r\n     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n     <title>Infraestrutura de TI - LobosTI</title>\r\n-    <script src=\"https://cdn.tailwindcss.com\"></script>\r\n+\r\n     <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css\">\r\n-    \r\n     <link rel=\"stylesheet\" href=\"../style.css\"> \r\n-    \r\n-    <style>\r\n-\r\n-    </style>\r\n </head>\r\n <body>\r\n \r\n     <header id=\"header-placeholder\"></header>\r\n"
                 }
             ],
             "date": 1754346228934,

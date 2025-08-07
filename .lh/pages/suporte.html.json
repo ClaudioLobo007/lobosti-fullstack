@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 7,
+            "activePatchIndex": 11,
             "patches": [
                 {
                     "date": 1754353918165,
@@ -36,6 +36,22 @@
                 {
                     "date": 1754520361685,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,21 +3,10 @@\n <head>\r\n     <meta charset=\"UTF-8\">\r\n     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n     <title>Suporte Técnico - LobosTI</title>\r\n-    <script src=\"https://cdn.tailwindcss.com\"></script>\r\n     <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css\">\r\n-    \r\n-    <link rel=\"stylesheet\" href=\"../style.css\"> \r\n-    \r\n-    <style>\r\n-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');\r\n-        body {\r\n-            font-family: 'Poppins', sans-serif;\r\n-            background-color: #0f172a;\r\n-            color: #e2e8f0;\r\n-        }\r\n-    </style>\r\n+    <link rel=\"stylesheet\" href=\"../style.css\">\r\n </head>\r\n <body>\r\n \r\n     <header id=\"header-placeholder\"></header>\r\n@@ -134,6 +123,7 @@\n     <div id=\"modals-placeholder\"></div>\r\n     <footer id=\"footer-placeholder\"></footer>\r\n \r\n <script type=\"module\" src=\"../scripts/page-loader.js\"></script>\r\n+\r\n </body>\r\n </html>\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1754534323062,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,10 +3,12 @@\n <head>\r\n     <meta charset=\"UTF-8\">\r\n     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n     <title>Suporte Técnico - LobosTI</title>\r\n+    <script src=\"https://cdn.tailwindcss.com\"></script>\r\n     <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css\">\r\n-    <link rel=\"stylesheet\" href=\"../style.css\">\r\n+    \r\n+    <link rel=\"stylesheet\" href=\"../style.css\"> \r\n </head>\r\n <body>\r\n \r\n     <header id=\"header-placeholder\"></header>\r\n"
+                },
+                {
+                    "date": 1754534342742,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n     <meta charset=\"UTF-8\">\r\n     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n     <title>Suporte Técnico - LobosTI</title>\r\n     <script src=\"https://cdn.tailwindcss.com\"></script>\r\n-    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css\">\r\n+\r\n     \r\n     <link rel=\"stylesheet\" href=\"../style.css\"> \r\n </head>\r\n <body>\r\n"
+                },
+                {
+                    "date": 1754534356136,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n     <meta charset=\"UTF-8\">\r\n     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n     <title>Suporte Técnico - LobosTI</title>\r\n     <script src=\"https://cdn.tailwindcss.com\"></script>\r\n-\r\n+    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css\">\r\n     \r\n     <link rel=\"stylesheet\" href=\"../style.css\"> \r\n </head>\r\n <body>\r\n"
+                },
+                {
+                    "date": 1754534362701,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,8 @@\n     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n     <title>Suporte Técnico - LobosTI</title>\r\n     <script src=\"https://cdn.tailwindcss.com\"></script>\r\n     <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css\">\r\n-    \r\n     <link rel=\"stylesheet\" href=\"../style.css\"> \r\n </head>\r\n <body>\r\n \r\n"
                 }
             ],
             "date": 1754353918165,

@@ -1,7 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./**/*.{html,js}", // Monitora TODOS os arquivos .html e .js dentro do projeto
+    './*.html',
+    './pages/**/*.html',
+    './components/**/*.html',
+    './Scripts/**/*.js'
   ],
   theme: {
     extend: {},
