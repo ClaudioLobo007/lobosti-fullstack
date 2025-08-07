@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 17,
+            "activePatchIndex": 18,
             "patches": [
                 {
                     "date": 1754337126151,
@@ -76,6 +76,10 @@
                 {
                     "date": 1754520294693,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,14 +3,10 @@\n <head>\r\n     <meta charset=\"UTF-8\">\r\n     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n     <title>Desenvolvimento de Software - LobosTI</title> <link rel=\"stylesheet\" href=\"../style.css\">\r\n-    <script src=\"https://cdn.tailwindcss.com\"></script>\r\n     <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css\">\r\n-    <style>\r\n-        /* Adicionado para garantir a consistência de fontes com as outras páginas */\r\n-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');\r\n-    </style>\r\n+    <link rel=\"stylesheet\" href=\"../style.css\">\r\n </head>\r\n <body style=\"font-family: 'Poppins', sans-serif; background-color: #0f172a; color: #e2e8f0;\">\r\n \r\n     <header id=\"header-placeholder\"></header>\r\n"
+                },
+                {
+                    "date": 1754522542788,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,8 @@\n <head>\r\n     <meta charset=\"UTF-8\">\r\n     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n     <title>Desenvolvimento de Software - LobosTI</title> <link rel=\"stylesheet\" href=\"../style.css\">\r\n-    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css\">\r\n     <link rel=\"stylesheet\" href=\"../style.css\">\r\n </head>\r\n <body style=\"font-family: 'Poppins', sans-serif; background-color: #0f172a; color: #e2e8f0;\">\r\n \r\n"
                 }
             ],
             "date": 1754337126151,

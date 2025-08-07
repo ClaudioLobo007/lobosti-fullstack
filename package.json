@@ -2,18 +2,16 @@
   "name": "sitelobos",
   "version": "1.0.0",
   "main": "Script.js",
-"scripts": {
-  "build:css": "chmod +x ./node_modules/.bin/tailwindcss && tailwindcss -i ./src/input.css -o ./dist/style.css",
-  "build:copy": "chmod +x ./node_modules/.bin/cpy && cpy \"**/*.html\" \"Scripts\" \"public\" \"pages\" \"src\" dist --parents",
-  "build": "npm run build:copy && npm run build:css"
-},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:css": "chmod +x ./node_modules/.bin/tailwindcss && tailwindcss -i ./src/input.css -o ./style.css"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
     "@tailwindcss/cli": "^4.1.11",
-    "cpy-cli": "^5.0.0",
     "tailwindcss": "^4.1.11"
   }
 }

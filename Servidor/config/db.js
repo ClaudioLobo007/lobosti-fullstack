@@ -25,24 +25,25 @@ const setMasterConnection = (connection) => {
 
 // A CORREÇÃO CRÍTICA ESTÁ NESTA FUNÇÃO
 async function getTenantConnection(dbName) {
+    // Verifica se já existe uma conexão ativa e em cache para esta empresa.
+    // Se sim, retorna-a imediatamente para economizar recursos.
     if (tenantConnections[dbName] && tenantConnections[dbName].readyState === 1) {
         return tenantConnections[dbName];
     }
 
-    // --- INÍCIO DA CORREÇÃO ---
-    // Em vez de usar a variável de ambiente, derivamos o endereço da conexão MESTRE ATIVA.
-    // Isto garante que nos testes, ele aponte para o servidor em memória.
-    const host = masterConnection.host;
-    const port = masterConnection.port;
-    const user = masterConnection.user;
-    const pass = masterConnection.pass;
-    const auth = user && pass ? `${user}:${pass}@` : '';
+    // Pega na string de conexão original do Atlas que está no seu ficheiro .env.
+    const originalUri = process.env.MONGODB_URI;
+    
+    // Usa uma expressão regular para substituir de forma inteligente apenas o nome da base de dados
+    // no final da string, preservando o `+srv` e todos os outros parâmetros importantes.
+    const tenantDbUri = originalUri.replace(/\/([^\/?]+)(\?.+)?$/, `/${dbName}$2`);
 
-    const tenantDbUri = `mongodb://${auth}${host}:${port}/${dbName}`;
-    // --- FIM DA CORREÇÃO ---
-
+    // Cria a nova conexão específica para a base de dados da empresa.
     const newConnection = await mongoose.createConnection(tenantDbUri).asPromise();
+    
+    // Guarda a nova conexão no cache para ser reutilizada.
     tenantConnections[dbName] = newConnection;
+    
     return newConnection;
 }
 

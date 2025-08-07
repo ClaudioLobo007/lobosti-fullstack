@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 8,
+            "activePatchIndex": 9,
             "patches": [
                 {
                     "date": 1752274027936,
@@ -40,6 +40,10 @@
                 {
                     "date": 1754066468022,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -164,10 +164,10 @@\n     /* Adiciona uma transição suave para o efeito */\r\n     transition: transform 0.2s ease, box-shadow 0.2s ease; \r\n }\r\n /* Layout para o Painel de Administrador */\r\n-#adminDashboardScreen {\r\n-    display: flex; /* Torna o container um flexbox */\r\n+#adminDashboardScreen.hidden {\r\n+    display: none;\r\n     flex-direction: column; /* Organiza os filhos em coluna */\r\n     height: 90vh; /* Faz o painel ocupar 90% da altura da tela */\r\n }\r\n \r\n"
+                },
+                {
+                    "date": 1754522854638,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,8 +5,9 @@\n \r\n @tailwind base;\r\n @tailwind components;\r\n @tailwind utilities;\r\n+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');\r\n \r\n \r\n /* ========================================================================== */\r\n /* Seus Estilos Personalizados                        */\r\n@@ -27,8 +28,13 @@\n         opacity: 1;\r\n         transform: translateY(0);\r\n     }\r\n }\r\n+@keyframes float {\r\n+    0% { transform: translateY(0px); }\r\n+    50% { transform: translateY(-15px); }\r\n+    100% { transform: translateY(0px); }\r\n+}\r\n \r\n /* Estilos para o calendário e cartões de boletos */\r\n .day-cell {\r\n     background-color: #374151; /* gray-700 */\r\n@@ -178,5 +184,55 @@\n #adminContentWrapper {\r\n     flex-grow: 1; /* Faz esta área crescer e ocupar o espaço que sobrar */\r\n     overflow-y: auto; /* Adiciona uma barra de scroll APENAS nesta área se necessário */\r\n     padding-top: 1rem;\r\n-}\n\\ No newline at end of file\n+}\r\n+\r\n+\r\n+body {\r\n+    font-family: 'Poppins', sans-serif;\r\n+    background-color: #0f172a;\r\n+    color: #e2e8f0;\r\n+}\r\n+\r\n+.hero-gradient {\r\n+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);\r\n+}\r\n+\r\n+.service-card:hover {\r\n+    transform: translateY(-5px);\r\n+    box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);\r\n+}\r\n+\r\n+.wolf-logo {\r\n+    filter: drop-shadow(0 0 5px rgba(99, 102, 241, 0.7));\r\n+}\r\n+\r\n+.login-form {\r\n+    backdrop-filter: blur(10px);\r\n+    background: rgba(15, 23, 42, 0.8);\r\n+    border: 1px solid rgba(99, 102, 241, 0.3);\r\n+}\r\n+\r\n+.nav-link {\r\n+    position: relative;\r\n+}\r\n+\r\n+.nav-link::after {\r\n+    content: '';\r\n+    position: absolute;\r\n+    width: 0;\r\n+    height: 2px;\r\n+    bottom: -2px;\r\n+    left: 0;\r\n+    background-color: #6366f1;\r\n+    transition: width 0.3s ease;\r\n+}\r\n+\r\n+.nav-link:hover::after {\r\n+    width: 100%;\r\n+}\r\n+\r\n+.animated-wolf {\r\n+    animation: float 6s ease-in-out infinite;\r\n+}\r\n+\r\n"
                 }
             ],
             "date": 1752274027936,
