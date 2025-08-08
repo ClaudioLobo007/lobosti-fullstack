@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 3,
+            "activePatchIndex": 5,
             "patches": [
                 {
                     "date": 1753739333554,
@@ -20,6 +20,14 @@
                 {
                     "date": 1754522509184,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,8 @@\n <head>\r\n     <meta charset=\"UTF-8\">\r\n     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n     <title>Verificação de E-mail - Organizador de Boletos</title>\r\n-    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css\">\r\n     <link rel=\"stylesheet\" href=\"style.css\">\r\n </head>\r\n <body class=\"bg-gray-900 text-gray-100 min-h-screen flex items-center justify-center\">\r\n \r\n"
+                },
+                {
+                    "date": 1754584525164,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,12 @@\n <head>\r\n     <meta charset=\"UTF-8\">\r\n     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n     <title>Verificação de E-mail - Organizador de Boletos</title>\r\n-    <link rel=\"stylesheet\" href=\"style.css\">\r\n+    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css\">\r\n+    <style>\r\n+        body { background-color: #0f172a; font-family: 'Poppins', sans-serif; }\r\n+    </style>\r\n </head>\r\n <body class=\"bg-gray-900 text-gray-100 min-h-screen flex items-center justify-center\">\r\n \r\n     <div class=\"w-full max-w-md bg-gray-800 rounded-lg shadow-md p-8 text-center\">\r\n"
+                },
+                {
+                    "date": 1754584556983,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,11 +4,9 @@\n     <meta charset=\"UTF-8\">\r\n     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n     <title>Verificação de E-mail - Organizador de Boletos</title>\r\n     <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css\">\r\n-    <style>\r\n-        body { background-color: #0f172a; font-family: 'Poppins', sans-serif; }\r\n-    </style>\r\n+    <link rel=\"stylesheet\" href=\"style.css\">\r\n </head>\r\n <body class=\"bg-gray-900 text-gray-100 min-h-screen flex items-center justify-center\">\r\n \r\n     <div class=\"w-full max-w-md bg-gray-800 rounded-lg shadow-md p-8 text-center\">\r\n"
                 }
             ],
             "date": 1753739333554,

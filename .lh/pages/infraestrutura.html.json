@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 11,
+            "activePatchIndex": 21,
             "patches": [
                 {
                     "date": 1754346228934,
@@ -52,6 +52,46 @@
                 {
                     "date": 1754534274072,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,16 +3,11 @@\n <head>\r\n     <meta charset=\"UTF-8\">\r\n     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n     <title>Infraestrutura de TI - LobosTI</title>\r\n-    <script src=\"https://cdn.tailwindcss.com\"></script>\r\n+\r\n     <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css\">\r\n-    \r\n     <link rel=\"stylesheet\" href=\"../style.css\"> \r\n-    \r\n-    <style>\r\n-\r\n-    </style>\r\n </head>\r\n <body>\r\n \r\n     <header id=\"header-placeholder\"></header>\r\n"
+                },
+                {
+                    "date": 1754579183455,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,10 +3,10 @@\n <head>\r\n     <meta charset=\"UTF-8\">\r\n     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n     <title>Infraestrutura de TI - LobosTI</title>\r\n-\r\n-    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css\">\r\n+    <script src=\"https://cdn.tailwindcss.com\"></script>\r\n+    \r\n     <link rel=\"stylesheet\" href=\"../style.css\"> \r\n </head>\r\n <body>\r\n \r\n"
+                },
+                {
+                    "date": 1754579560716,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,10 +3,10 @@\n <head>\r\n     <meta charset=\"UTF-8\">\r\n     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n     <title>Infraestrutura de TI - LobosTI</title>\r\n-    <script src=\"https://cdn.tailwindcss.com\"></script>\r\n     \r\n+    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css\">\r\n     <link rel=\"stylesheet\" href=\"../style.css\"> \r\n </head>\r\n <body>\r\n \r\n"
+                },
+                {
+                    "date": 1754579570502,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n <head>\r\n     <meta charset=\"UTF-8\">\r\n     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n     <title>Infraestrutura de TI - LobosTI</title>\r\n-    \r\n+    <script src=\"https://cdn.tailwindcss.com\"></script>\r\n     <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css\">\r\n     <link rel=\"stylesheet\" href=\"../style.css\"> \r\n </head>\r\n <body>\r\n"
+                },
+                {
+                    "date": 1754579629747,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n     <meta charset=\"UTF-8\">\r\n     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n     <title>Infraestrutura de TI - LobosTI</title>\r\n     <script src=\"https://cdn.tailwindcss.com\"></script>\r\n-    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css\">\r\n+    \r\n     <link rel=\"stylesheet\" href=\"../style.css\"> \r\n </head>\r\n <body>\r\n \r\n"
+                },
+                {
+                    "date": 1754580325381,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n     <meta charset=\"UTF-8\">\r\n     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n     <title>Infraestrutura de TI - LobosTI</title>\r\n     <script src=\"https://cdn.tailwindcss.com\"></script>\r\n-    \r\n+    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css\">\r\n     <link rel=\"stylesheet\" href=\"../style.css\"> \r\n </head>\r\n <body>\r\n \r\n"
+                },
+                {
+                    "date": 1754583476867,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n <head>\r\n     <meta charset=\"UTF-8\">\r\n     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n     <title>Infraestrutura de TI - LobosTI</title>\r\n-    <script src=\"https://cdn.tailwindcss.com\"></script>\r\n+    \r\n     <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css\">\r\n     <link rel=\"stylesheet\" href=\"../style.css\"> \r\n </head>\r\n <body>\r\n"
+                },
+                {
+                    "date": 1754583491438,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,9 +38,9 @@\n                             </div>\r\n                             \r\n                             <div class=\"flex items-start\">\r\n                                 <div class=\"flex-shrink-0 mt-1\">\r\n-                                    <div class=\"w-8 h-8 bg-green-600 bg-opacity-20 rounded-full flex items-center justify-center\">\r\n+                                    <div class=\"w-8 h-8 bg-green-600  rounded-full flex items-center justify-center\">\r\n                                         <i class=\"fas fa-check text-green-500 text-sm\"></i>\r\n                                     </div>\r\n                                 </div>\r\n                                 <div class=\"ml-4\">\r\n"
+                },
+                {
+                    "date": 1754583536131,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,9 +38,9 @@\n                             </div>\r\n                             \r\n                             <div class=\"flex items-start\">\r\n                                 <div class=\"flex-shrink-0 mt-1\">\r\n-                                    <div class=\"w-8 h-8 bg-green-600  rounded-full flex items-center justify-center\">\r\n+                                    <div class=\"w-8 h-8 bg-green-950 rounded-full flex items-center justify-center\">\r\n                                         <i class=\"fas fa-check text-green-500 text-sm\"></i>\r\n                                     </div>\r\n                                 </div>\r\n                                 <div class=\"ml-4\">\r\n"
+                },
+                {
+                    "date": 1754583551601,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -50,9 +50,9 @@\n                             </div>\r\n                             \r\n                             <div class=\"flex items-start\">\r\n                                 <div class=\"flex-shrink-0 mt-1\">\r\n-                                    <div class=\"w-8 h-8 bg-green-600 bg-opacity-20 rounded-full flex items-center justify-center\">\r\n+                                    <div class=\"w-8 h-8 bg-green-950 rounded-full flex items-center justify-center\">\r\n                                         <i class=\"fas fa-check text-green-500 text-sm\"></i>\r\n                                     </div>\r\n                                 </div>\r\n                                 <div class=\"ml-4\">\r\n"
+                },
+                {
+                    "date": 1754583563347,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,9 @@\n                         \r\n                         <div class=\"space-y-6 mb-10\">\r\n                             <div class=\"flex items-start\">\r\n                                 <div class=\"flex-shrink-0 mt-1\">\r\n-                                    <div class=\"w-8 h-8 bg-green-600 bg-opacity-20 rounded-full flex items-center justify-center\">\r\n+                                    <div class=\"w-8 h-8 bg-green-950 rounded-full flex items-center justify-center\">\r\n                                         <i class=\"fas fa-check text-green-500 text-sm\"></i>\r\n                                     </div>\r\n                                 </div>\r\n                                 <div class=\"ml-4\">\r\n"
                 }
             ],
             "date": 1754346228934,

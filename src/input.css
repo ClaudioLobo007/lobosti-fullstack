@@ -1,17 +1,28 @@
-/* ========================================================================== */
-/* Diretivas Principais do Tailwind                      */
-/* ========================================================================== */
-/* Estas linhas serão substituídas pelo CSS base do Tailwind durante a compilação. */
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
+/* src/input.css */
 
 /* ========================================================================== */
-/* Seus Estilos Personalizados                        */
+/* Diretiva Principal do Tailwind v4+                                         */
 /* ========================================================================== */
-/* Todos os seus estilos que antes estavam em style.css vêm aqui abaixo. */
+/* Esta linha importa automaticamente o 'base', 'components' e 'utilities'. */
+@import "tailwindcss";
+
+/* ========================================================================== */
+/* Importações de Fontes Externas (Apenas uma vez)                          */
+/* ========================================================================== */
+
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* ========================================================================== */
+/* Estilos Globais e Personalizados                                           */
+/* ========================================================================== */
+
+/* Estilos base para o corpo da página */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #0f172a; /* slate-900 */
+    color: #e2e8f0; /* slate-200 */
+}
 
 /* Animação de Fade-in */
 .fade-in {
@@ -19,199 +30,29 @@
 }
 
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-/* Estilos para o calendário e cartões de boletos */
-.day-cell {
-    background-color: #374151; /* gray-700 */
-    border-color: #1f2937;    /* gray-800 */
-    border-radius: 0.375rem;  /* rounded-md */
-    min-height: 8rem;         /* h-32 */
-    position: relative;
-}
-
-.day-cell.today {
-    border: 2px solid #6366f1; /* indigo-500 */
-}
-
-.day-cell.has-bills {
-    border: 1px solid #4f46e5; /* indigo-600 */
-}
-
-/* Estilos da barra de scroll dentro das células do calendário */
-.day-cell::-webkit-scrollbar {
-    width: 4px;
-}
-
-.day-cell::-webkit-scrollbar-thumb {
-    background-color: #4f46e5; /* indigo-600 */
-    border-radius: 2px;
-}
-
-.day-cell::-webkit-scrollbar-track {
-    background-color: #1f2937; /* gray-800 */
-}
-
-/* Estilos dos cartões de boleto */
-.bill-card {
-    background-color: #4b5563; /* gray-700 */
-    border: 1px solid #374151; /* gray-600 */
-    border-radius: 0.375rem;   /* rounded-md */
-    padding: 0.75rem;
-    margin-bottom: 0.75rem;
-}
-
-.bill-card.paid {
-    background-color: #15803d; /* green-700 */
-    border-color: #166534;     /* green-800 */
-    color: #d1fae5;            /* green-100 */
-}
-
-.bill-card.unpaid {
-    background-color: #4f46e5; /* indigo-700 */
-    border-color: #4338ca;     /* indigo-800 */
-    color: #e0e7ff;            /* indigo-100 */
-}
-
-/* Ajustes para o input de data para mostrar o ícone */
-input[type="date"]::-webkit-calendar-picker-indicator {
-    filter: invert(1); /* Inverte a cor do ícone para branco */
-}
-
-input[type="date"] {
-    color-scheme: dark; /* Força o tema escuro para o calendário popup */
-}
-
-/* Esconde as setas de TODOS os inputs do tipo 'number' */
-input[type=number]::-webkit-outer-spin-button,
-input[type=number]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
-input[type=number] {
-    -moz-appearance: textfield; /* Para o Firefox */
-    appearance: textfield;      /* Propriedade padrão para outros navegadores */
-}
-
-/* Ajusta o tamanho da imagem do código de barras para ser responsivo */
-#barcodeImage {
-    max-width: 100%;
-    height: auto;
-}
-
-/* Estilos para o botão de rádio personalizado */
-.radio-custom {
-  display: inline-block;
-  width: 1.5rem; /* 24px */
-  height: 1.5rem; /* 24px */
-  border: 2px solid #4b5563; /* Cor da borda (cinza) */
-  border-radius: 50%;
-  position: relative;
-  vertical-align: middle;
-  cursor: pointer;
-  transition: border-color 0.2s ease-in-out;
-}
-
-/* Círculo interior que aparece quando selecionado */
-.radio-custom::after {
-  content: '';
-  display: block;
-  width: 0.875rem; /* 14px */
-  height: 0.875rem; /* 14px */
-  background-color: #6366f1; /* Cor do preenchimento (índigo) */
-  border-radius: 50%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0);
-  transition: transform 0.15s ease-in-out;
-}
-
-/* Mostra o círculo interior quando o rádio escondido está marcado */
-input[type="radio"]:checked + .radio-custom::after {
-  transform: translate(-50%, -50%) scale(1);
-}
-
-/* Muda a cor da borda quando o rádio está marcado para um feedback visual melhor */
-input[type="radio"]:checked + .radio-custom {
-  border-color: #6366f1; /* Cor da borda (índigo) */
-}
-
-.bill-card-draggable {
-    /* Adicionamos uma posição relativa para o z-index funcionar */
-    position: relative; 
-}
-
-.bill-card-draggable:hover {
-    /* Aumenta ligeiramente o tamanho do card */
-    transform: scale(1.05); 
-
-    /* Traz o card para a frente dos outros */
-    z-index: 10; 
-
-    /* Adiciona uma sombra para dar profundidade */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); 
-
-    /* Adiciona uma transição suave para o efeito */
-    transition: transform 0.2s ease, box-shadow 0.2s ease; 
-}
-/* Layout para o Painel de Administrador */
-#adminDashboardScreen.hidden {
-    display: none;
-    flex-direction: column; /* Organiza os filhos em coluna */
-    height: 90vh; /* Faz o painel ocupar 90% da altura da tela */
-}
-
-#adminHeader {
-    flex-shrink: 0; /* Impede que o cabeçalho encolha */
-}
-
-#adminContentWrapper {
-    flex-grow: 1; /* Faz esta área crescer e ocupar o espaço que sobrar */
-    overflow-y: auto; /* Adiciona uma barra de scroll APENAS nesta área se necessário */
-    padding-top: 1rem;
-}
-
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-
-body {
-    font-family: 'Poppins', sans-serif;
-    background-color: #0f172a;
-    color: #e2e8f0;
-}
-
+/* Estilos da página Index.html */
 .hero-gradient {
     background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
 }
-
 .service-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
 }
-
 .wolf-logo {
     filter: drop-shadow(0 0 5px rgba(99, 102, 241, 0.7));
 }
-
 .login-form {
     backdrop-filter: blur(10px);
     background: rgba(15, 23, 42, 0.8);
     border: 1px solid rgba(99, 102, 241, 0.3);
 }
-
 .nav-link {
     position: relative;
 }
-
 .nav-link::after {
     content: '';
     position: absolute;
@@ -222,24 +63,127 @@ body {
     background-color: #6366f1;
     transition: width 0.3s ease;
 }
-
 .nav-link:hover::after {
     width: 100%;
 }
-
 .animated-wolf {
     animation: float 6s ease-in-out infinite;
 }
-
 @keyframes float {
     0% { transform: translateY(0px); }
     50% { transform: translateY(-15px); }
     100% { transform: translateY(0px); }
 }
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-body {
-    font-family: 'Poppins', sans-serif;
-    background-color: #0f172a;
-    color: #e2e8f0;
+
+/* Estilos da página OrgBoletos.html */
+.day-cell {
+    background-color: #374151;
+    border-color: #1f2937;
+    border-radius: 0.375rem;
+    min-height: 8rem;
+    position: relative;
+}
+.day-cell.today {
+    border: 2px solid #6366f1;
+}
+.day-cell.has-bills {
+    border: 1px solid #4f46e5;
+}
+.day-cell::-webkit-scrollbar {
+    width: 4px;
+}
+.day-cell::-webkit-scrollbar-thumb {
+    background-color: #4f46e5;
+    border-radius: 2px;
+}
+.day-cell::-webkit-scrollbar-track {
+    background-color: #1f2937;
+}
+.bill-card {
+    background-color: #4b5563;
+    border: 1px solid #374151;
+    border-radius: 0.375rem;
+    padding: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+.bill-card.paid {
+    background-color: #15803d;
+    border-color: #166534;
+    color: #d1fae5;
+}
+.bill-card.unpaid {
+    background-color: #4f46e5;
+    border-color: #4338ca;
+    color: #e0e7ff;
+}
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+input[type="date"] {
+    color-scheme: dark;
+}
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type=number] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+#barcodeImage {
+    max-width: 100%;
+    height: auto;
+}
+.radio-custom {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 2px solid #4b5563;
+  border-radius: 50%;
+  position: relative;
+  vertical-align: middle;
+  cursor: pointer;
+  transition: border-color 0.2s ease-in-out;
+}
+.radio-custom::after {
+  content: '';
+  display: block;
+  width: 0.875rem;
+  height: 0.875rem;
+  background-color: #6366f1;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.15s ease-in-out;
+}
+input[type="radio"]:checked + .radio-custom::after {
+  transform: translate(-50%, -50%) scale(1);
+}
+input[type="radio"]:checked + .radio-custom {
+  border-color: #6366f1;
+}
+.bill-card-draggable {
+    position: relative; 
+}
+.bill-card-draggable:hover {
+    transform: scale(1.05); 
+    z-index: 10; 
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); 
+    transition: transform 0.2s ease, box-shadow 0.2s ease; 
+}
+#adminDashboardScreen {
+    display: flex;
+    flex-direction: column;
+    height: 90vh;
+}
+#adminHeader {
+    flex-shrink: 0;
+}
+#adminContentWrapper {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding-top: 1rem;
 }
