@@ -187,3 +187,99 @@ input[type="radio"]:checked + .radio-custom {
     overflow-y: auto;
     padding-top: 1rem;
 }
+.service-card .icon-container:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    transition: all 0.2s;
+}
+
+/* Animação de entrada nos cards de serviço */
+.service-card {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: serviceFadeIn 0.7s cubic-bezier(.4,0,.2,1) forwards;
+}
+.service-card:nth-child(1) { animation-delay: 0.1s; }
+.service-card:nth-child(2) { animation-delay: 0.2s; }
+.service-card:nth-child(3) { animation-delay: 0.3s; }
+.service-card:nth-child(4) { animation-delay: 0.4s; }
+
+@keyframes serviceFadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Efeito de borda animada e brilho ao hover */
+.service-card:hover {
+    box-shadow: 0 0 40px 0 rgba(255,255,255,0.08), 0 8px 32px 0 rgba(99,102,241,0.18);
+    border-width: 3px;
+    filter: brightness(1.07);
+    transition: box-shadow 0.3s, border-color 0.3s, filter 0.3s;
+}
+
+/* Título do card com gradiente suave */
+.service-card h3 {
+    background: linear-gradient(90deg, #a78bfa 0%, #6366f1 60%, #a78bfa 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent; 
+    transition: background 0.3s;
+}
+
+/* Gradiente específico e suave para cada card no hover */
+.service-card:nth-child(1):hover h3 {
+    background: linear-gradient(90deg, #facc15 0%, #fde047 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.service-card:nth-child(2):hover h3 {
+    background: linear-gradient(90deg, #60a5fa 0%, #6366f1 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.service-card:nth-child(3):hover h3 {
+    background: linear-gradient(90deg, #4ade80 0%, #22c55e 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.service-card:nth-child(4):hover h3 {
+    background: linear-gradient(90deg, #f87171 0%, #ef4444 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Ícone maior e com sombra */
+.service-card .icon-container i {
+    text-shadow: 0 2px 12px rgba(0,0,0,0.25);
+    transition: text-shadow 0.2s;
+}
+.service-card:hover .icon-container i {
+    text-shadow: 0 4px 24px rgba(99,102,241,0.25);
+}
+
+/* Efeito de destaque no link "Saiba mais" */
+.service-card a {
+    position: relative;
+    z-index: 2;
+}
+.service-card a::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #6366f1, #a78bfa);
+    transition: width 0.3s;
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+}
+.service-card a:hover::after {
+    width: 100%;
+}
