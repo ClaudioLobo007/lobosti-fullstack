@@ -451,6 +451,7 @@ function clearBillForm() {
  * Atualiza a interface principal com os dados dos boletos.
  */
 async function updateBillsOrganizer() {
+    showLoader();
     try {
         userBoletos = await api.getBoletos();
 
@@ -475,6 +476,8 @@ async function updateBillsOrganizer() {
     } catch (error) {
         console.error("ERRO GRAVE DENTRO DE updateBillsOrganizer:", error);
         showToast(error.message, 'error');
+    }finally {
+        hideLoader(); // Adicionado
     }
 }
 
@@ -734,6 +737,7 @@ async function openAddBillModal(preselectedDate = null) {
 }
 
 async function populateCategoryFilter() {
+    showLoader();
     try {
         const categories = await api.getCategories();
         categoryFilterSelect.innerHTML = '<option value="all">Todas as Categorias</option>'; // Opção padrão
@@ -744,6 +748,8 @@ async function populateCategoryFilter() {
         console.error("Erro ao popular filtro de categorias:", error);
         // Se der erro, garante que a opção padrão exista
         categoryFilterSelect.innerHTML = '<option value="all">Todas as Categorias</option>';
+    } finally {
+        hideLoader();
     }
 }
 
@@ -1300,6 +1306,7 @@ async function openProfileModal() {
  * Busca o anúncio ativo mais recente e o exibe no banner.
  */
 async function fetchAndDisplayAnnouncement() {
+    showLoader();
     try {
         const announcement = await api.getActiveAnnouncement();
 
@@ -1315,6 +1322,8 @@ async function fetchAndDisplayAnnouncement() {
         }
     } catch (error) {
         console.error("Não foi possível buscar o anúncio:", error);
+    } finally {
+        hideLoader();
     }
 }
 

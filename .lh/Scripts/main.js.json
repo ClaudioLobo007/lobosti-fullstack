@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 369,
+            "activePatchIndex": 371,
             "patches": [
                 {
                     "date": 1752672273587,
@@ -1484,6 +1484,14 @@
                 {
                     "date": 1754665995140,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1624,9 +1624,9 @@\n     const token = localStorage.getItem('authToken');\r\n     if (!token) {\r\n         // Se não houver token, o utilizador não está logado.\r\n         // Idealmente, a página de login (index.html) deveria ser mostrada.\r\n-        // Como estamos em OrgBoletos.html, vamos redirecionar.\r\n+        // Como estamos em orgboletos.html, vamos redirecionar.\r\n         window.location.href = 'index.html';\r\n         return;\r\n     }\r\n \r\n"
+                },
+                {
+                    "date": 1754685854251,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -450,8 +450,9 @@\n /**\r\n  * Atualiza a interface principal com os dados dos boletos.\r\n  */\r\n async function updateBillsOrganizer() {\r\n+    showLoader();\r\n     try {\r\n         userBoletos = await api.getBoletos();\r\n \r\n         if (!userBoletos || userBoletos.length === 0) {\r\n@@ -474,8 +475,10 @@\n \r\n     } catch (error) {\r\n         console.error(\"ERRO GRAVE DENTRO DE updateBillsOrganizer:\", error);\r\n         showToast(error.message, 'error');\r\n+    }finally {\r\n+        hideLoader(); // Adicionado\r\n     }\r\n }\r\n \r\n async function showMainApp() {\r\n@@ -733,8 +736,9 @@\n     }\r\n }\r\n \r\n async function populateCategoryFilter() {\r\n+    showLoader();\r\n     try {\r\n         const categories = await api.getCategories();\r\n         categoryFilterSelect.innerHTML = '<option value=\"all\">Todas as Categorias</option>'; // Opção padrão\r\n         categories.forEach(category => {\r\n@@ -743,8 +747,10 @@\n     } catch (error) {\r\n         console.error(\"Erro ao popular filtro de categorias:\", error);\r\n         // Se der erro, garante que a opção padrão exista\r\n         categoryFilterSelect.innerHTML = '<option value=\"all\">Todas as Categorias</option>';\r\n+    } finally {\r\n+        hideLoader(); // Adicionado\r\n     }\r\n }\r\n \r\n /**\r\n"
+                },
+                {
+                    "date": 1754685879180,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -748,9 +748,9 @@\n         console.error(\"Erro ao popular filtro de categorias:\", error);\r\n         // Se der erro, garante que a opção padrão exista\r\n         categoryFilterSelect.innerHTML = '<option value=\"all\">Todas as Categorias</option>';\r\n     } finally {\r\n-        hideLoader(); // Adicionado\r\n+        hideLoader();\r\n     }\r\n }\r\n \r\n /**\r\n@@ -1305,8 +1305,9 @@\n /**\r\n  * Busca o anúncio ativo mais recente e o exibe no banner.\r\n  */\r\n async function fetchAndDisplayAnnouncement() {\r\n+    showLoader();\r\n     try {\r\n         const announcement = await api.getActiveAnnouncement();\r\n \r\n         // Se existir um anúncio e ele tiver uma mensagem\r\n@@ -1320,8 +1321,10 @@\n             globalAnnouncementBanner.classList.remove('hidden');\r\n         }\r\n     } catch (error) {\r\n         console.error(\"Não foi possível buscar o anúncio:\", error);\r\n+    } finally {\r\n+        hideLoader();\r\n     }\r\n }\r\n \r\n /**\r\n"
                 }
             ],
             "date": 1752672273587,

@@ -9,6 +9,11 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+    <div id="globalLoader" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
+        <i class="fas fa-spinner fa-spin text-white text-4xl"></i>
+    </div>
+
     <header id="header-placeholder"></header>
 
     <!-- Hero Section -->
@@ -79,7 +84,7 @@
                     <p class="text-gray-400 mb-4">
                         Soluções personalizadas de software e aplicativos para atender às necessidades específicas do seu negócio.
                     </p>
-                    <a href="/pages/Desenvolvimento.html" class="text-blue-500 font-medium inline-flex items-center">
+                    <a href="/pages/desenvolvimento.html" class="text-blue-500 font-medium inline-flex items-center">
                         Saiba mais <i class="fas fa-chevron-right ml-1 text-sm"></i>
                     </a>
                 </div>
@@ -396,6 +401,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // CARREGA TODOS OS COMPONENTES PRIMEIRO
+    document.getElementById('globalLoader').style.display = 'flex';
     Promise.all([
         loadComponent('components/header.html', document.getElementById("header-placeholder")),
         loadComponent('components/footer.html', document.getElementById("footer-placeholder")),
@@ -416,7 +422,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const currentYear = new Date().getFullYear();
             copyrightTextElement.innerHTML = `&copy; ${currentYear} LobosTI. Todos os direitos reservados.`;
         }
-        
+    
+
         // Carrega o script que controla os modais (Termos de Uso, Privacidade)
         const modalScript = document.createElement('script');
         const basePath = window.location.pathname.includes('/pages/') ? '../' : '';
@@ -871,7 +878,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         }
-    }).catch(error => console.error("Erro crítico ao carregar componentes:", error));
+        document.getElementById('globalLoader').style.display = 'none';
+    }).catch(error => {
+        console.error("Erro ao carregar componentes:", error);
+        document.getElementById('globalLoader').style.display = 'none';
+        document.getElementById('header-placeholder').innerHTML = '<p class="text-red-500">Erro ao carregar o cabeçalho.</p>';
+        document.getElementById('footer-placeholder').innerHTML = '<p class="text-red-500">Erro ao carregar o rodapé.</p>';
+        document.getElementById('modals-placeholder').innerHTML = '<p class="text-red-500">Erro ao carregar os modais.</p>';
+    });
 });
 </script>
 
