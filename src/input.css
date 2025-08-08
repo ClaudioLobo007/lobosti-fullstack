@@ -308,3 +308,5 @@ input[type="radio"]:checked + .radio-custom {
 .animate-pulse-contact:hover, .group-hover\:animate-pulse-contact:hover {
     animation: pulse-contact 0.7s;
 }
+
+/* Nenhuma alteração necessária, pois feature-card e benefit-card já estão animados */
