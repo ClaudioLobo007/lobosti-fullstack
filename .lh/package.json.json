@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 11,
+            "activePatchIndex": 12,
             "patches": [
                 {
                     "date": 1752336547628,
@@ -52,6 +52,10 @@
                 {
                     "date": 1754663618931,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,12 +1,13 @@\n {\n   \"name\": \"sitelobos\",\n   \"version\": \"1.0.0\",\n-  \"main\": \"Script.js\",\n+    \"main\": \"Script.js\",\n   \"scripts\": {\n     \"dev\": \"tailwindcss -i ./src/input.css -o ./style.css --watch\",\n-    \"build\": \"npm run build:copy && npm run build:css\",\n-    \"build:copy\": \"chmod +x ./node_modules/.bin/cpy && cpy \\\"*.html\\\" pages public Scripts dist\",\n+    \"build\": \"npm run build:copy-files && npm run build:copy-folders && npm run build:css\",\n+    \"build:copy-files\": \"chmod +x ./node_modules/.bin/cpy && cpy \\\"*.html\\\" dist\",\n+    \"build:copy-folders\": \"chmod +x ./node_modules/.bin/cpy && cpy pages public Scripts dist --parents\",\n     \"build:css\": \"chmod +x ./node_modules/.bin/tailwindcss && tailwindcss -i ./src/input.css -o ./dist/style.css\"\n   },\n   \"keywords\": [],\n   \"author\": \"\",\n"
+                },
+                {
+                    "date": 1754663786112,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n     \"main\": \"Script.js\",\n   \"scripts\": {\n     \"dev\": \"tailwindcss -i ./src/input.css -o ./style.css --watch\",\n     \"build\": \"npm run build:copy-files && npm run build:copy-folders && npm run build:css\",\n-    \"build:copy-files\": \"chmod +x ./node_modules/.bin/cpy && cpy \\\"*.html\\\" dist\",\n+    \"build:copy-files\": \"chmod +x ./node_modules/.bin/cpy && cpy ./*.html dist\",\n     \"build:copy-folders\": \"chmod +x ./node_modules/.bin/cpy && cpy pages public Scripts dist --parents\",\n     \"build:css\": \"chmod +x ./node_modules/.bin/tailwindcss && tailwindcss -i ./src/input.css -o ./dist/style.css\"\n   },\n   \"keywords\": [],\n"
                 }
             ],
             "date": 1752336547628,

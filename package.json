@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "tailwindcss -i ./src/input.css -o ./style.css --watch",
     "build": "npm run build:copy-files && npm run build:copy-folders && npm run build:css",
-    "build:copy-files": "chmod +x ./node_modules/.bin/cpy && cpy \"*.html\" dist",
+    "build:copy-files": "chmod +x ./node_modules/.bin/cpy && cpy ./*.html dist",
     "build:copy-folders": "chmod +x ./node_modules/.bin/cpy && cpy pages public Scripts dist --parents",
     "build:css": "chmod +x ./node_modules/.bin/tailwindcss && tailwindcss -i ./src/input.css -o ./dist/style.css"
   },
