@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 7,
+            "activePatchIndex": 8,
             "patches": [
                 {
                     "date": 1752336547628,
@@ -36,6 +36,10 @@
                 {
                     "date": 1754531856193,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,18 +1,18 @@\n {\n   \"name\": \"sitelobos\",\n   \"version\": \"1.0.0\",\n   \"main\": \"Script.js\",\n-\"scripts\": {\n-  \"dev\": \"tailwindcss -i ./src/input.css -o ./style.css --watch\",\n-  \"build\": \"cpy \\\"*.html\\\" pages public Scripts dist && tailwindcss -i ./src/input.css -o ./dist/style.css\"\n-},\n+  \"scripts\": {\n+    \"test\": \"echo \\\"Error: no test specified\\\" && exit 1\",\n+    \"build:css\": \"tailwindcss -i ./src/input.css -o ./style.css\",\n+    \"dev\": \"tailwindcss -i ./src/input.css -o ./style.css --watch\"\n+  },\n   \"keywords\": [],\n   \"author\": \"\",\n   \"license\": \"ISC\",\n   \"description\": \"\",\n   \"devDependencies\": {\n     \"@tailwindcss/cli\": \"^4.1.11\",\n-    \"cpy-cli\": \"^5.0.0\",\n     \"tailwindcss\": \"^4.1.11\"\n   }\n }\n"
+                },
+                {
+                    "date": 1754662740202,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,17 +2,21 @@\n   \"name\": \"sitelobos\",\n   \"version\": \"1.0.0\",\n   \"main\": \"Script.js\",\n   \"scripts\": {\n-    \"test\": \"echo \\\"Error: no test specified\\\" && exit 1\",\n-    \"build:css\": \"tailwindcss -i ./src/input.css -o ./style.css\",\n-    \"dev\": \"tailwindcss -i ./src/input.css -o ./style.css --watch\"\n+    \"dev\": \"tailwindcss -i ./src/input.css -o ./style.css --watch\",\n+    \"build\": \"npm run build:copy && npm run build:css\",\n+    \"build:copy\": \"chmod +x ./node_modules/.bin/cpy && cpy \\\"*.html\\\" pages public Scripts dist\",\n+    \"build:css\": \"chmod +x ./node_modules/.bin/tailwindcss && tailwindcss -i ./src/input.css -o ./dist/style.css\"\n   },\n   \"keywords\": [],\n   \"author\": \"\",\n   \"license\": \"ISC\",\n   \"description\": \"\",\n   \"devDependencies\": {\n     \"@tailwindcss/cli\": \"^4.1.11\",\n     \"tailwindcss\": \"^4.1.11\"\n+  },\n+  \"dependencies\": {\n+    \"@fortawesome/fontawesome-free\": \"^7.0.0\"\n   }\n }\n"
                 }
             ],
             "date": 1752336547628,
