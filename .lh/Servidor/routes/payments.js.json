@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 50,
+            "activePatchIndex": 51,
             "patches": [
                 {
                     "date": 1752529411292,
@@ -208,6 +208,10 @@
                 {
                     "date": 1754666093286,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,9 +35,9 @@\n                 frequency_type: 'months',\r\n                 transaction_amount: 40.00,\r\n                 currency_id: 'BRL'\r\n             },\r\n-            back_url: 'http://127.0.0.1:5500/OrgBoletos.html',\r\n+            back_url: 'http://127.0.0.1:5500/orgboletos.html',\r\n             payer_email: company.email || '' // Usa o email da empresa ou string vazia\r\n         };\r\n \r\n         const preapproval = new PreApproval(client);\r\n"
+                },
+                {
+                    "date": 1754667227938,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,9 +35,9 @@\n                 frequency_type: 'months',\r\n                 transaction_amount: 40.00,\r\n                 currency_id: 'BRL'\r\n             },\r\n-            back_url: 'http://127.0.0.1:5500/orgboletos.html',\r\n+            back_url: `${process.env.FRONTEND_BASE_URL}/orgboletos.html`,\r\n             payer_email: company.email || '' // Usa o email da empresa ou string vazia\r\n         };\r\n \r\n         const preapproval = new PreApproval(client);\r\n"
                 }
             ],
             "date": 1752529411292,

@@ -36,7 +36,7 @@ router.post('/create-subscription', protect, async (req, res) => {
                 transaction_amount: 40.00,
                 currency_id: 'BRL'
             },
-            back_url: 'http://127.0.0.1:5500/orgboletos.html',
+            back_url: `${process.env.FRONTEND_BASE_URL}/orgboletos.html`,
             payer_email: company.email || '' // Usa o email da empresa ou string vazia
         };
 
