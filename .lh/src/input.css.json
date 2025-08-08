@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 28,
+            "activePatchIndex": 31,
             "patches": [
                 {
                     "date": 1752274027936,
@@ -120,6 +120,18 @@
                 {
                     "date": 1754690906323,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -231,17 +231,29 @@\n \r\n /* Gradiente específico e suave para cada card no hover */\r\n .service-card:nth-child(1):hover h3 {\r\n     background: linear-gradient(90deg, #facc15 0%, #fde047 100%);\r\n+    background-clip: text;\r\n+    -webkit-background-clip: text;\r\n+    -webkit-text-fill-color: transparent;\r\n }\r\n .service-card:nth-child(2):hover h3 {\r\n     background: linear-gradient(90deg, #60a5fa 0%, #6366f1 100%);\r\n+    background-clip: text;\r\n+    -webkit-background-clip: text;\r\n+    -webkit-text-fill-color: transparent;\r\n }\r\n .service-card:nth-child(3):hover h3 {\r\n     background: linear-gradient(90deg, #4ade80 0%, #22c55e 100%);\r\n+    background-clip: text;\r\n+    -webkit-background-clip: text;\r\n+    -webkit-text-fill-color: transparent;\r\n }\r\n .service-card:nth-child(4):hover h3 {\r\n     background: linear-gradient(90deg, #f87171 0%, #ef4444 100%);\r\n+    background-clip: text;\r\n+    -webkit-background-clip: text;\r\n+    -webkit-text-fill-color: transparent;\r\n }\r\n \r\n /* Ícone maior e com sombra */\r\n .service-card .icon-container i {\r\n"
+                },
+                {
+                    "date": 1754691895829,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -281,5 +281,21 @@\n     bottom: -2px;\r\n }\r\n .service-card a:hover::after {\r\n     width: 100%;\r\n+}\r\n+\r\n+/* Animação fadeIn para cards */\r\n+@keyframes fadeInContact {\r\n+    from { opacity: 0; transform: translateY(20px);}\r\n+    to { opacity: 1; transform: translateY(0);}\r\n+}\r\n+.animate-fadeIn {\r\n+    animation: fadeInContact 0.7s cubic-bezier(.4,0,.2,1) forwards;\r\n+}\r\n+\r\n+/* Efeito de brilho nos ícones de contato ao hover */\r\n+.bg-indigo-500:hover, .bg-purple-500:hover, .bg-blue-500:hover {\r\n+    box-shadow: 0 0 16px 2px rgba(99,102,241,0.3), 0 2px 8px rgba(0,0,0,0.15);\r\n+    filter: brightness(1.15);\r\n+    transition: box-shadow 0.3s, filter 0.3s;\r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1754692018793,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -297,5 +297,20 @@\n .bg-indigo-500:hover, .bg-purple-500:hover, .bg-blue-500:hover {\r\n     box-shadow: 0 0 16px 2px rgba(99,102,241,0.3), 0 2px 8px rgba(0,0,0,0.15);\r\n     filter: brightness(1.15);\r\n     transition: box-shadow 0.3s, filter 0.3s;\r\n+}\r\n+\r\n+/* Animação pulse para ícones de contato */\r\n+@keyframes pulse-contact {\r\n+    0%, 100% { box-shadow: 0 0 0 0 rgba(99,102,241,0.2); }\r\n+    50% { box-shadow: 0 0 16px 4px rgba(99,102,241,0.4); }\r\n+}\r\n+.animate-pulse-contact:hover, .group-hover\\:animate-pulse-contact:hover {\r\n+    animation: pulse-contact 0.7s;\r\n+}\r\n+\r\n+/* Tooltips customizados para contatos */\r\n+.group:hover > span[aria-label] + span,\r\n+.group:focus-within > span[aria-label] + span {\r\n+    opacity: 1 !important;\r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1754692126010,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -306,11 +306,5 @@\n     50% { box-shadow: 0 0 16px 4px rgba(99,102,241,0.4); }\r\n }\r\n .animate-pulse-contact:hover, .group-hover\\:animate-pulse-contact:hover {\r\n     animation: pulse-contact 0.7s;\r\n-}\r\n-\r\n-/* Tooltips customizados para contatos */\r\n-.group:hover > span[aria-label] + span,\r\n-.group:focus-within > span[aria-label] + span {\r\n-    opacity: 1 !important;\r\n }\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1752274027936,

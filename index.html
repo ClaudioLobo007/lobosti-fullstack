@@ -215,59 +215,52 @@
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
                 <div>
-                    <div class="bg-gray-800 rounded-xl p-8 h-full">
+                    <div class="bg-gray-800 rounded-xl p-8 h-full shadow-xl border border-gray-700 transition hover:border-indigo-500 hover:shadow-2xl animate-fadeIn">
                         <h3 class="text-xl font-semibold text-white mb-6">Informações de Contato</h3>
                         
-                        <div class="space-y-6">
-                            <div class="flex items-start">
-                                <div class="flex-shrink-0">
-                                    <div class="w-10 h-10 bg-indigo-500 rounded-lg flex items-center justify-center">
-                                        <i class="fas fa-map-marker-alt text-indigo-100"></i>
-                                    </div>
+                        <ul class="space-y-6 mb-8">
+                            <li class="flex items-center gap-4 group relative">
+                                <span class="w-12 h-12 flex items-center justify-center rounded-full bg-indigo-500 text-white text-2xl transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg group-hover:animate-pulse-contact cursor-pointer" aria-label="Endereço">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </span>
+                                <div>
+                                    <span class="block text-white font-medium">Endereço</span>
+                                    <span class="block text-gray-400">Loja Online</span>
                                 </div>
-                                <div class="ml-4">
-                                    <h4 class="text-white font-medium">Endereço</h4>
-                                    <p class="text-gray-400">Loja Online</p>
+                            </li>
+                            <li class="flex items-center gap-4 group relative">
+                                <span class="w-12 h-12 flex items-center justify-center rounded-full bg-purple-500 text-white text-2xl transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg group-hover:animate-pulse-contact cursor-pointer" aria-label="Telefone">
+                                    <i class="fas fa-phone-alt"></i>
+                                </span>
+                                <div>
+                                    <span class="block text-white font-medium">Telefone</span>
+                                    <span class="block text-gray-400">(21) 98765-4321</span>
                                 </div>
-                            </div>
-                            
-                            <div class="flex items-start">
-                                <div class="flex-shrink-0">
-                                    <div class="w-10 h-10 bg-purple-500 rounded-lg flex items-center justify-center">
-                                        <i class="fas fa-phone-alt text-purple-100"></i> </div>
+                            </li>
+                            <li class="flex items-center gap-4 group relative">
+                                <span class="w-12 h-12 flex items-center justify-center rounded-full bg-blue-500 text-white text-2xl transition-all duration-300 group-hover:scale-110 group_hover:shadow-lg group-hover:animate-pulse-contact cursor-pointer" aria-label="E-mail">
+                                    <i class="fas fa-envelope"></i>
+                                </span>
+                                <div>
+                                    <span class="block text-white font-medium">E-mail</span>
+                                    <span class="block text-gray-400">lobosti@outlook.com</span>
                                 </div>
-                                <div class="ml-4">
-                                    <h4 class="text-white font-medium">Telefone</h4>
-                                    <p class="text-gray-400">(21) 98765-4321</p>
-                                </div>
-                            </div>
-                            
-                            <div class="flex items-start">
-                                <div class="flex-shrink-0">
-                                    <div class="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center">
-                                        <i class="fas fa-envelope text-blue-300"></i>
-                                    </div>
-                                </div>
-                                <div class="ml-4">
-                                    <h4 class="text-white font-medium">E-mail</h4>
-                                    <p class="text-gray-400">lobosti@outlook.com</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="mt-8">
+                            </li>
+                        </ul>
+                        <div class="border-t border-gray-700 my-6"></div>
+                        <div class="mt-4">
                             <h4 class="text-white font-medium mb-4">Siga-nos</h4>
                             <div class="flex space-x-4">
-                                <a href="#" class="w-10 h-10 bg-gray-600 hover:bg-indigo-600 rounded-full flex items-center justify-center transition duration-300">
+                                <a href="#" class="w-10 h-10 bg-gray-600 hover:bg-indigo-600 rounded-full flex items-center justify-center transition duration-300 hover:scale-110 hover:shadow-lg animate-pulse-contact" aria-label="Facebook">
                                     <i class="fab fa-facebook-f text-white"></i>
                                 </a>
-                                <a href="#" class="w-10 h-10 bg-gray-600 hover:bg-blue-400 rounded-full flex items-center justify-center transition duration-300">
+                                <a href="#" class="w-10 h-10 bg-gray-600 hover:bg-blue-400 rounded-full flex items-center justify-center transition duration-300 hover:scale-110 hover:shadow-lg animate-pulse-contact" aria-label="Twitter">
                                     <i class="fab fa-twitter text-white"></i>
                                 </a>
-                                <a href="#" class="w-10 h-10 bg-gray-600 hover:bg-pink-600 rounded-full flex items-center justify-center transition duration-300">
+                                <a href="#" class="w-10 h-10 bg-gray-600 hover:bg-pink-600 rounded-full flex items-center justify-center transition duration-300 hover:scale-110 hover:shadow-lg animate-pulse-contact" aria-label="Instagram">
                                     <i class="fab fa-instagram text-white"></i>
                                 </a>
-                                <a href="#" class="w-10 h-10 bg-gray-600 hover:bg-blue-600 rounded-full flex items-center justify-center transition duration-300">
+                                <a href="#" class="w-10 h-10 bg-gray-600 hover:bg-blue-600 rounded-full flex items-center justify-center transition duration-300 hover:scale-110 hover:shadow-lg animate-pulse-contact" aria-label="LinkedIn">
                                     <i class="fab fa-linkedin-in text-white"></i>
                                 </a>
                             </div>
