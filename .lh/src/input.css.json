@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 33,
+            "activePatchIndex": 34,
             "patches": [
                 {
                     "date": 1752274027936,
@@ -140,6 +140,10 @@
                 {
                     "date": 1754692451612,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -308,22 +308,5 @@\n .animate-pulse-contact:hover, .group-hover\\:animate-pulse-contact:hover {\r\n     animation: pulse-contact 0.7s;\r\n }\r\n \r\n-/* Animação fadeIn para cards de recurso/benefício */\r\n-@keyframes fadeInFeature {\r\n-    from { opacity: 0; transform: translateY(30px);}\r\n-    to { opacity: 1; transform: translateY(0);}\r\n-}\r\n-.feature-card, .benefit-card, .animate-fadeIn {\r\n-    opacity: 0;\r\n-    animation: fadeInFeature 0.8s cubic-bezier(.4,0,.2,1) forwards;\r\n-}\r\n-.feature-card:nth-child(1) { animation-delay: 0.1s; }\r\n-.feature-card:nth-child(2) { animation-delay: 0.2s; }\r\n-.feature-card:nth-child(3) { animation-delay: 0.3s; }\r\n-.feature-card:nth-child(4) { animation-delay: 0.4s; }\r\n-.benefit-card:nth-child(1) { animation-delay: 0.2s; }\r\n-.benefit-card:nth-child(2) { animation-delay: 0.3s; }\r\n-.benefit-card:nth-child(3) { animation-delay: 0.4s; }\r\n-.benefit-card:nth-child(4) { animation-delay: 0.5s; }\r\n-.benefit-card:nth-child(5) { animation-delay: 0.6s; }\n\\ No newline at end of file\n+/* Nenhuma alteração necessária, pois feature-card e benefit-card já estão animados */\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1754693504686,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -45,11 +45,13 @@\n .wolf-logo {\r\n     filter: drop-shadow(0 0 5px rgba(99, 102, 241, 0.7));\r\n }\r\n .login-form {\r\n-    backdrop-filter: blur(10px);\r\n-    background: rgba(15, 23, 42, 0.8);\r\n-    border: 1px solid rgba(99, 102, 241, 0.3);\r\n+    backdrop-filter: blur(16px);\r\n+    background: rgba(30, 41, 59, 0.85);\r\n+    border: 1.5px solid rgba(99, 102, 241, 0.18);\r\n+    box-shadow: 0 8px 32px 0 rgba(99,102,241,0.12);\r\n+    transition: border 0.3s, box-shadow 0.3s;\r\n }\r\n .nav-link {\r\n     position: relative;\r\n }\r\n@@ -304,9 +306,9 @@\n @keyframes pulse-contact {\r\n     0%, 100% { box-shadow: 0 0 0 0 rgba(99,102,241,0.2); }\r\n     50% { box-shadow: 0 0 16px 4px rgba(99,102,241,0.4); }\r\n }\r\n-.animate-pulse-contact:hover, .group-hover\\:animate-pulse-contact:hover {\r\n-    animation: pulse-contact 0.7s;\r\n+.animate-pulse-contact {\r\n+    animation: pulse-contact 1.2s infinite;\r\n }\r\n \r\n /* Nenhuma alteração necessária, pois feature-card e benefit-card já estão animados */\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1752274027936,
