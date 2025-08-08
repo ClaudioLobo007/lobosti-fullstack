@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 13,
+            "activePatchIndex": 14,
             "patches": [
                 {
                     "date": 1752336547628,
@@ -60,6 +60,10 @@
                 {
                     "date": 1754664084195,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n   \"scripts\": {\n     \"dev\": \"tailwindcss -i ./src/input.css -o ./style.css --watch\",\n     \"build\": \"npm run build:copy-files && npm run build:copy-folders && npm run build:css\",\n     \"build:copy-files\": \"chmod +x ./node_modules/.bin/cpy && cpy ./*.html dist\",\n-    \"build:copy-folders\": \"chmod +x ./node_modules/.bin/cpy && cpy pages public Scripts dist --parents\",\n+    \"build:copy-folders\": \"chmod +x ./node_modules/.bin/cpy && cpy pages public Scripts components dist --parents\",\n     \"build:css\": \"chmod +x ./node_modules/.bin/tailwindcss && tailwindcss -i ./src/input.css -o ./dist/style.css\"\n   },\n   \"keywords\": [],\n   \"author\": \"\",\n"
+                },
+                {
+                    "date": 1754667544051,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n   \"scripts\": {\n     \"dev\": \"tailwindcss -i ./src/input.css -o ./style.css --watch\",\n     \"build\": \"npm run build:copy-files && npm run build:copy-folders && npm run build:css\",\n     \"build:copy-files\": \"chmod +x ./node_modules/.bin/cpy && cpy ./*.html dist\",\n-    \"build:copy-folders\": \"chmod +x ./node_modules/.bin/cpy && cpy pages public Scripts components dist --parents\",\n+    \"build:copy-folders\": \"chmod +x ./node_modules/.bin/cpy && cpy pages public scripts components dist --parents\",\n     \"build:css\": \"chmod +x ./node_modules/.bin/tailwindcss && tailwindcss -i ./src/input.css -o ./dist/style.css\"\n   },\n   \"keywords\": [],\n   \"author\": \"\",\n"
                 }
             ],
             "date": 1752336547628,
