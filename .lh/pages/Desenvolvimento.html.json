@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 34,
+            "activePatchIndex": 35,
             "patches": [
                 {
                     "date": 1754337126151,
@@ -144,6 +144,10 @@
                 {
                     "date": 1754583678653,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -50,9 +50,9 @@\n                             </div>\r\n                             \r\n                             <div class=\"flex items-start\">\r\n                                 <div class=\"flex-shrink-0 mt-1\">\r\n-                                    <div class=\"w-8 h-8 bg-blue-600 bg-opacity-20 rounded-full flex items-center justify-center\">\r\n+                                    <div class=\"w-8 h-8 bg-blue-950 backdrop-opacity-60 rounded-full flex items-center justify-center\">\r\n                                         <i class=\"fas fa-check text-blue-500 text-sm\"></i>\r\n                                     </div>\r\n                                 </div>\r\n                                 <div class=\"ml-4\">\r\n"
+                },
+                {
+                    "date": 1754684095983,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,8 +3,9 @@\n <head>\r\n     <meta charset=\"UTF-8\">\r\n     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n     <title>Desenvolvimento de Software - LobosTI</title> <link rel=\"stylesheet\" href=\"../style.css\">\r\n+    <link rel=\"icon\" type=\"image/png\" href=\"../public/images/logo-lobosti.png\">\r\n \r\n     <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css\">\r\n     <link rel=\"stylesheet\" href=\"../style.css\">\r\n </head>\r\n"
                 }
             ],
             "date": 1754337126151,
