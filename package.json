@@ -4,9 +4,7 @@
   "main": "Script.js",
   "scripts": {
     "dev": "tailwindcss -i ./src/input.css -o ./style.css --watch",
-    "build": "npm run build:copy && npm run build:css",
-    "build:copy": "chmod +x ./node_modules/.bin/cpy && cpy \"*.html\" pages public Scripts dist",
-    "build:css": "chmod +x ./node_modules/.bin/tailwindcss && tailwindcss -i ./src/input.css -o ./dist/style.css"
+    "build": "cpy ./src/input.css dist && cpy \"*.html\" pages public Scripts dist && tailwindcss -i ./dist/input.css -o ./dist/style.css"
   },
   "keywords": [],
   "author": "",
