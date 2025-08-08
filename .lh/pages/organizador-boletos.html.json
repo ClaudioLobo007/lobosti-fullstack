@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 20,
+            "activePatchIndex": 21,
             "patches": [
                 {
                     "date": 1754404188905,
@@ -88,6 +88,10 @@
                 {
                     "date": 1754684104551,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,8 +3,9 @@\n <head>\r\n     <meta charset=\"UTF-8\">\r\n     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n     <title>Organizador de Boletos - LobosTI</title>\r\n+    <link rel=\"icon\" type=\"image/png\" href=\"../public/images/logo-lobosti.png\">\r\n     <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css\">\r\n     <link rel=\"stylesheet\" href=\"../style.css\"> \r\n </head>\r\n <body>\r\n"
+                },
+                {
+                    "date": 1754684322645,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n <head>\r\n     <meta charset=\"UTF-8\">\r\n     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n     <title>Organizador de Boletos - LobosTI</title>\r\n-    <link rel=\"icon\" type=\"image/png\" href=\"../public/images/logo-lobosti.png\">\r\n+    <link rel=\"icon\" type=\"image/png\" href=\"../public/images/FavIcon.png\">\r\n     <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css\">\r\n     <link rel=\"stylesheet\" href=\"../style.css\"> \r\n </head>\r\n <body>\r\n"
                 }
             ],
             "date": 1754404188905,

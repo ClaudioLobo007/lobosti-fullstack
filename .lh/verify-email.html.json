@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 6,
+            "activePatchIndex": 7,
             "patches": [
                 {
                     "date": 1753739333554,
@@ -32,6 +32,10 @@
                 {
                     "date": 1754665904766,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n         <p id=\"status-message\" class=\"text-gray-400 mb-6\">\r\n             Por favor, aguarde um momento.\r\n         </p>\r\n \r\n-        <a href=\"Index.html\" id=\"login-button\" class=\"hidden w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-4 rounded-lg transition duration-300\">\r\n+        <a href=\"index.html\" id=\"login-button\" class=\"hidden w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-4 rounded-lg transition duration-300\">\r\n             Ir para o Login\r\n         </a>\r\n     </div>\r\n \r\n"
+                },
+                {
+                    "date": 1754684357644,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,8 +3,9 @@\n <head>\r\n     <meta charset=\"UTF-8\">\r\n     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n     <title>Verificação de E-mail - Organizador de Boletos</title>\r\n+    <link rel=\"icon\" type=\"image/png\" href=\"/public/images/FavIcon.png\">\r\n     <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css\">\r\n     <link rel=\"stylesheet\" href=\"style.css\">\r\n </head>\r\n <body class=\"bg-gray-900 text-gray-100 min-h-screen flex items-center justify-center\">\r\n"
                 }
             ],
             "date": 1753739333554,
