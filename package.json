@@ -14,6 +14,7 @@
   "description": "",
   "devDependencies": {
     "@tailwindcss/cli": "^4.1.11",
+    "cpy-cli": "^5.0.0",
     "tailwindcss": "^4.1.11"
   },
   "dependencies": {
