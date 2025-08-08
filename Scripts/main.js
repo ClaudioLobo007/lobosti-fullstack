@@ -1624,9 +1624,9 @@ async function initializeApp() {
     const token = localStorage.getItem('authToken');
     if (!token) {
         // Se não houver token, o utilizador não está logado.
-        // Idealmente, a página de login (Index.html) deveria ser mostrada.
-        // Como estamos em OrgBoletos.html, vamos redirecionar.
-        window.location.href = 'Index.html';
+        // Idealmente, a página de login (index.html) deveria ser mostrada.
+        // Como estamos em orgboletos.html, vamos redirecionar.
+        window.location.href = 'index.html';
         return;
     }
 
@@ -1658,7 +1658,7 @@ async function initializeApp() {
         localStorage.removeItem('authToken');
         localStorage.removeItem('superAdminToken');
         setTimeout(() => {
-            window.location.href = 'Index.html';
+            window.location.href = 'index.html';
         }, 2000); // Aguarda 2 segundos para o utilizador ler a mensagem
     } finally {
         // Esconde a tela de carregamento inicial
@@ -1669,7 +1669,7 @@ async function initializeApp() {
 function logout() {
     localStorage.removeItem('authToken');
     localStorage.removeItem('superAdminToken');
-    window.location.href = 'Index.html';
+    window.location.href = 'index.html';
 }
 
 /**
@@ -2334,7 +2334,7 @@ currentDailyViewDate = today;
 const token = localStorage.getItem('authToken');
 if (!token) {
     // Se não houver token, redireciona para a página de login
-    window.location.href = 'Index.html';
+    window.location.href = 'index.html';
     return;
 }
 
@@ -2370,7 +2370,7 @@ try {
         localStorage.removeItem('authToken');
         localStorage.removeItem('superAdminToken');
         setTimeout(() => {
-            window.location.href = 'Index.html';
+            window.location.href = 'index.html';
         }, 2000); 
     }  finally {
     // Esconde a tela de carregamento inicial
@@ -2389,7 +2389,7 @@ if (closePermissionsModal) closePermissionsModal.addEventListener('click', () =>
 if (savePermissionsBtn) savePermissionsBtn.addEventListener('click', handleSavePermissions);
 if (logoutBtn) {
     logoutBtn.addEventListener('click', () => {
-        window.location.href = 'Index.html';
+        window.location.href = 'index.html';
     });
 }
 if (adminLogoutBtn) adminLogoutBtn.addEventListener('click', logout);
@@ -2429,13 +2429,13 @@ if (openAddBillModalBtn) {
 }
 
 const handleRedirectToHome = () => {
-    window.location.href = 'Index.html';
+    window.location.href = 'index.html';
 };
 
 const handleFullLogoutAndRedirect = () => {
     localStorage.removeItem('authToken');
     localStorage.removeItem('superAdminToken');
-    window.location.href = 'Index.html';
+    window.location.href = 'index.html';
 };
 
 if (subscriptionLogoutBtn) {
@@ -2444,7 +2444,7 @@ if (subscriptionLogoutBtn) {
 
 if (blockedAccessLogoutBtn) {
     blockedAccessLogoutBtn.addEventListener('click', () => {
-        window.location.href = 'Index.html';
+        window.location.href = 'index.html';
     });
 }
 

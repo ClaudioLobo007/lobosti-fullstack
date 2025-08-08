@@ -437,7 +437,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const navLoginLink = document.getElementById('nav-login-link');
             if (desktopMenu && navLoginLink && !document.getElementById('desktop-logout-btn')) {
                 navLoginLink.textContent = 'Aceder ao Painel';
-                navLoginLink.href = 'OrgBoletos.html';
+                navLoginLink.href = 'orgboletos.html';
                 const logoutButton = document.createElement('button');
                 logoutButton.id = 'desktop-logout-btn';
                 logoutButton.className = 'bg-red-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-red-700';
@@ -454,7 +454,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const mobileLoginLink = document.getElementById('mobile-nav-login-link');
             if (mobileMenuItems && mobileLoginLink && !document.getElementById('mobile-logout-btn')) {
                 mobileLoginLink.textContent = 'Aceder ao Painel';
-                mobileLoginLink.href = 'OrgBoletos.html';
+                mobileLoginLink.href = 'orgboletos.html';
                 const logoutButtonMobile = document.createElement('a');
                 logoutButtonMobile.id = 'mobile-logout-btn';
                 logoutButtonMobile.href = '#';
@@ -487,7 +487,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const isSubscriptionActive = subscription && subscription.status === 'active' && new Date(subscription.endDate) > new Date();
                 
                 boletoCardLink.classList.remove('text-yellow-500', 'text-green-500', 'text-red-500');
-                boletoCardLink.href = 'OrgBoletos.html';
+                boletoCardLink.href = 'orgboletos.html';
 
                 if (user.role === 'Proprietário') {
                     if (isSubscriptionActive) {

@@ -31,7 +31,7 @@ async function apiCall(endpoint, options = {}) {
             localStorage.removeItem('superAdminToken');
 
             // Redireciona o utilizador para a página de login
-            window.location.href = 'Index.html';
+            window.location.href = 'index.html';
 
             // Lança um erro para interromper a execução do código que chamou esta função
             throw new Error('Sessão expirada. Por favor, faça login novamente.');
