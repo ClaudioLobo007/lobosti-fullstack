@@ -1,9 +1,9 @@
 {
-    "sourceFile": "Scripts/api.js",
+    "sourceFile": "scripts/api.js",
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 34,
+            "activePatchIndex": 35,
             "patches": [
                 {
                     "date": 1752672272290,
@@ -144,6 +144,10 @@
                 {
                     "date": 1754665900456,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,9 +30,9 @@\n             localStorage.removeItem('authToken');\r\n             localStorage.removeItem('superAdminToken');\r\n \r\n             // Redireciona o utilizador para a página de login\r\n-            window.location.href = 'Index.html';\r\n+            window.location.href = 'index.html';\r\n \r\n             // Lança um erro para interromper a execução do código que chamou esta função\r\n             throw new Error('Sessão expirada. Por favor, faça login novamente.');\r\n         }\r\n"
+                },
+                {
+                    "date": 1754753389089,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -116,8 +116,9 @@\n };\r\n export const deleteAttachment = (boletoId, parcelId) => apiCall(`/api/boletos/${boletoId}/parcels/${parcelId}/attach`, { method: 'DELETE' });\r\n export const updateBoleto = (id, data) => apiCall(`/api/boletos/${id}`, { method: 'PATCH', body: JSON.stringify(data) });\r\n export const markParcelsAsPaid = (parcelIds) => apiCall('/api/boletos/parcels/mark-as-paid', { method: 'PATCH', body: JSON.stringify({ parcelIds }) });\r\n+export const markParcelsAsUnpaid = (parcelIds) => apiCall('/api/boletos/parcels/mark-as-unpaid', { method: 'PATCH', body: JSON.stringify({ parcelIds }) });\r\n export const bulkUpdateCategory = (boletoIds, categoryId) => apiCall('/api/boletos/bulk-update-category', { method: 'PATCH', body: JSON.stringify({ boletoIds, categoryId }) });\r\n export const bulkUpdateParcels = (boletoId, parcelId, updatedData, scope) => apiCall('/api/boletos/bulk-update-parcels', { \r\n     method: 'PATCH', \r\n     body: JSON.stringify({ boletoId, parcelId, updatedData, scope }) \r\n"
                 }
             ],
             "date": 1752672272290,

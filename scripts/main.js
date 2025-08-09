@@ -147,6 +147,7 @@ const selectedCountSpan = document.getElementById('selectedCount');
 const massActionsContainer = document.getElementById('massActionsContainer');
 const selectAllVisibleBtn = document.getElementById('selectAllVisibleBtn');
 const deselectAllVisibleBtn = document.getElementById('deselectAllVisibleBtn');
+const markSelectedAsUnpaidBtn = document.getElementById('markSelectedAsUnpaidBtn');
 
 const changeCategoryBtn = document.getElementById('changeCategoryBtn');
 const categoryBatchModal = document.getElementById('categoryBatchModal');
@@ -247,8 +248,8 @@ function updateMonthlySummary(boletosForSummary = userBoletos) {
 
 
 /**
- * Renderiza o calendário com uma lista específica de boletos.
- * VERSÃO FINAL - Otimizada, com melhorias visuais e todas as funcionalidades.
+ * Renderiza o calendário com uma lista específica de boletos,
+ * incluindo checkboxes para ações em massa.
  * @param {Array} boletosToRender - A lista de boletos a ser exibida.
  */
 function renderCalendar(boletosToRender = userBoletos) {
@@ -256,7 +257,6 @@ function renderCalendar(boletosToRender = userBoletos) {
     // Otimização: Se o container do calendário não estiver visível (telas pequenas), não executa a renderização.
     if (!calendarContainer || calendarContainer.offsetParent === null) {
         return;
-        console.log("-> 'renderCalendar' PAROU (container invisível).");
     }
 
     const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
@@ -345,6 +345,7 @@ function renderCalendar(boletosToRender = userBoletos) {
                     </div>
                 `;
                 parcelElement.addEventListener('click', () => openBillModal(bill, parcel));
+                
                 const checkbox = parcelElement.querySelector('.mass-payment-checkbox');
                 checkbox.addEventListener('change', (e) => {
                     const parcelId = e.target.dataset.parcelId;
@@ -357,6 +358,7 @@ function renderCalendar(boletosToRender = userBoletos) {
                     updateMassPaymentButton();
                 });
                 checkbox.addEventListener('click', (e) => e.stopPropagation());
+                
                 dayCell.appendChild(parcelElement);
             });
         }
@@ -1205,6 +1207,10 @@ async function handleConfirmImport() {
  * Atualiza a visibilidade e a contagem do botão de pagamento em massa.
  */
 function updateMassPaymentButton() {
+    const massActionsContainer = document.getElementById('massActionsContainer');
+    const selectedCountSpan = document.getElementById('selectedCount');
+    if (!massActionsContainer || !selectedCountSpan) return;
+
     const count = selectedItems.size;
     selectedCountSpan.textContent = count;
     massActionsContainer.classList.toggle('hidden', count === 0);
@@ -1270,17 +1276,62 @@ function handleSelectAllVisible() {
 }
 
 /**
+ * Lida com o clique no botão "Remover Pagamento" para os itens selecionados.
+ */
+async function handleMarkSelectedAsUnpaid() {
+    if (selectedItems.size === 0) {
+        return showToast('Nenhuma parcela selecionada.', 'info');
+    }
+
+    if (!confirm(`Tem a certeza que deseja REMOVER o status de PAGO de ${selectedItems.size} parcela(s)?`)) {
+        return;
+    }
+
+    showLoader();
+    try {
+        const parcelIds = Array.from(selectedItems.keys());
+        // Chama a nova função da API
+        const response = await api.markParcelsAsUnpaid(parcelIds);
+        showToast(response.message, 'success');
+
+        // Limpa a seleção e atualiza a interface
+        selectedItems.clear();
+        updateMassPaymentButton();
+        await updateBillsOrganizer();
+    } catch (error) {
+        showToast(error.message, 'error');
+    } finally {
+        hideLoader();
+    }
+}
+
+function handleSelectAllMonth() {
+    // Limpa a seleção anterior para evitar duplicados
+    selectedItems.clear();
+
+    // Itera sobre todos os boletos e suas parcelas
+    userBoletos.forEach(bill => {
+        bill.parcels.forEach(parcel => {
+            const parcelDate = new Date(parcel.dueDate + 'T00:00:00');
+            // Verifica se a parcela pertence ao mês/ano atual E se não está paga
+            if (parcelDate.getMonth() === currentMonth && parcelDate.getFullYear() === currentYear && !parcel.paid) {
+                selectedItems.set(parcel._id, bill._id);
+            }
+        });
+    });
+
+    // Atualiza a interface
+    applyFiltersAndSearch(); // Força a renderização do calendário com os checkboxes marcados
+    updateMassPaymentButton(); // Mostra o painel de ações
+}
+
+/**
  * Desmarca todos os checkboxes de boletos selecionados.
  */
 function handleDeselectAll() {
-    // Limpa o nosso Set de seleção
     selectedItems.clear();
-    // Desmarca todos os checkboxes que estão no calendário
-    document.querySelectorAll('.mass-payment-checkbox:checked').forEach(checkbox => {
-        checkbox.checked = false;
-    });
-    // Atualiza o botão (que será escondido, pois a contagem é 0)
-    updateMassPaymentButton();
+    applyFiltersAndSearch(); // Força a renderização do calendário com os checkboxes desmarcados
+    updateMassPaymentButton(); // Esconde o painel de ações
 }
 
 /**
@@ -2747,6 +2798,9 @@ if (importCsvBtn) {
 if (markSelectedAsPaidBtn) {
     markSelectedAsPaidBtn.addEventListener('click', handleMarkSelectedAsPaid);
 }
+if (markSelectedAsUnpaidBtn) {
+    markSelectedAsUnpaidBtn.addEventListener('click', handleMarkSelectedAsUnpaid);
+}
 if (selectAllVisibleBtn) {
     selectAllVisibleBtn.addEventListener('click', handleSelectAllVisible);
 }
@@ -2771,11 +2825,13 @@ if (dashboardFilterButtons) {
 // Abre o modal de alteração de categoria
 if (changeCategoryBtn) {
     changeCategoryBtn.addEventListener('click', async () => {
+        if (selectedItems.size === 0) {
+            return showToast('Nenhum item selecionado.', 'info');
+        }
         showLoader();
-        // Popula o dropdown do modal com as categorias existentes
-        await populateCategorySelect(batchCategorySelect);
+        await populateCategorySelect(document.getElementById('batchCategorySelect'));
         hideLoader();
-        categoryBatchModal.classList.remove('hidden');
+        document.getElementById('categoryBatchModal').classList.remove('hidden');
     });
 }
 

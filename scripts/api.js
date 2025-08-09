@@ -117,6 +117,7 @@ export const uploadAttachment = (boletoId, parcelId, formData) => {
 export const deleteAttachment = (boletoId, parcelId) => apiCall(`/api/boletos/${boletoId}/parcels/${parcelId}/attach`, { method: 'DELETE' });
 export const updateBoleto = (id, data) => apiCall(`/api/boletos/${id}`, { method: 'PATCH', body: JSON.stringify(data) });
 export const markParcelsAsPaid = (parcelIds) => apiCall('/api/boletos/parcels/mark-as-paid', { method: 'PATCH', body: JSON.stringify({ parcelIds }) });
+export const markParcelsAsUnpaid = (parcelIds) => apiCall('/api/boletos/parcels/mark-as-unpaid', { method: 'PATCH', body: JSON.stringify({ parcelIds }) });
 export const bulkUpdateCategory = (boletoIds, categoryId) => apiCall('/api/boletos/bulk-update-category', { method: 'PATCH', body: JSON.stringify({ boletoIds, categoryId }) });
 export const bulkUpdateParcels = (boletoId, parcelId, updatedData, scope) => apiCall('/api/boletos/bulk-update-parcels', { 
     method: 'PATCH', 
