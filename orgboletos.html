@@ -28,8 +28,14 @@
         </button>
     </div>
 
-    <div id="generalLoader" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 hidden">
-        <i class="fas fa-spinner fa-spin text-white text-4xl"></i>
+    <div id="generalLoader" class="fixed inset-0 flex justify-center items-center z-50 hidden"
+        style="background: rgba(15, 23, 42, 0.55);">
+        <div class="flex flex-col items-center">
+            <i class="fas fa-paw fa-spin text-indigo-300 text-6xl mb-6 animate-bounce"></i>
+            <h2 class="text-xl font-bold text-white mb-2">Carregando informações...</h2>
+            <p class="text-base text-indigo-100 mb-2">Aguarde, estamos organizando seus dados!</p>
+            <span class="text-sm text-gray-300 italic">"Sua rotina financeira mais leve e inteligente."</span>
+        </div>
     </div>
 
     <!-- NOVO MODAL DE ASSINATURA -->
@@ -71,9 +77,14 @@
         </div>
     </div>
 
-    <div id="loadingScreen" class="fixed inset-0 bg-gray-950 opacity-90 flex flex-col justify-center items-center z-50">
-        <i class="fas fa-spinner fa-spin text-indigo-400 text-5xl"></i>
-        <p class="mt-4 text-gray-300">Carregando sua sessão...</p>
+    <div id="loadingScreen" class="fixed inset-0 flex flex-col justify-center items-center z-50"
+        style="background: linear-gradient(135deg, #312e81 0%, #0f172a 100%);">
+        <div class="flex flex-col items-center">
+            <i class="fas fa-paw fa-spin text-indigo-400 text-6xl mb-6 animate-bounce"></i>
+            <h2 class="text-2xl font-bold text-white mb-2">Organizando seus boletos...</h2>
+            <p class="text-lg text-indigo-200 mb-4">Aguarde só um instante, estamos preparando tudo para você!</p>
+            <span class="text-sm text-gray-300 italic">"Tecnologia para facilitar sua vida financeira."</span>
+        </div>
     </div>
 
     <div id="toastMessage"
@@ -515,7 +526,8 @@
                 </div>
 
                 <div id="categoriesModal"
-                    class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+                    class="fixed inset-0 flex items-center justify-center z-50 hidden"
+                    style="background: rgba(15,23,42,0.75);">
                     <div class="bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-lg">
                         <div class="flex justify-between items-center mb-6">
                             <h3 class="text-xl font-semibold text-gray-100 flex items-center">
@@ -862,7 +874,8 @@
     </div>
 
     <div id="companyDetailsModal"
-        class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+        class="fixed inset-0 flex items-center justify-center z-50 hidden"
+        style="background: rgba(15,23,42,0.75);">
         <div class="bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-lg">
             <div class="flex justify-between items-center mb-4">
                 <div>
@@ -938,7 +951,8 @@
     </div>
 
     <div id="barcodeFullScreenModal"
-        class="fixed inset-0 bg-black bg-opacity-80 flex flex-col items-center justify-center z-50 hidden">
+        class="fixed inset-0 flex flex-col items-center justify-center z-50 hidden"
+        style="background: rgba(15,23,42,0.75);">
 
         <div class="bg-white p-6 rounded-lg shadow-xl inline-block">
             <svg id="fullScreenBarcodeImage"></svg>
@@ -951,7 +965,8 @@
     </div>
 
     <div id="quickUserAddModal"
-        class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+        class="fixed inset-0 flex items-center justify-center z-50 hidden"
+        style="background: rgba(15,23,42,0.75);">
         <div class="bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-md">
             <div class="flex justify-between items-center mb-6">
                 <h3 class="text-xl font-semibold text-gray-100">Cadastrar Novo Usuário</h3>
@@ -983,7 +998,8 @@
     </div>
 
     <div id="companyInfoModal"
-        class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+        class="fixed inset-0 flex items-center justify-center z-50 hidden"
+        style="background: rgba(15,23,42,0.75);">
         <div class="bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-lg">
             <div class="flex justify-between items-start mb-6">
                 <h3 class="text-xl font-semibold text-gray-100 flex items-center">
@@ -1059,7 +1075,8 @@
     </div>
 
     <div id="permissionsModal"
-        class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+        class="fixed inset-0 flex items-center justify-center z-50 hidden"
+        style="background: rgba(15,23,42,0.75);">
         <div class="bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-4xl max-h-[90vh] overflow-y-auto">
             <div class="flex justify-between items-center mb-6">
                 <h3 class="text-xl font-semibold text-gray-100 flex items-center"><i
@@ -1181,14 +1198,15 @@
         </div>
     </div>
 
-    <div id="addUserModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+    <div id="addUserModal" class="fixed inset-0 flex items-center justify-center z-50 hidden"
+        style="background: rgba(15,23,42,0.75);">
         <div class="bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-md">
             <div class="flex justify-between items-center mb-6">
                 <h3 class="text-xl font-semibold text-gray-100 flex items-center">
                     <i class="fas fa-user-plus mr-3 text-indigo-400"></i>
                     Adicionar Novo Usuário
                 </h3>
-                <button id="closeAddUserModal" class="text-gray-400 hover:text-white">
+                <button id="closeAddUserModal" class="text-gray-400 hover:text-gray-200">
                     <i class="fas fa-times text-xl"></i>
                 </button>
             </div>
@@ -1228,7 +1246,8 @@
         </div>
     </div>
 
-    <div id="addCompanyModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+    <div id="addCompanyModal" class="fixed inset-0 flex items-center justify-center z-50 hidden"
+        style="background: rgba(15,23,42,0.75);">
         <div class="bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-lg">
             <div class="flex justify-between items-center mb-6">
                 <h3 class="text-xl font-semibold text-gray-100 flex items-center">
@@ -1301,7 +1320,8 @@
     </div>
 
     <div id="manageUsersModal"
-        class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+        class="fixed inset-0 flex items-center justify-center z-50 hidden"
+        style="background: rgba(15,23,42,0.75);">
         <div class="bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-lg">
             <div class="flex justify-between items-center mb-6">
                 <h3 class="text-xl font-semibold text-gray-100">Gerenciar Utilizadores da Empresa</h3>
@@ -1327,7 +1347,8 @@
     </button>
 
     <div id="categoryBatchModal"
-        class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+        class="fixed inset-0 flex items-center justify-center z-50 hidden"
+        style="background: rgba(15,23,42,0.75);">
         <div class="bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-sm">
             <h3 class="text-xl font-semibold text-gray-100 mb-4">Alterar Categoria dos Itens Selecionados</h3>
 
@@ -1349,7 +1370,8 @@
         </div>
     </div>
 
-    <div id="profileModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+    <div id="profileModal" class="fixed inset-0 flex items-center justify-center z-50 hidden"
+        style="background: rgba(15,23,42,0.75);">
         <div class="bg-gray-800 rounded-lg shadow-2xl p-8 w-full max-w-md text-white relative transform transition-all">
 
             <button id="closeProfileModalBtn" class="absolute top-4 right-4 text-gray-400 hover:text-white transition">
@@ -1393,7 +1415,8 @@
     </div>
 
     <div id="recurrentEditModal"
-        class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+        class="fixed inset-0 flex items-center justify-center z-50 hidden"
+        style="background: rgba(15,23,42,0.75);">
         <div class="bg-gray-800 rounded-lg shadow-2xl p-8 w-full max-w-lg text-white relative">
 
             <h2 class="text-2xl font-bold mb-4 text-center text-indigo-400">Editar Parcela Recorrente</h2>
@@ -1429,7 +1452,8 @@
     </div>
 
     <div id="announcementModal"
-        class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+        class="fixed inset-0 flex items-center justify-center z-50 hidden"
+        style="background: rgba(15,23,42,0.75);">
         <div class="bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-lg">
             <h3 id="announcementModalTitle" class="text-xl font-semibold text-gray-100 mb-6">Novo Anúncio</h3>
             <form id="announcementForm" class="space-y-4">
