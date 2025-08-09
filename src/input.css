@@ -102,41 +102,127 @@ body {
     background-color: #1f2937;
 }
 .bill-card {
-    background-color: #4b5563;
-    border: 1px solid #374151;
-    border-radius: 0.375rem;
-    padding: 0.75rem;
-    margin-bottom: 0.75rem;
-}
-.bill-card.paid {
-    background-color: #15803d;
-    border-color: #166534;
-    color: #d1fae5;
-}
-.bill-card.unpaid {
-    background-color: #4f46e5;
-    border-color: #4338ca;
-    color: #e0e7ff;
-}
-input[type="date"]::-webkit-calendar-picker-indicator {
-    filter: invert(1);
-}
-input[type="date"] {
-    color-scheme: dark;
-}
-input[type=number]::-webkit-outer-spin-button,
-input[type=number]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-input[type=number] {
-    -moz-appearance: textfield;
-    appearance: textfield;
-}
-#barcodeImage {
+    background: linear-gradient(135deg, #1e293b 0%, #374151 100%);
+    border-radius: 1rem;
+    box-shadow: 0 4px 24px rgba(99,102,241,0.08), 0 1.5px 8px rgba(0,0,0,0.12);
+    border: 1.5px solid #334155;
+    padding: 1rem 1.2rem;
+    margin-bottom: 1rem;
+    position: relative;
+    transition: box-shadow 0.2s, transform 0.2s;
+    cursor: pointer;
+    font-size: 1rem;
+    min-width: 220px;
     max-width: 100%;
-    height: auto;
+    overflow: hidden;
 }
+.bill-card:hover {
+    box-shadow: 0 8px 32px rgba(99,102,241,0.18), 0 2px 16px rgba(0,0,0,0.18);
+    transform: scale(1.04);
+    z-index: 2;
+}
+.bill-card .card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+.bill-card .card-title {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #fff;
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.bill-card .card-status {
+    font-size: 1.1rem;
+    font-weight: bold;
+    padding: 0.2rem 0.7rem;
+    border-radius: 1rem;
+    margin-left: 0.5rem;
+    background: #334155;
+    color: #fff;
+    letter-spacing: 0.03em;
+}
+.bill-card.paid .card-status {
+    background: #16a34a;
+    color: #fff;
+}
+.bill-card.unpaid .card-status {
+    background: #6366f1;
+    color: #fff;
+}
+.bill-card.overdue .card-status {
+    background: #ef4444;
+    color: #fff;
+}
+.bill-card .card-value {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #a5b4fc;
+    margin-bottom: 0.3rem;
+}
+.bill-card .card-details {
+    font-size: 0.95rem;
+    color: #cbd5e1;
+    margin-bottom: 0.2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+}
+.bill-card .card-actions {
+    position: absolute;
+    top: 0.7rem;
+    right: 1rem;
+    display: flex;
+    gap: 0.5rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+}
+.bill-card:hover .card-actions {
+    opacity: 1;
+    pointer-events: auto;
+}
+.bill-card .card-actions button {
+    background: #6366f1;
+    color: #fff;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.3rem 0.7rem;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.bill-card .card-actions button:hover {
+    background: #4338ca;
+}
+.bill-card .card-category {
+    font-size: 0.9rem;
+    color: #fbbf24;
+    font-weight: 500;
+    margin-left: 0.5rem;
+}
+.bill-card .card-cod {
+    font-size: 0.85rem;
+    color: #38bdf8;
+    font-weight: 500;
+    margin-left: 0.5rem;
+}
+.bill-card .card-footer {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* ...existing code... */
+
+/* Radio buttons personalizados */
 .radio-custom {
   display: inline-block;
   width: 1.5rem;
@@ -311,4 +397,62 @@ input[type="radio"]:checked + .radio-custom {
     animation: pulse-contact 1.2s infinite;
 }
 
-/* Nenhuma alteração necessária, pois feature-card e benefit-card já estão animados */
+#dailyBillsViewer {
+  overflow-x: hidden; /* Garante que o conteúdo que sai da tela não crie uma barra de rolagem */
+  position: relative;
+}
+
+#dailyBillsList.swiping {
+  transition: none; /* Remove a transição durante o arraste para um movimento instantâneo */
+}
+
+#dailyBillsList.snap-back {
+  transition: transform 0.3s ease-out, opacity 0.3s ease-out; /* Animação suave de retorno */
+}
+
+/* Animações de Entrada e Saída */
+.slide-out-left {
+  animation: slide-out-left 0.3s forwards ease-in-out;
+}
+.slide-out-right {
+  animation: slide-out-right 0.3s forwards ease-in-out;
+}
+.slide-in-from-left {
+  animation: slide-in-from-left 0.3s forwards ease-in-out;
+}
+.slide-in-from-right {
+  animation: slide-in-from-right 0.3s forwards ease-in-out;
+}
+
+@keyframes slide-out-left {
+  to {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+@keyframes slide-out-right {
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+@keyframes slide-in-from-left {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+@keyframes slide-in-from-right {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}

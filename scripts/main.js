@@ -1330,8 +1330,9 @@ async function fetchAndDisplayAnnouncement() {
 /**
  * Renderiza a visualização de lista diária para dispositivos móveis.
  * @param {Array} boletosToRender - A lista de boletos a ser usada para a renderização.
+ * @param {string|null} slideDirection - A direção do swipe ('left' ou 'right') para aplicar a animação de entrada correta.
  */
-function renderDailyView(boletosToRender = userBoletos) {
+function renderDailyView(boletosToRender = userBoletos, slideDirection = null) {
     const dailyViewContainer = document.getElementById('dailyBillsViewer');
     if (!dailyViewContainer || dailyViewContainer.offsetParent === null) {
         return;
@@ -1357,6 +1358,18 @@ function renderDailyView(boletosToRender = userBoletos) {
 
     // Limpa de forma direta todos os boletos antigos E a mensagem "Nenhum boleto".
     listContainer.innerHTML = '';
+
+    // Adiciona a animação de entrada se uma direção foi fornecida
+    if (slideDirection) {
+        const animationClass = slideDirection === 'right' ? 'slide-in-from-left' : 'slide-in-from-right';
+        listContainer.classList.add(animationClass);
+
+        // Remove a classe após a animação para não interferir em futuros swipes
+        listContainer.addEventListener('animationend', () => {
+            listContainer.classList.remove(animationClass);
+        }, { once: true });
+    }
+
 
     if (parcelsForDay.length === 0) {
         // Se não houver parcelas, recria e exibe a mensagem de "Nenhum boleto".
@@ -2040,8 +2053,9 @@ async function handleRemoveAttachment() {
 
 /**
  * Aplica o filtro e a pesquisa atuais à lista de boletos e atualiza a UI.
+ * @param {string|null} slideDirection - A direção do swipe ('left' ou 'right') para passar para as funções de renderização.
  */
-function applyFiltersAndSearch() {
+function applyFiltersAndSearch(slideDirection = null) {
     // 1. Obtém os valores de todos os filtros da tela
     const searchTerm = searchInput.value.toLowerCase();
     const activeStatusFilter = document.getElementById('statusFilterSelect').value;
@@ -2074,8 +2088,7 @@ function applyFiltersAndSearch() {
             return false;
         }
 
-        // Critério 2: O nome do boleto deve corresponder ao termo de pesquisa
-        // (com uma verificação de segurança para garantir que o nome existe)
+        // Critério 2: O nome do boleto ou o código da NFE devem corresponder ao termo de pesquisa
         const matchesSearch = (bill.name && typeof bill.name === 'string' && bill.name.toLowerCase().includes(searchTerm)) || 
                               (bill.nfeNumber && bill.nfeNumber.includes(searchTerm));
 
@@ -2088,7 +2101,7 @@ function applyFiltersAndSearch() {
 
     // 3. Envia a lista final, completamente filtrada, para as funções que desenham a tela
     renderCalendar(finalFilteredBoletos);
-    renderDailyView(finalFilteredBoletos);
+    renderDailyView(finalFilteredBoletos, slideDirection);
     updateMonthlySummary(finalFilteredBoletos);
 }
 
@@ -2921,7 +2934,84 @@ if (nextDayBtn) {
     });
 }
 
+const dailyViewContainer = document.getElementById('dailyBillsViewer');
+if (dailyViewContainer) {
+    let touchStartX = 0;
+    let touchCurrentX = 0;
+    let isSwiping = false;
+    const swipeThreshold = window.innerWidth / 3; // Precisa arrastar 1/3 da tela para mudar
 
-initializeDashboardDragAndDrop();
+    dailyViewContainer.addEventListener('touchstart', (e) => {
+        touchStartX = e.touches[0].clientX;
+        isSwiping = true;
+        // Prepara o elemento para o arraste
+        const list = document.getElementById('dailyBillsList');
+        if (list) {
+            list.classList.add('swiping');
+            list.classList.remove('snap-back');
+        }
+    }, { passive: true });
+
+    dailyViewContainer.addEventListener('touchmove', (e) => {
+        if (!isSwiping) return;
+        touchCurrentX = e.touches[0].clientX;
+        const deltaX = touchCurrentX - touchStartX;
+
+        // Move a lista em tempo real com o dedo
+        const list = document.getElementById('dailyBillsList');
+        if (list) {
+            list.style.transform = `translateX(${deltaX}px)`;
+            list.style.opacity = 1 - Math.abs(deltaX) / window.innerWidth;
+        }
+    }, { passive: true });
+
+    dailyViewContainer.addEventListener('touchend', (e) => {
+        if (!isSwiping) return;
+        isSwiping = false;
+
+        const deltaX = touchCurrentX - touchStartX;
+        const list = document.getElementById('dailyBillsList');
+        
+        if (Math.abs(deltaX) > swipeThreshold) {
+            // Swipe bem-sucedido, mudar o dia
+            const direction = deltaX > 0 ? 'right' : 'left'; // right = dia anterior, left = próximo dia
+            const animationClass = deltaX > 0 ? 'slide-out-right' : 'slide-out-left';
+            
+            if (list) {
+                list.classList.add(animationClass);
+                // Espera a animação de saída terminar para carregar o novo dia
+                list.addEventListener('animationend', () => {
+                    list.style.transform = ''; // Limpa o estilo inline
+                    list.style.opacity = 1;
+                    list.classList.remove('swiping', animationClass);
+
+                    if (direction === 'right') {
+                        currentDailyViewDate.setDate(currentDailyViewDate.getDate() - 1);
+                    } else {
+                        currentDailyViewDate.setDate(currentDailyViewDate.getDate() + 1);
+                    }
+                    // Chama a função de renderização passando a direção para a animação de entrada
+                    applyFiltersAndSearch(direction);
+
+                }, { once: true });
+            }
+        } else {
+            // Swipe não foi longo o suficiente, voltar à posição original
+            if (list) {
+                list.classList.add('snap-back');
+                list.style.transform = '';
+                list.style.opacity = 1;
+                list.addEventListener('transitionend', () => {
+                    list.classList.remove('swiping', 'snap-back');
+                }, { once: true });
+            }
+        }
+        // Reseta as posições para o próximo swipe
+        touchStartX = 0;
+        touchCurrentX = 0;
+    });
+}
+
+    initializeDashboardDragAndDrop();
 
 });
