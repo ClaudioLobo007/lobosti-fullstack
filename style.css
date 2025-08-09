@@ -3369,6 +3369,50 @@ input[type="radio"]:checked + .radio-custom {
     opacity: 1;
   }
 }
+@media (max-width: 640px) {
+  #billModal {
+    padding: 0;
+    align-items: flex-start;
+  }
+  #billModal > .bg-gray-800 {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+    padding: 1.5rem 1rem;
+    display: flex;
+    flex-direction: column;
+  }
+  #billModal .space-y-4 {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding-right: 8px;
+    margin-right: -8px;
+  }
+  #billModal #modalBillName {
+    font-size: 1.125rem;
+  }
+  #billModal .flex.justify-between.pt-4 {
+    flex-shrink: 0;
+    border-top: 1px solid #374151;
+    padding-top: 1rem;
+    background-color: #1f2937;
+    margin: 1.5rem -1rem -1.5rem -1rem;
+    padding: 1rem;
+  }
+  #billModal #saveBill, #billModal #deleteBill {
+    flex-grow: 1;
+    text-align: center;
+    padding: 0.75rem 0.5rem;
+    font-size: 1rem;
+  }
+  #billModal #saveBill {
+    margin-right: 0.5rem;
+  }
+  #billModal .border-t.border-gray-700.pt-4.mt-4 {
+    text-align: center;
+    flex-shrink: 0;
+  }
+}
 @property --tw-translate-x {
   syntax: "*";
   inherits: false;

@@ -456,3 +456,63 @@ input[type="radio"]:checked + .radio-custom {
     opacity: 1;
   }
 }
+/* NOVO: Estilos para tornar o Modal de Edição de Boleto responsivo */
+@media (max-width: 640px) {
+
+    /* Ajusta o modal para ocupar a tela inteira, removendo margens desnecessárias */
+    #billModal {
+        padding: 0;
+        align-items: flex-start; /* Alinha o modal no topo */
+    }
+
+    #billModal > .bg-gray-800 {
+        width: 100%;
+        height: 100%;
+        border-radius: 0; /* Remove as bordas arredondadas em tela cheia */
+        padding: 1.5rem 1rem; /* Ajusta o espaçamento interno (32px topo/baixo, 16px lados) */
+        display: flex;
+        flex-direction: column; /* Organiza o conteúdo em coluna */
+    }
+
+    /* Permite que a área de formulário cresça e use uma barra de rolagem interna */
+    #billModal .space-y-4 {
+        flex-grow: 1;
+        overflow-y: auto; /* Adiciona rolagem se o conteúdo for maior que a tela */
+        padding-right: 8px; /* Espaço para a barra de rolagem */
+        margin-right: -8px;
+    }
+
+    /* Reduz o tamanho da fonte do título do modal */
+    #billModal #modalBillName {
+        font-size: 1.125rem; /* Equivalente a text-lg */
+    }
+
+    /* Garante que os botões de Salvar e Excluir fiquem sempre visíveis no rodapé */
+    #billModal .flex.justify-between.pt-4 {
+        flex-shrink: 0; /* Impede que o container dos botões encolha */
+        border-top: 1px solid #374151; /* Adiciona uma linha divisória */
+        padding-top: 1rem;
+        background-color: #1f2937; /* Cor de fundo do 'bg-gray-800' */
+        margin: 1.5rem -1rem -1.5rem -1rem; /* Expande para preencher o rodapé */
+        padding: 1rem;
+    }
+
+    /* Faz os botões principais ocuparem o espaço disponível */
+    #billModal #saveBill,
+    #billModal #deleteBill {
+        flex-grow: 1;
+        text-align: center;
+        padding: 0.75rem 0.5rem; /* Ajusta o padding para um toque mais fácil */
+        font-size: 1rem; /* Aumenta a fonte do botão */
+    }
+
+    #billModal #saveBill {
+        margin-right: 0.5rem; /* Espaço entre os botões */
+    }
+    
+    /* Centraliza o botão de Excluir Boleto Completo */
+    #billModal .border-t.border-gray-700.pt-4.mt-4 {
+        text-align: center;
+        flex-shrink: 0;
+    }
+}
