@@ -174,6 +174,46 @@ router.patch('/parcels/mark-as-paid', async (req, res) => {
     }
 });
 
+// Rota para REMOVER O PAGAMENTO de parcelas em massa
+router.patch('/parcels/mark-as-unpaid', async (req, res) => {
+    try {
+        // 1. Obtém o modelo 'Boleto' da conexão de banco de dados específica desta empresa (tenant)
+        const Boleto = req.tenantDb.model('Boleto', BoletoSchema);
+
+        // 2. Extrai a lista de IDs de parcelas do corpo da requisição enviada pelo frontend
+        const { parcelIds } = req.body;
+
+        // 3. Validação para garantir que recebemos uma lista válida de parcelas
+        if (!parcelIds || !Array.isArray(parcelIds) || parcelIds.length === 0) {
+            return res.status(400).json({ message: 'Nenhuma parcela selecionada para remover o pagamento.' });
+        }
+
+        // 4. Executa a atualização no banco de dados
+        // - Procura todos os boletos que contenham parcelas com os IDs fornecidos
+        // - Altera o campo 'paid' para 'false' nessas parcelas específicas
+        await Boleto.updateMany(
+            { 
+                "parcels._id": { $in: parcelIds } 
+            },
+            { 
+                // A única mudança em relação à rota de "pagar": definimos 'paid' como 'false'
+                $set: { "parcels.$[elem].paid": false } 
+            },
+            { 
+                arrayFilters: [{ "elem._id": { $in: parcelIds } }] 
+            }
+        );
+
+        // 5. Envia uma resposta de sucesso para o frontend
+        res.status(200).json({ message: 'Pagamento removido das parcelas selecionadas com sucesso!' });
+
+    } catch (error) {
+        // 6. Em caso de qualquer erro, envia uma resposta de erro genérica
+        console.error("Erro ao remover pagamento de parcelas em massa:", error);
+        res.status(500).json({ message: 'Erro interno do servidor ao atualizar as parcelas.' });
+    }
+});
+
 // Rota para alterar categoria em massa
 router.patch('/bulk-update-category', async (req, res) => {
     try {
