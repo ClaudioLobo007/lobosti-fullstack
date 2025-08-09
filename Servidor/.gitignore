@@ -6,3 +6,5 @@ node_modules
 
 # Pasta de build do React
 index_copy.html
+
+/.lh
