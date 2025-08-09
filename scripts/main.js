@@ -2005,9 +2005,21 @@ async function handleAttachmentUpload(event) {
         const data = await api.uploadAttachment(selectedParcel.parentId, selectedParcel._id, formData);
         showToast(data.message, 'success');
 
-        // Atualiza a UI para mostrar o link do novo anexo
         const attachmentContainer = document.getElementById('attachment-container');
-        attachmentContainer.innerHTML = `<a href="${data.attachmentUrl}" target="_blank" class="text-indigo-400 hover:underline flex items-center"><i class="fas fa-paperclip mr-2"></i>Ver Comprovativo</a>`;
+
+        // Substitui o input de upload pelo HTML que contém o link E o botão de remover.
+        // Este é o mesmo HTML usado quando o modal é aberto pela primeira vez.
+        attachmentContainer.innerHTML = `
+            <div class="flex items-center justify-between">
+                <a href="${data.attachmentUrl}" target="_blank" class="text-indigo-400 hover:underline flex items-center">
+                    <i class="fas fa-paperclip mr-2"></i>Ver Comprovativo
+                </a>
+                <button id="removeAttachmentBtn" class="bg-red-600 text-white px-2 py-1 rounded text-xs hover:bg-red-700">Remover</button>
+            </div>
+        `;
+
+        // IMPORTANTE: Adiciona o evento de clique ao novo botão "Remover" que acabámos de criar.
+        document.getElementById('removeAttachmentBtn').addEventListener('click', handleRemoveAttachment);
 
         // Atualiza o nosso estado local para que a mudança persista se o modal for reaberto
         await updateBillsOrganizer();
