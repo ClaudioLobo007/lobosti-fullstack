@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 377,
+            "activePatchIndex": 378,
             "patches": [
                 {
                     "date": 1752672273587,
@@ -1516,6 +1516,10 @@
                 {
                     "date": 1754702305507,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2058,9 +2058,9 @@\n function applyFiltersAndSearch(slideDirection = null) {\r\n     // 1. Obtém os valores de todos os filtros da tela\r\n     const searchTerm = searchInput.value.toLowerCase();\r\n     const activeStatusFilter = document.getElementById('statusFilterSelect').value;\r\n-    const selectedCategoryId = categoryFilterselect.value;\r\n+    const selectedCategoryId = categoryFilterSelect.value;\r\n     const today = new Date();\r\n     today.setHours(0, 0, 0, 0);\r\n \r\n     // 2. Inicia o processo de filtragem em duas etapas\r\n"
+                },
+                {
+                    "date": 1754702799293,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2968,36 +2968,38 @@\n     dailyViewContainer.addEventListener('touchend', (e) => {\r\n         if (!isSwiping) return;\r\n         isSwiping = false;\r\n \r\n-        const deltaX = touchCurrentX - touchStartX;\r\n+        // A mágica está aqui: pegamos a posição final EXATA do toque.\r\n+        // Num clique, touchEndX será quase igual a touchStartX.\r\n+        const touchEndX = e.changedTouches[0].clientX;\r\n+        const deltaX = touchEndX - touchStartX; // <--- CÁLCULO CORRETO\r\n+\r\n         const list = document.getElementById('dailyBillsList');\r\n         \r\n         if (Math.abs(deltaX) > swipeThreshold) {\r\n             // Swipe bem-sucedido, mudar o dia\r\n-            const direction = deltaX > 0 ? 'right' : 'left'; // right = dia anterior, left = próximo dia\r\n+            const direction = deltaX > 0 ? 'right' : 'left';\r\n             const animationClass = deltaX > 0 ? 'slide-out-right' : 'slide-out-left';\r\n             \r\n             if (list) {\r\n                 list.classList.add(animationClass);\r\n-                // Espera a animação de saída terminar para carregar o novo dia\r\n                 list.addEventListener('animationend', () => {\r\n-                    list.style.transform = ''; // Limpa o estilo inline\r\n+                    list.style.transform = '';\r\n                     list.style.opacity = 1;\r\n                     list.classList.remove('swiping', animationClass);\r\n \r\n                     if (direction === 'right') {\r\n                         currentDailyViewDate.setDate(currentDailyViewDate.getDate() - 1);\r\n                     } else {\r\n                         currentDailyViewDate.setDate(currentDailyViewDate.getDate() + 1);\r\n                     }\r\n-                    // Chama a função de renderização passando a direção para a animação de entrada\r\n                     applyFiltersAndSearch(direction);\r\n \r\n                 }, { once: true });\r\n             }\r\n         } else {\r\n-            // Swipe não foi longo o suficiente, voltar à posição original\r\n+            // Swipe não foi longo o suficiente (ou foi um clique), voltar à posição original\r\n             if (list) {\r\n                 list.classList.add('snap-back');\r\n                 list.style.transform = '';\r\n                 list.style.opacity = 1;\r\n@@ -3005,9 +3007,10 @@\n                     list.classList.remove('swiping', 'snap-back');\r\n                 }, { once: true });\r\n             }\r\n         }\r\n-        // Reseta as posições para o próximo swipe\r\n+        \r\n+        // Reseta as posições para o próximo toque\r\n         touchStartX = 0;\r\n         touchCurrentX = 0;\r\n     });\r\n }\r\n"
                 }
             ],
             "date": 1752672273587,

@@ -2969,19 +2969,22 @@ if (dailyViewContainer) {
         if (!isSwiping) return;
         isSwiping = false;
 
-        const deltaX = touchCurrentX - touchStartX;
+        // A mágica está aqui: pegamos a posição final EXATA do toque.
+        // Num clique, touchEndX será quase igual a touchStartX.
+        const touchEndX = e.changedTouches[0].clientX;
+        const deltaX = touchEndX - touchStartX; // <--- CÁLCULO CORRETO
+
         const list = document.getElementById('dailyBillsList');
         
         if (Math.abs(deltaX) > swipeThreshold) {
             // Swipe bem-sucedido, mudar o dia
-            const direction = deltaX > 0 ? 'right' : 'left'; // right = dia anterior, left = próximo dia
+            const direction = deltaX > 0 ? 'right' : 'left';
             const animationClass = deltaX > 0 ? 'slide-out-right' : 'slide-out-left';
             
             if (list) {
                 list.classList.add(animationClass);
-                // Espera a animação de saída terminar para carregar o novo dia
                 list.addEventListener('animationend', () => {
-                    list.style.transform = ''; // Limpa o estilo inline
+                    list.style.transform = '';
                     list.style.opacity = 1;
                     list.classList.remove('swiping', animationClass);
 
@@ -2990,13 +2993,12 @@ if (dailyViewContainer) {
                     } else {
                         currentDailyViewDate.setDate(currentDailyViewDate.getDate() + 1);
                     }
-                    // Chama a função de renderização passando a direção para a animação de entrada
                     applyFiltersAndSearch(direction);
 
                 }, { once: true });
             }
         } else {
-            // Swipe não foi longo o suficiente, voltar à posição original
+            // Swipe não foi longo o suficiente (ou foi um clique), voltar à posição original
             if (list) {
                 list.classList.add('snap-back');
                 list.style.transform = '';
@@ -3006,7 +3008,8 @@ if (dailyViewContainer) {
                 }, { once: true });
             }
         }
-        // Reseta as posições para o próximo swipe
+        
+        // Reseta as posições para o próximo toque
         touchStartX = 0;
         touchCurrentX = 0;
     });
