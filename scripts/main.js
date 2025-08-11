@@ -759,17 +759,29 @@ async function populateCategoryFilter() {
  * Alterna a visualização entre o Calendário e o Dashboard.
  */
 function switchView(viewToShow) {
-    // Esconde ambas as vistas
+    // Garante que as variáveis que representam as duas "telas" estão definidas
+    const calendarView = document.getElementById('calendarView');
+    const dashboardView = document.getElementById('dashboardView');
+    const viewCalendarBtn = document.getElementById('viewCalendarBtn');
+    const viewDashboardBtn = document.getElementById('viewDashboardBtn');
+
+    // Se qualquer um dos elementos não for encontrado, interrompe para evitar erros
+    if (!calendarView || !dashboardView || !viewCalendarBtn || !viewDashboardBtn) {
+        console.error("Erro: Um ou mais elementos de visualização (calendarView, dashboardView) não foram encontrados no HTML.");
+        return;
+    }
+
+    // 1. ESCONDE AMBAS AS TELAS PRIMEIRO - Esta é a parte crucial
     calendarView.classList.add('hidden');
     dashboardView.classList.add('hidden');
 
-    // Reseta o estilo dos botões
+    // 2. Reseta o estilo dos botões
     viewCalendarBtn.classList.remove('bg-indigo-600');
     viewCalendarBtn.classList.add('text-gray-400', 'hover:bg-gray-800');
     viewDashboardBtn.classList.remove('bg-indigo-600');
     viewDashboardBtn.classList.add('text-gray-400', 'hover:bg-gray-800');
 
-    // Mostra a vista correta e ativa o botão correspondente
+    // 3. MOSTRA APENAS A TELA DESEJADA e ativa o botão correspondente
     if (viewToShow === 'calendar') {
         calendarView.classList.remove('hidden');
         viewCalendarBtn.classList.add('bg-indigo-600');
@@ -778,6 +790,7 @@ function switchView(viewToShow) {
         dashboardView.classList.remove('hidden');
         viewDashboardBtn.classList.add('bg-indigo-600');
         viewDashboardBtn.classList.remove('text-gray-400', 'hover:bg-gray-800');
+        // Renderiza o dashboard apenas quando ele for exibido
         renderDashboard();
     }
 }

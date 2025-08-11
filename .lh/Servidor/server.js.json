@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 69,
+            "activePatchIndex": 70,
             "patches": [
                 {
                     "date": 1752253945740,
@@ -284,6 +284,10 @@
                 {
                     "date": 1754506975940,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -81,25 +81,8 @@\n app.use('/api/reports', protect, tenantMiddleware, checkSubscription, reportRoutes);\r\n app.use('/api/export', protect, tenantMiddleware, checkSubscription, exportRoutes);\r\n app.use('/api/nfe', protect, nfeRoutes); // NFe não usa nosso banco, só precisa de proteção\r\n \r\n-\r\n-\r\n-// 6. LÓGICA DE INICIALIZAÇÃO DO SERVIDOR\r\n-const startServer = async () => {\r\n-    // PRIMEIRO, conecta-se ao banco de dados Mestre\r\n-    await connectToMasterDB();\r\n-\r\n-    // DEPOIS, inicializa as tarefas agendadas\r\n-    initCronJobs();\r\n-\r\n-    // FINALMENTE, inicia o servidor Express\r\n-    const PORT = process.env.PORT || 5000;\r\n-    app.listen(PORT, () => {\r\n-        console.log(`Servidor a rodar na porta ${PORT}`);\r\n-    });\r\n-};\r\n-\r\n // --- NOVO BLOCO: LÓGICA DE DESLIGAMENTO GRACIOSO ---\r\n const cleanup = (signal) => {\r\n     console.log(`\\nSinal ${signal} recebido. A fechar as conexões com o banco de dados...`);\r\n     closeAllConnections().then(() => {\r\n@@ -111,7 +94,19 @@\n // Ouve os sinais de interrupção (como Ctrl+C) e terminação\r\n process.on('SIGINT', () => cleanup('SIGINT'));\r\n process.on('SIGTERM', () => cleanup('SIGTERM'));\r\n \r\n+const startServer = async () => {\r\n+    await connectToMasterDB();\r\n+    initCronJobs();\r\n\\ No newline at end of file\n+    const PORT = process.env.PORT || 5000;\r\n+    const server = app.listen(PORT, () => {\r\n+        console.log(`Servidor a rodar na porta ${PORT}`);\r\n+    });\r\n+    return server;\r\n+};\r\n \r\n-// Inicia todo o processo\r\n-startServer();\n+if (require.main === module) {\r\n+    startServer();\r\n+}\r\n+\r\n+module.exports = app;\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1754754183826,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,13 @@\n const BoletoSchema = require('./models/Boleto').schema;\r\n const announcementRoutes = require('./routes/announcements');\r\n \r\n // 2. MIDDLEWARES GERAIS\r\n-app.use(cors());\r\n+app.use(cors({\r\n+    origin: '*', // Permite qualquer origem (para desenvolvimento/teste)\r\n+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],\r\n+  allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization']\r\n+}));\r\n app.use(express.json({ limit: '50mb' }));\r\n app.use(express.urlencoded({ limit: '50mb', extended: true }));\r\n \r\n // 3. IMPORTAÇÃO DE TODAS AS ROTAS E MIDDLEWARES DE AUTENTICAÇÃO\r\n"
                 }
             ],
             "date": 1752253945740,
