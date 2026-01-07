@@ -1,9 +1,9 @@
 {
-    "sourceFile": "Index.html",
+    "sourceFile": "index.html",
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 231,
+            "activePatchIndex": 232,
             "patches": [
                 {
                     "date": 1752239206847,
@@ -932,6 +932,10 @@
                 {
                     "date": 1754703178766,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -233,18 +233,18 @@\n                                     <i class=\"fas fa-phone-alt\"></i>\r\n                                 </span>\r\n                                 <div>\r\n                                     <span class=\"block text-white font-medium\">Telefone</span>\r\n-                                    <span class=\"block text-gray-400\">(21) 98765-4321</span>\r\n+                                    <span class=\"block text-gray-400\">(21) 98675-4310</span>\r\n                                 </div>\r\n                             </li>\r\n                             <li class=\"flex items-center gap-4 group relative\">\r\n                                 <span class=\"w-12 h-12 flex items-center justify-center rounded-full bg-blue-500 text-white text-2xl transition-all duration-300 group-hover:scale-110 group_hover:shadow-lg group-hover:animate-pulse-contact cursor-pointer\" aria-label=\"E-mail\">\r\n                                     <i class=\"fas fa-envelope\"></i>\r\n                                 </span>\r\n                                 <div>\r\n                                     <span class=\"block text-white font-medium\">E-mail</span>\r\n-                                    <span class=\"block text-gray-400\">lobosti@outlook.com</span>\r\n+                                    <span class=\"block text-gray-400\">contato@lobosti.com.br</span>\r\n                                 </div>\r\n                             </li>\r\n                         </ul>\r\n                         <div class=\"border-t border-gray-700 my-6\"></div>\r\n"
+                },
+                {
+                    "date": 1767802913307,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,8 +6,10 @@\n     <title>LobosTI - Soluções em Tecnologia</title>\r\n     <link rel=\"icon\" type=\"image/png\" href=\"/public/images/FavIcon.png\">\r\n     <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css\">\r\n     <link rel=\"stylesheet\" href=\"style.css\">\r\n+    <meta name=\"facebook-domain-verification\" content=\"zxroc95o0fg442rkfk246g976wwbdh\" />\r\n+    \r\n </head>\r\n <body>\r\n \r\n     <div id=\"globalLoader\" class=\"fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50\">\r\n"
                 }
             ],
             "date": 1752239206846,
