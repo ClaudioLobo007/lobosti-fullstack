@@ -12,10 +12,6 @@
 </head>
 <body>
 
-    <div id="globalLoader" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
-        <i class="fas fa-spinner fa-spin text-white text-4xl"></i>
-    </div>
-
     <header id="header-placeholder"></header>
 
     <!-- Hero Section -->
@@ -406,12 +402,11 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // CARREGA TODOS OS COMPONENTES PRIMEIRO
-    document.getElementById('globalLoader').style.display = 'flex';
-    Promise.all([
+    Promise.allSettled([
         loadComponent('components/header.html', document.getElementById("header-placeholder")),
         loadComponent('components/footer.html', document.getElementById("footer-placeholder")),
         loadComponent('components/modals.html', document.getElementById("modals-placeholder"))
-    ]).then(async () => {
+    ]).then(() => {
         // --- TODA A LÓGICA AGORA FICA DENTRO DO .then() ---
 
         // 1. ADICIONA O EVENTO DO MENU MOBILE (AGORA O BOTÃO JÁ EXISTE)
@@ -543,25 +538,30 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
 
-        // 2. VERIFICAÇÃO DE SESSÃO E INICIALIZAÇÃO
+        // Verifica a sessão em segundo plano, sem bloquear a página ou seus formulários.
         const token = localStorage.getItem('authToken');
         if (token) {
-            // LÓGICA PARA USUÁRIO LOGADO
-            try {
-                const response = await fetch(`${API_BASE_URL}/api/auth/me`, { headers: { 'Authorization': `Bearer ${token}` } });
+            fetch(API_BASE_URL + '/api/auth/me', {
+                headers: { 'Authorization': 'Bearer ' + token },
+                signal: AbortSignal.timeout(15000)
+            }).then(async response => {
+                if (localStorage.getItem('authToken') !== token) return;
                 if (response.ok) {
                     const data = await response.json();
-                    updateUIForLoggedInUser(data.user, data.company);
-                } else {
+                    if (localStorage.getItem('authToken') === token) {
+                        updateUIForLoggedInUser(data.user, data.company);
+                    }
+                } else if (response.status === 401 || response.status === 403) {
                     localStorage.removeItem('authToken');
                 }
-            } catch (error) {
+            }).catch(error => {
+                // Lentidão ou indisponibilidade não encerra a sessão salva.
                 console.error("Erro ao verificar sessão:", error);
-                localStorage.removeItem('authToken');
-            }
-        } else {
-            // 3. LÓGICA EXECUTADA APENAS SE O USUÁRIO NÃO ESTIVER LOGADO
-            
+            });
+        }
+        {
+            // Os formulários permanecem disponíveis durante a verificação de sessão.
+
             // --- ADICIONADO: SETUP DO LISTENER DO EASTER EGG ---
             const wolfImageElement = document.querySelector('.animated-wolf');
             if (wolfImageElement) {
@@ -883,10 +883,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         }
-        document.getElementById('globalLoader').style.display = 'none';
     }).catch(error => {
         console.error("Erro ao carregar componentes:", error);
-        document.getElementById('globalLoader').style.display = 'none';
         document.getElementById('header-placeholder').innerHTML = '<p class="text-red-500">Erro ao carregar o cabeçalho.</p>';
         document.getElementById('footer-placeholder').innerHTML = '<p class="text-red-500">Erro ao carregar o rodapé.</p>';
         document.getElementById('modals-placeholder').innerHTML = '<p class="text-red-500">Erro ao carregar os modais.</p>';
